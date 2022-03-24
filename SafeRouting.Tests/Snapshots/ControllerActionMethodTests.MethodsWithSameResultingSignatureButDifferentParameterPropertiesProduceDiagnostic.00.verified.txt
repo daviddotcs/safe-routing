@@ -1,0 +1,17 @@
+﻿{
+  Diagnostics: [
+    {
+      Id: CSR0001,
+      Title: Conflicting methods,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: : (8,8)-(9,74),
+      Description: ,
+      HelpLink: ,
+      MessageFormat: The class '{0}' contains multiple methods which map to the route method '{1}'.,
+      Message: The class 'ProductsController' contains multiple methods which map to the route method 'Index()'.,
+      Category: Foundation,
+      CustomTags: []
+    }
+  ]
+}

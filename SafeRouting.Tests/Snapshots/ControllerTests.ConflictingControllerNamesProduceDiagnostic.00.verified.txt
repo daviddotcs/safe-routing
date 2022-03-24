@@ -1,0 +1,17 @@
+﻿{
+  Diagnostics: [
+    {
+      Id: CSR0004,
+      Title: Conflicting Controller,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: : (14,8)-(17,9),
+      Description: ,
+      HelpLink: ,
+      MessageFormat: The controller '{0}' conflicts with another controller of the same name.,
+      Message: The controller 'Products' conflicts with another controller of the same name.,
+      Category: Foundation,
+      CustomTags: []
+    }
+  ]
+}
