@@ -20,15 +20,23 @@ public sealed class RouteValuesTagHelper : TagHelper
   [HtmlAttributeName(ForRouteAttributeName)]
   public IRouteValues? ForRoute { get; set; }
 
+  /// <summary>
+  /// The current <see cref="Microsoft.AspNetCore.Mvc.Rendering.ViewContext"/>.
+  /// </summary>
   [HtmlAttributeNotBound]
   [ViewContext]
   public ViewContext ViewContext { get; set; } = default!;
 
+  /// <summary>
+  /// Initialises a new instance of the <see cref="RouteValuesTagHelper"/> class.
+  /// </summary>
+  /// <param name="urlHelperFactory">A factory to be injected.</param>
   public RouteValuesTagHelper(IUrlHelperFactory urlHelperFactory)
   {
     UrlHelperFactory = urlHelperFactory;
   }
 
+  /// <inheritdoc/>
   public override void Process(TagHelperContext context, TagHelperOutput output)
   {
     var urlAttributeName = context.TagName switch
