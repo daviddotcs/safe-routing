@@ -22,6 +22,7 @@
     <PackageProjectUrl>https://github.com/daviddotcs/safe-routing</PackageProjectUrl>
     <Copyright>Copyright © David Wake 2022</Copyright>
     <NeutralLanguage>en-AU</NeutralLanguage>
+    <PackageReleaseNotes>https://github.com/daviddotcs/safe-routing/releases</PackageReleaseNotes>
   </PropertyGroup>
   
   <ItemGroup>
