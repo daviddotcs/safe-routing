@@ -37,7 +37,7 @@ WriteLine("Done", color: ConsoleColor.DarkGray);
 Console.WriteLine();
 Console.WriteLine("Creating nuget package...");
 Console.WriteLine();
-if (RunCommand("dotnet", $"pack ./{GeneratorProject} -c Release -o ./artifacts -p:Version={version}") != 0)
+if (RunCommand("dotnet", $"pack ./{GeneratorProject} -c Release -o ./artifacts /p:ContinuousIntegrationBuild=true -p:Version={version}") != 0)
 {
   Environment.Exit(1);
 }
