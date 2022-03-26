@@ -54,6 +54,7 @@ internal static class TestHelper
       var emitResult = compilationWithGeneratedCode.Emit(stream);
 
       Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => x.ToString()))}");
+      Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
     }
 
     return Verifier.Verify(generatorDriver, verifySettings);
