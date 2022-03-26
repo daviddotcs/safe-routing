@@ -135,11 +135,84 @@ public sealed class ControllerActionParameterTests
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
+
+      public sealed class ProductsController : Controller
+      {
+        public IActionResult A(string a, string? b) => View(new { a, b });
+      }
+    ");
+  }
+
+  [Fact]
+  public Task NullableRefenceTypePermutationsAreHandledForIndexers()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
       using System.Collections.Generic;
 
       public sealed class ProductsController : Controller
       {
-        public IActionResult A(IEnumerable<string> x, IEnumerable<string?>? y) => View(new { x, y });
+        public IActionResult T01(IEnumerable<string> a, IEnumerable<string> b) => View(new { a, b });
+        public IActionResult T02(IEnumerable<string> a, IEnumerable<string>? b) => View(new { a, b });
+        public IActionResult T03(IEnumerable<string> a, IEnumerable<string?> b) => View(new { a, b });
+        public IActionResult T04(IEnumerable<string> a, IEnumerable<string?>? b) => View(new { a, b });
+        public IActionResult T05(IEnumerable<string> a,
+#nullable disable
+          IEnumerable<string> b
+#nullable restore
+          ) => View(new { a, b });
+        public IActionResult T06(IEnumerable<string>? a, IEnumerable<string> b) => View(new { a, b });
+        public IActionResult T07(IEnumerable<string>? a, IEnumerable<string>? b) => View(new { a, b });
+        public IActionResult T08(IEnumerable<string>? a, IEnumerable<string?> b) => View(new { a, b });
+        public IActionResult T09(IEnumerable<string>? a, IEnumerable<string?>? b) => View(new { a, b });
+        public IActionResult T10(IEnumerable<string>? a,
+#nullable disable
+          IEnumerable<string> b
+#nullable restore
+          ) => View(new { a, b });
+        public IActionResult T11(IEnumerable<string?> a, IEnumerable<string> b) => View(new { a, b });
+        public IActionResult T12(IEnumerable<string?> a, IEnumerable<string>? b) => View(new { a, b });
+        public IActionResult T13(IEnumerable<string?> a, IEnumerable<string?> b) => View(new { a, b });
+        public IActionResult T14(IEnumerable<string?> a, IEnumerable<string?>? b) => View(new { a, b });
+        public IActionResult T15(IEnumerable<string?> a,
+#nullable disable
+          IEnumerable<string> b
+#nullable restore
+          ) => View(new { a, b });
+        public IActionResult T16(IEnumerable<string?>? a, IEnumerable<string> b) => View(new { a, b });
+        public IActionResult T17(IEnumerable<string?>? a, IEnumerable<string>? b) => View(new { a, b });
+        public IActionResult T18(IEnumerable<string?>? a, IEnumerable<string?> b) => View(new { a, b });
+        public IActionResult T19(IEnumerable<string?>? a, IEnumerable<string?>? b) => View(new { a, b });
+        public IActionResult T20(IEnumerable<string?>? a,
+#nullable disable
+          IEnumerable<string> b
+#nullable restore
+          ) => View(new { a, b });
+        public IActionResult T21(
+#nullable disable
+          IEnumerable<string> a
+#nullable restore
+          , IEnumerable<string> b) => View(new { a, b });
+        public IActionResult T22(
+#nullable disable
+          IEnumerable<string> a
+#nullable restore
+          , IEnumerable<string>? b) => View(new { a, b });
+        public IActionResult T23(
+#nullable disable
+          IEnumerable<string> a
+#nullable restore
+          , IEnumerable<string?> b) => View(new { a, b });
+        public IActionResult T24(
+#nullable disable
+          IEnumerable<string> a
+#nullable restore
+          , IEnumerable<string?>? b) => View(new { a, b });
+        public IActionResult T25(
+#nullable disable
+          IEnumerable<string> a, IEnumerable<string> b
+#nullable restore
+          ) => View(new { a, b });
       }
     ");
   }

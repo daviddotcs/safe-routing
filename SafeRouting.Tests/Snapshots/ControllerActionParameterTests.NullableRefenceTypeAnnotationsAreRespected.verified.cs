@@ -14,14 +14,14 @@ namespace Routes
     public static class Products
     {
       /// <summary>
-      /// Generates route values for <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
+      /// Generates route values for <see cref="global::ProductsController.A(string, string?)"/>.
       /// </summary>
-      public static Support.Controllers_Products.ARouteValues A(global::System.Collections.Generic.IEnumerable<string> x, global::System.Collections.Generic.IEnumerable<string?>? y)
+      public static Support.Controllers_Products.ARouteValues A(string a, string? b)
       {
         var routeInfo = new Support.Controllers_Products.ARouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.X] = x;
-        routeInfo[routeInfo.Parameters.Y] = y;
+        routeInfo[routeInfo.Parameters.A] = a;
+        routeInfo[routeInfo.Parameters.B] = b;
         return routeInfo;
       }
     }
@@ -30,7 +30,7 @@ namespace Routes
   namespace Support.Controllers_Products
   {
     /// <summary>
-    /// Represents route values for routes to <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
+    /// Represents route values for routes to <see cref="global::ProductsController.A(string, string?)"/>.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
     public sealed class ARouteValues : global::SafeRouting.IControllerRouteValues
@@ -49,7 +49,7 @@ namespace Routes
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
       
       /// <summary>
-      /// Parameters of <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
+      /// Parameters of <see cref="global::ProductsController.A(string, string?)"/> which can be used in the route.
       /// </summary>
       public A.ParameterData Parameters { get; } = new A.ParameterData();
       /// <summary>
@@ -70,26 +70,28 @@ namespace Routes
       /// Sets a parameter value for the route.
       /// </summary>
       /// <param name="key">The key for the route.</param>
-      public global::System.Collections.Generic.IEnumerable<string?>? this[global::SafeRouting.RouteKey<A.ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> key] { set => RouteValues[key.Name] = value; }
+#nullable disable
+      public string this[global::SafeRouting.RouteKey<A.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
+#nullable restore
     }
     
     namespace A
     {
       /// <summary>
-      /// Represents route keys for parameters to <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
+      /// Represents route keys for parameters to <see cref="global::ProductsController.A(string, string?)"/>.
       /// </summary>
       [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
       public sealed class ParameterData
       {
         /// <summary>
-        /// Route key for the <c>x</c> parameter in <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
+        /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.A(string, string?)"/>.
         /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> X { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("x");
+        public global::SafeRouting.RouteKey<ParameterData, string> A { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("a");
         
         /// <summary>
-        /// Route key for the <c>y</c> parameter in <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
+        /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.A(string, string?)"/>.
         /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> Y { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("y");
+        public global::SafeRouting.RouteKey<ParameterData, string?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, string?>("b");
       }
     }
   }

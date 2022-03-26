@@ -401,43 +401,11 @@ namespace SafeRouting.Generator
         WriteRouteKeyIndexer(writer, scopeType: memberDataClassName, valueType: parameterType);
       }
     }
-
-    /// <summary>
-    /// Determines all unique types ignoring nullability.
-    /// 
-    /// Name      Sans-Name Annotated
-    /// ---------------------------------
-    /// Foo<X>    Foo<X>    N
-    /// Foo<X?>   Foo<X>    Y
-    /// ---------------------------------
-    /// Result:   Foo<X>    N
-    /// 
-    /// ---------------------------------
-    /// Foo<X?>   Foo<X>    Y
-    /// Foo<X>?   Foo<X>    Y
-    /// ---------------------------------
-    /// Result:   Foo<X>    N
-    /// 
-    /// ---------------------------------
-    /// Foo<X>    Foo<X>    Y
-    /// Foo<X?>   Foo<X>    Y
-    /// ---------------------------------
-    /// Result:   Foo<X?>   Y
-    /// 
-    /// ---------------------------------
-    /// Foo<X>    Foo<X>    Y
-    /// Foo<X?>   Foo<X>    Y
-    /// Foo<X>?   Foo<X>    Y
-    /// ---------------------------------
-    /// Result:   Foo<X?>   N
-    /// ---------------------------------
-    /// </summary>
     private static List<TypeInfo> ConsolidateTypes(IEnumerable<TypeInfo> types)
     {
-      // Group types by name sans annotations
-      // If any are in an annotation disabled context, take that
-      // Else if all annotated names are the same (1) or the same as the sans annotation name (2), take (1)
-      // Else take the sans annotation name and treat as non-annotated
+      // 1. Group all types by their names without nullable reference type annotations.
+      // 2. If any within the group are from an annotation disabled context, take that and ignore the rest.
+      // 3. If all remaining types are identical, return that, otherwise fall back to a nullable disabled context.
 
       var results = new List<TypeInfo>();
 
@@ -456,16 +424,12 @@ namespace SafeRouting.Generator
           if (resultType is null)
           {
             resultType = type;
+            continue;
           }
-          else if (string.Equals(resultType.FullyQualifiedName, resultType.FullyQualifiedNameSansAnnotations, StringComparison.Ordinal))
+          
+          if (!string.Equals(resultType.FullyQualifiedName, type.FullyQualifiedName, StringComparison.Ordinal))
           {
-            resultType = type;
-          }
-          else if (!string.Equals(resultType.FullyQualifiedName, type.FullyQualifiedName, StringComparison.Ordinal)
-            && !string.Equals(type.FullyQualifiedName, type.FullyQualifiedNameSansAnnotations, StringComparison.Ordinal))
-          {
-            resultType = new TypeInfo(resultType.FullyQualifiedNameSansAnnotations, resultType.FullyQualifiedNameSansAnnotations, annotationsEnabled: false);
-            break;
+            resultType = new TypeInfo(type.FullyQualifiedNameSansAnnotations, type.FullyQualifiedNameSansAnnotations, annotationsEnabled: false);
           }
         }
 
