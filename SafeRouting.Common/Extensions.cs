@@ -23,7 +23,7 @@ public static class RouteValueExtensions
   /// </summary>
   /// <param name="route">The <see cref="IControllerRouteValues"/> to redirect to.</param>
   /// <param name="page">The <see cref="PageModel"/>.</param>
-  /// <returns>The <see cref="RedirectToPageResult"/>.</returns>
+  /// <returns>The <see cref="RedirectToActionResult"/>.</returns>
   public static RedirectToActionResult Redirect(this IControllerRouteValues route, PageModel page)
     => page.RedirectToAction(route.ActionName, route.ControllerName, route.RouteValues);
 
@@ -41,7 +41,7 @@ public static class RouteValueExtensions
   /// </summary>
   /// <param name="route">The <see cref="IControllerRouteValues"/> to redirect to.</param>
   /// <param name="controller">The <see cref="ControllerBase"/>.</param>
-  /// <returns>The <see cref="RedirectToPageResult"/>.</returns>
+  /// <returns>The <see cref="RedirectToActionResult"/>.</returns>
   public static RedirectToActionResult Redirect(this IControllerRouteValues route, ControllerBase controller)
     => controller.RedirectToAction(route.ActionName, route.ControllerName, route.RouteValues);
 
