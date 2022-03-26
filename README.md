@@ -1,6 +1,7 @@
 ﻿# Safe Routing Source Generator for ASP.NET Core
 
 [![SafeRouting NuGet Package](https://img.shields.io/nuget/v/SafeRouting.svg?style=for-the-badge&logo=nuget)](https://www.nuget.org/packages/SafeRouting)
+[![GitHub Release](https://img.shields.io/github/v/release/daviddotcs/safe-routing?label=GitHub&logo=github&style=for-the-badge)](https://github.com/daviddotcs/safe-routing/releases/latest)
 
 Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview) which analyses a project's razor pages and MVC controllers, producing strongly-typed representations of those routes as you type. This enables you to link between pages with compile time safety instead of using the standard _"stringly typed"_ approach.
 
