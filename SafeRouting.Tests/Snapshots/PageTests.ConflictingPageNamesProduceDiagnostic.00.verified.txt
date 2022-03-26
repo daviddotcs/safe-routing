@@ -5,7 +5,7 @@
       Title: Conflicting PageModel Class,
       Severity: Error,
       WarningLevel: 0,
-      Location: C:\Project\Pages\Products\Edit.cshtml.cs: (16,8)-(21,9),
+      Location: C:\Project\Pages\Products\Edit.cshtml.cs: (15,8)-(20,9),
       Description: ,
       HelpLink: ,
       MessageFormat: The page class '{0}' conflicts with another page class with the same resulting name.,

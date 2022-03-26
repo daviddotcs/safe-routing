@@ -17,12 +17,11 @@ public sealed class CommonTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using System.Collections.Generic;
 
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public IActionResult Index(int id)
         {
@@ -33,7 +32,7 @@ public sealed class CommonTests
       [BindProperties]
       public sealed class EditModel : PageModel
       {
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         public void OnGet(string name)
         {
@@ -50,12 +49,11 @@ public sealed class CommonTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using System.Collections.Generic;
 
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public IActionResult Index(int id)
         {
@@ -66,7 +64,7 @@ public sealed class CommonTests
       [BindProperties]
       public sealed class EditModel : PageModel
       {
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         public void OnGet(string name)
         {
@@ -83,12 +81,11 @@ public sealed class CommonTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using System.Collections.Generic;
 
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public IActionResult Index(int id)
         {
@@ -99,7 +96,7 @@ public sealed class CommonTests
       [BindProperties]
       public sealed class EditModel : PageModel
       {
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         public void OnGet(string name)
         {
@@ -116,12 +113,11 @@ public sealed class CommonTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using System.Collections.Generic;
 
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public IActionResult Index(int id)
         {
@@ -132,7 +128,7 @@ public sealed class CommonTests
       [BindProperties]
       public sealed class EditModel : PageModel
       {
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         public void OnGet(string name)
         {
@@ -154,8 +150,8 @@ public sealed class CommonTests
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        public string Name { get; set; }
-        public Dictionary<string, object> Foo { get; set; }
+        public string? Name { get; set; }
+        public Dictionary<string, object>? Foo { get; set; }
 
         public IActionResult Index(int id, Dictionary<string, object> bar)
         {
@@ -166,8 +162,8 @@ public sealed class CommonTests
       [BindProperties]
       public sealed class EditModel : PageModel
       {
-        public string Title { get; set; }
-        public Dictionary<string, object> Foo { get; set; }
+        public string? Title { get; set; }
+        public Dictionary<string, object>? Foo { get; set; }
 
         public void OnGet(string name, Dictionary<string, object> bar)
         {

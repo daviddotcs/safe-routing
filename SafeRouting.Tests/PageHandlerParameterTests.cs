@@ -7,7 +7,6 @@ public sealed class PageHandlerParameterTests
   public Task CancellationTokenParametersAreExcluded()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using System.Threading;
 
@@ -24,7 +23,6 @@ public sealed class PageHandlerParameterTests
   public Task ExcludedParametersAreExcluded()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -41,7 +39,6 @@ public sealed class PageHandlerParameterTests
   public Task InvalidParameterNamesProduceDiagnostic()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -60,7 +57,6 @@ public sealed class PageHandlerParameterTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using SafeRouting;
 
       public sealed class EditModel : PageModel
       {
@@ -75,7 +71,6 @@ public sealed class PageHandlerParameterTests
   public Task RegularParametersAreIncluded()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -91,7 +86,6 @@ public sealed class PageHandlerParameterTests
   public Task RouteGeneratorNameAttributesRenameParameters()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -110,7 +104,6 @@ public sealed class PageHandlerParameterTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using SafeRouting;
 
       public sealed class EditModel : PageModel
       {

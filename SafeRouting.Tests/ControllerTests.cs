@@ -58,7 +58,6 @@ public sealed class ControllerTests
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
-      using SafeRouting;
 
       namespace a
       {
@@ -84,7 +83,6 @@ public sealed class ControllerTests
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
-      using SafeRouting;
 
       namespace a
       {
@@ -184,7 +182,7 @@ public sealed class ControllerTests
       public abstract class ProductsControllerBase : Controller
       {
         [BindProperty]
-        public string MyProperty { get; set; }
+        public string? MyProperty { get; set; }
 
         public IActionResult Index() => View();
       }

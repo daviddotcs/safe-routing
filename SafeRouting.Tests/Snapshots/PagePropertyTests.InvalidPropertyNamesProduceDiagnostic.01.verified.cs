@@ -36,7 +36,7 @@ namespace Routes
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.FromForm"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> FromForm { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("FromForm");
+      public global::SafeRouting.RouteKey<PropertyData, string?> FromForm { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromForm");
     }
     
     /// <summary>
@@ -80,7 +80,7 @@ namespace Routes
       /// Sets a property value for the route.
       /// </summary>
       /// <param name="key">The key for the route.</param>
-      public string this[global::SafeRouting.RouteKey<PropertyData, string> key] { set => RouteValues[key.Name] = value; }
+      public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
     }
   }
 }

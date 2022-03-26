@@ -12,7 +12,7 @@ public sealed class ControllerPropertyTests
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        public string SomeProperty { get; set; }
+        public string? SomeProperty { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -54,19 +54,19 @@ public sealed class ControllerPropertyTests
       public sealed class ProductsController : Controller
       {
         [BindProperty(Name = ""RenamedBindProperty"")]
-        public string BindProperty { get; set; }
+        public string? BindProperty { get; set; }
 
         [FromForm(Name = ""RenamedFromForm"")]
-        public string FromForm { get; set; }
+        public string? FromForm { get; set; }
 
         [FromHeader(Name = ""RenamedFromHeader"")]
-        public string FromHeader { get; set; }
+        public string? FromHeader { get; set; }
 
         [FromQuery(Name = ""RenamedFromQuery"")]
-        public string FromQuery { get; set; }
+        public string? FromQuery { get; set; }
 
         [FromRoute(Name = ""RenamedFromRoute"")]
-        public string FromRoute { get; set; }
+        public string? FromRoute { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -84,7 +84,7 @@ public sealed class ControllerPropertyTests
       public sealed class ProductsController : Controller
       {
         [ExcludeFromRouteGenerator]
-        public string MyProperty { get; set; }
+        public string? MyProperty { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -102,7 +102,7 @@ public sealed class ControllerPropertyTests
       {
         [RouteGeneratorName(""%&*$#(."")]
         [FromForm]
-        public string FromForm { get; set; }
+        public string? FromForm { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -118,7 +118,7 @@ public sealed class ControllerPropertyTests
       public sealed class ProductsController : Controller
       {
         [BindProperty]
-        private string BindProperty { get; set; }
+        private string? BindProperty { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -134,22 +134,22 @@ public sealed class ControllerPropertyTests
       public sealed class ProductsController : Controller
       {
         [BindProperty]
-        public string BindProperty { get; set; }
+        public string? BindProperty { get; set; }
 
         [FromBody]
-        public string FromBody { get; set; }
+        public string? FromBody { get; set; }
 
         [FromForm]
-        public string FromForm { get; set; }
+        public string? FromForm { get; set; }
 
         [FromHeader]
-        public string FromHeader { get; set; }
+        public string? FromHeader { get; set; }
 
         [FromQuery]
-        public string FromQuery { get; set; }
+        public string? FromQuery { get; set; }
 
         [FromRoute]
-        public string FromRoute { get; set; }
+        public string? FromRoute { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -189,7 +189,7 @@ public sealed class ControllerPropertyTests
       public sealed class ProductsController : Controller
       {
         [RouteGeneratorName(""Renamed"")]
-        public string MyProperty { get; set; }
+        public string? MyProperty { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -205,7 +205,7 @@ public sealed class ControllerPropertyTests
       public sealed class ProductsController : Controller
       {
         [BindProperty]
-        public static string BindProperty { get; set; }
+        public static string? BindProperty { get; set; }
 
         public IActionResult Index() => View();
       }
@@ -220,7 +220,7 @@ public sealed class ControllerPropertyTests
 
       public sealed class ProductsController : Controller
       {
-        public string SomeProperty { get; set; }
+        public string? SomeProperty { get; set; }
 
         public IActionResult Index() => View();
       }

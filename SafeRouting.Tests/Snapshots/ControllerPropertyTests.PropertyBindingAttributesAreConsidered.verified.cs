@@ -36,32 +36,32 @@ namespace Routes
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.BindProperty"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> BindProperty { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("BindProperty");
+      public global::SafeRouting.RouteKey<PropertyData, string?> BindProperty { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("BindProperty");
       
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromBody"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> FromBody { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("FromBody");
+      public global::SafeRouting.RouteKey<PropertyData, string?> FromBody { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromBody");
       
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromForm"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> FromForm { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("FromForm");
+      public global::SafeRouting.RouteKey<PropertyData, string?> FromForm { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromForm");
       
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromHeader"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> FromHeader { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("FromHeader");
+      public global::SafeRouting.RouteKey<PropertyData, string?> FromHeader { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromHeader");
       
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromQuery"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> FromQuery { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("FromQuery");
+      public global::SafeRouting.RouteKey<PropertyData, string?> FromQuery { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromQuery");
       
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromRoute"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> FromRoute { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("FromRoute");
+      public global::SafeRouting.RouteKey<PropertyData, string?> FromRoute { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromRoute");
     }
     
     /// <summary>
@@ -105,7 +105,7 @@ namespace Routes
       /// Sets a property value for the route.
       /// </summary>
       /// <param name="key">The key for the route.</param>
-      public string this[global::SafeRouting.RouteKey<PropertyData, string> key] { set => RouteValues[key.Name] = value; }
+      public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
     }
   }
 }

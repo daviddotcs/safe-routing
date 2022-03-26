@@ -38,12 +38,12 @@ namespace Routes
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.Name"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> Name { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("Name");
+      public global::SafeRouting.RouteKey<PropertyData, string?> Name { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("Name");
       
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.Foo"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>> Foo { get; } = new global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>>("Foo");
+      public global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>?> Foo { get; } = new global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>?>("Foo");
     }
     
     /// <summary>
@@ -87,12 +87,12 @@ namespace Routes
       /// Sets a property value for the route.
       /// </summary>
       /// <param name="key">The key for the route.</param>
-      public global::System.Collections.Generic.Dictionary<string, object> this[global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>> key] { set => RouteValues[key.Name] = value; }
+      public global::System.Collections.Generic.Dictionary<string, object>? this[global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>?> key] { set => RouteValues[key.Name] = value; }
       /// <summary>
       /// Sets a property value for the route.
       /// </summary>
       /// <param name="key">The key for the route.</param>
-      public string this[global::SafeRouting.RouteKey<PropertyData, string> key] { set => RouteValues[key.Name] = value; }
+      public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.Index(int, global::System.Collections.Generic.Dictionary{string, object})"/> which can be used in the route.

@@ -23,7 +23,6 @@ public sealed class PageTests
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc.RazorPages;
-      using SafeRouting;
 
       namespace A
       {
@@ -63,7 +62,6 @@ public sealed class PageTests
   public Task ExcludedPagesAreExcluded()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -105,7 +103,7 @@ public sealed class PageTests
       public abstract class EditModelBase : PageModel
       {
         [BindProperty]
-        public string MyProperty { get; set; }
+        public string? MyProperty { get; set; }
 
         public void OnGet()
         {
@@ -251,7 +249,6 @@ public sealed class PageTests
   public Task RouteGeneratorNameAttributesRenameClasses()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -269,8 +266,6 @@ public sealed class PageTests
   public Task StaticPagesAreExcluded()
   {
     return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc.RazorPages;
-
       public static class EditModel
       {
         public static void OnGet()

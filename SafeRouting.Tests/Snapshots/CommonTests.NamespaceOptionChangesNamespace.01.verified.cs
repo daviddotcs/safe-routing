@@ -37,7 +37,7 @@ namespace Test.Namespace
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.Title"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string> Title { get; } = new global::SafeRouting.RouteKey<PropertyData, string>("Title");
+      public global::SafeRouting.RouteKey<PropertyData, string?> Title { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("Title");
     }
     
     /// <summary>
@@ -81,7 +81,7 @@ namespace Test.Namespace
       /// Sets a property value for the route.
       /// </summary>
       /// <param name="key">The key for the route.</param>
-      public string this[global::SafeRouting.RouteKey<PropertyData, string> key] { set => RouteValues[key.Name] = value; }
+      public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
       
       /// <summary>
       /// Parameters of <see cref="global::EditModel.OnGet(string)"/> which can be used in the route.

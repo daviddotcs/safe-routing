@@ -36,7 +36,6 @@ public sealed class ControllerActionParameterTests
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
       using System;
-      using System.Collections.Generic;
 
       public sealed class ProductsController : Controller
       {
