@@ -58,6 +58,7 @@ namespace SafeRouting.Generator
       }
 
       var isController = false;
+      var hasControllerAttribute = false;
       var isExcludedController = false;
       var isPage = false;
       var isAncestor = false;
@@ -66,6 +67,7 @@ namespace SafeRouting.Generator
       {
         switch (typeSymbol.ToDisplayString())
         {
+          case AspNetClassNames.Controller:
           case AspNetClassNames.ControllerBase:
             isController = true;
             break;
@@ -75,12 +77,17 @@ namespace SafeRouting.Generator
             break;
         }
 
+        if (isController || isPage)
+        {
+          break;
+        }  
+
         foreach (var attribute in typeSymbol.GetAttributes())
         {
           switch (attribute.AttributeClass?.ToDisplayString())
           {
             case AspNetClassNames.ControllerAttribute:
-              isController = true;
+              hasControllerAttribute = true;
               break;
 
             case AspNetClassNames.NonControllerAttribute:
@@ -99,6 +106,7 @@ namespace SafeRouting.Generator
         isAncestor = true;
       }
 
+      isController |= hasControllerAttribute;
       isController &= !isExcludedController;
 
       if (!isController && !isPage)
