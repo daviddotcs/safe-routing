@@ -53,7 +53,7 @@ internal static class TestHelper
       using var stream = new MemoryStream();
       var emitResult = compilationWithGeneratedCode.Emit(stream);
 
-      Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => x.ToString()))}");
+      Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x)))}");
       Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
     }
 
