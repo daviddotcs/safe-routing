@@ -104,7 +104,7 @@ public sealed class CommonTests
       }
     ",
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
-    options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "1nvalid Namespace,[]!" });
+    options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "x.1nvalid Namespace,[]!" });
   }
 
   [Fact]
@@ -137,6 +137,38 @@ public sealed class CommonTests
     ",
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
     options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "Test.Namespace" });
+  }
+
+  [Fact]
+  public Task PublicAccessModifierOptionProducesPublicClasses()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      [BindProperties]
+      public sealed class ProductsController : Controller
+      {
+        public string? Name { get; set; }
+
+        public IActionResult Index(int id)
+        {
+          return View();
+        }
+      }
+
+      [BindProperties]
+      public sealed class EditModel : PageModel
+      {
+        public string? Title { get; set; }
+
+        public void OnGet(string name)
+        {
+        }
+      }
+    ",
+    path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
+    options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "public" });
   }
 
   [Fact]

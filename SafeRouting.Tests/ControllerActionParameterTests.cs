@@ -45,11 +45,12 @@ public sealed class ControllerActionParameterTests
           string c = ""he\""llo\\"",
           DayOfWeek d = DayOfWeek.Wednesday,
           bool e = false,
-          string f = nameof(ProductsController),
-          char g = '?',
-          char h = (char)42,
-          char i = '\'',
-          char j = '\\') => View();
+          bool f = true,
+          string g = nameof(ProductsController),
+          char h = '?',
+          char i = (char)42,
+          char j = '\'',
+          char k = '\\') => View();
       }
     ");
   }
@@ -240,6 +241,19 @@ public sealed class ControllerActionParameterTests
       public sealed class ProductsController : Controller
       {
         public IActionResult Index([FromServices] string fromServices) => View();
+      }
+    ");
+  }
+
+  [Fact]
+  public Task UrlBoundParametersAreIncludedInSignature()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class ProductsController : Controller
+      {
+        public IActionResult Index([FromQuery] string fromQuery, [FromRoute] string fromRoute) => View();
       }
     ");
   }

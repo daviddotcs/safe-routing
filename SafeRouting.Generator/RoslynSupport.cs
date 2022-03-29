@@ -42,7 +42,7 @@ namespace SafeRouting.Generator
       return new MvcBindingSourceInfo(sourceType, name);
     }
 
-    public static bool ParseRazorPageName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
+    public static bool ParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
     {
       var methodNameMatch = RazorPageMethodNameRegex.Match(methodName);
       if (!methodNameMatch.Success)
@@ -65,10 +65,9 @@ namespace SafeRouting.Generator
 
     public static IEnumerable<INamedTypeSymbol> EnumerateSelfAndBaseTypes(this INamedTypeSymbol symbol)
     {
-      while (symbol != null)
+      for (; symbol != null; symbol = symbol.BaseType!)
       {
         yield return symbol;
-        symbol = symbol.BaseType!;
       }
     }
 

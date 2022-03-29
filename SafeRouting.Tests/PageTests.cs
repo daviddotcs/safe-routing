@@ -47,6 +47,21 @@ public sealed class PageTests
   }
 
   [Fact]
+  public Task DeeplyNestedPagesHaveFolderNamesSeparatedWithUnderscores()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class EditModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Products\Foo\Edit.cshtml.cs");
+  }
+
+  [Fact]
   public Task EmptyPagesAreExcluded()
   {
     return TestHelper.Verify(@"
@@ -201,6 +216,66 @@ public sealed class PageTests
   }
 
   [Fact]
+  public Task PagesInNonCshtmlDotCsFilesAreExcluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class IndexModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Index.cs");
+  }
+
+  [Fact]
+  public Task PagesInPagesDirectoryHaveNothingAddedToClassName()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class IndexModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Index.cshtml.cs");
+  }
+
+  [Fact]
+  public Task PagesInPagesDirectoryOnRootAreIncluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class IndexModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Pages\Index.cshtml.cs");
+  }
+
+  [Fact]
+  public Task PagesOutsideOfAPagesDirectoryAreExcluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class IndexModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Index.cshtml.cs");
+  }
+
+  [Fact]
   public Task PagesWithAGetHandlerAndFilePathAreIncluded()
   {
     return TestHelper.Verify(@"
@@ -243,6 +318,21 @@ public sealed class PageTests
         }
       }
     ");
+  }
+
+  [Fact]
+  public Task PagesWithoutHandlerMethodsAreExcluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class IndexModel : PageModel
+      {
+        public void DoNothing()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Index.cshtml.cs");
   }
 
   [Fact]

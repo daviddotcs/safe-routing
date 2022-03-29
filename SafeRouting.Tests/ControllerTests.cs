@@ -121,12 +121,38 @@ public sealed class ControllerTests
   }
 
   [Fact]
+  public Task ControllersNamedControllerAreExcluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class Controller : Microsoft.AspNetCore.Mvc.Controller
+      {
+        public IActionResult Index() => View();
+      }
+    ");
+  }
+
+  [Fact]
   public Task ControllersWithAnActionMethodAreIncluded()
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
+      {
+        public IActionResult Index() => View();
+      }
+    ");
+  }
+
+  [Fact]
+  public Task ControllersWithoutControllerSuffixAreNamedAsIs()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class Products : Controller
       {
         public IActionResult Index() => View();
       }
@@ -141,6 +167,25 @@ public sealed class ControllerTests
 
       public sealed class ProductsController : Controller
       {
+      }
+    ");
+  }
+
+  [Fact]
+  public Task ExcludedAncestorControllersArentConsidered()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+      using SafeRouting;
+
+      [ExcludeFromRouteGenerator]
+      public abstract class BaseController : Controller
+      {
+      }
+
+      public sealed class ProductsController : BaseController
+      {
+        public IActionResult Index() => View();
       }
     ");
   }
@@ -202,6 +247,24 @@ public sealed class ControllerTests
 
       [RouteGeneratorName(""%&*$#(."")]
       public sealed class ProductsController : Controller
+      {
+        public IActionResult Index() => View();
+      }
+    ");
+  }
+
+  [Fact]
+  public Task MultipleControllersAreHandled()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class AController : Controller
+      {
+        public IActionResult Index() => View();
+      }
+
+      public sealed class BController : Controller
       {
         public IActionResult Index() => View();
       }

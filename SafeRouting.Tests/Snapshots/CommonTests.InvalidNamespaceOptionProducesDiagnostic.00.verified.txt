@@ -9,7 +9,7 @@
       Description: ,
       HelpLink: ,
       MessageFormat: Value for the option '{0}' is invalid. {1},
-      Message: Value for the option 'safe_routing.generated_namespace' is invalid. '1nvalid Namespace,[]!' is not a valid namespace identifier.,
+      Message: Value for the option 'safe_routing.generated_namespace' is invalid. 'x.1nvalid Namespace,[]!' is not a valid namespace identifier.,
       Category: Foundation,
       CustomTags: []
     }

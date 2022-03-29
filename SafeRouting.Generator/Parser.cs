@@ -172,15 +172,12 @@ namespace SafeRouting.Generator
         return null;
       }
 
-      var pageName = fileInfo.Name.Substring(0, fileInfo.Name.Length - ".cshtml.cs".Length);
       var directory = fileInfo.Directory;
       var pathSegments = new List<string>();
 
-      while (directory != null && !string.Equals(directory.Name, "Pages", StringComparison.InvariantCultureIgnoreCase))
+      for (; directory != null && !string.Equals(directory.Name, "Pages", StringComparison.InvariantCultureIgnoreCase); directory = directory.Parent)
       {
         pathSegments.Insert(0, directory.Name);
-
-        directory = directory.Parent;
       }
 
       if (directory is null)
@@ -195,6 +192,7 @@ namespace SafeRouting.Generator
         areaName = directory.Parent.Name;
       }
 
+      var pageName = fileInfo.Name.Substring(0, fileInfo.Name.Length - ".cshtml.cs".Length);
       pathSegments.Add(pageName);
       var pagePath = "/" + string.Join("/", pathSegments);
 
@@ -726,7 +724,7 @@ namespace SafeRouting.Generator
     }
     private static PageMethodInfo? GetPageMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
-      if (!RoslynSupport.ParseRazorPageName(methodSymbol.Name, out var name, out var handlerName))
+      if (!RoslynSupport.ParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
       {
         return null;
       }
