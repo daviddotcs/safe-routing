@@ -7,7 +7,7 @@ namespace SafeRouting.Tests;
 
 internal static class TestHelper
 {
-  public static Task Verify(string source, string path = "", LanguageVersion languageVersion = LanguageVersion.Latest, NullableContextOptions nullableContextOptions = NullableContextOptions.Enable, TestConfigOptions? options = null, object?[]? parameters = null, bool testCompilation = true)
+  public static Task Verify(string source, string path = "", LanguageVersion languageVersion = LanguageVersion.Latest, NullableContextOptions nullableContextOptions = NullableContextOptions.Enable, TestConfigOptions? options = null, object?[]? parameters = null, bool testCompilation = true, AdditionalSource[]? additionalSources = null)
   {
     var parseOptions = CSharpParseOptions.Default.WithLanguageVersion(languageVersion);
 
@@ -16,6 +16,19 @@ internal static class TestHelper
       path: path,
       options: parseOptions);
 
+    var syntaxTrees = new List<SyntaxTree> { syntaxTree };
+
+    if (additionalSources is not null)
+    {
+      foreach (var additionalSource in additionalSources)
+      {
+        syntaxTrees.Add(CSharpSyntaxTree.ParseText(
+          additionalSource.Source,
+          path: additionalSource.Path,
+          options: additionalSource.ParseOptions ?? parseOptions));
+      }
+    }
+
     // There's probably a less heavy-handed way of providing required ASP.NET Core assemblies
     var references = AppDomain.CurrentDomain.GetAssemblies()
       .Where(a => !a.IsDynamic)
@@ -23,7 +36,7 @@ internal static class TestHelper
 
     var compilation = CSharpCompilation.Create(
       assemblyName: "Tests",
-      syntaxTrees: new[] { syntaxTree },
+      syntaxTrees: syntaxTrees,
       references: references,
       options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: nullableContextOptions));
 
@@ -60,6 +73,8 @@ internal static class TestHelper
     return Verifier.Verify(generatorDriver, verifySettings);
   }
 }
+
+internal sealed record AdditionalSource(string Source, string Path = "", CSharpParseOptions? ParseOptions = null);
 
 internal sealed class FixedConfigOptionsProvider : AnalyzerConfigOptionsProvider
 {

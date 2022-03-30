@@ -166,6 +166,35 @@ public sealed class PageTests
     ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
+  [Fact]
+  public Task MultiplePagesInSeparateFilesAreIncluded()
+  {
+    var additionalSources = new[]
+    {
+      new AdditionalSource(@"
+        using Microsoft.AspNetCore.Mvc.RazorPages;
+
+        public sealed class ViewModel : PageModel
+        {
+          public void OnGet()
+          {
+          }
+        }
+      ", Path: @"C:\Project\Pages\Products\View.cshtml.cs")
+    };
+
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class EditModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs", additionalSources: additionalSources);
+  }
+
   /// <remarks>
   /// Nested page models are supported by ASP.NET Core, so this should be considered.
   /// </remarks>

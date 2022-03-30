@@ -72,19 +72,13 @@ namespace SafeRouting.Generator
 
       foreach (var controller in controllers)
       {
-        if (controllerNames.Add($"{controller.Area} {controller.Name}"))
-        {
-          emitControllers.Add(controller);
-        }
-        else
+        if (!controllerNames.Add($"{controller.Area} {controller.Name}"))
         {
           context.ReportDiagnostic(Parser.CreateConflictingControllerDiagnostic(controller.Name, controller.ClassDeclarationSyntax.GetLocation()));
+          continue;
         }
-      }
-
-      if (emitControllers.Count == 0)
-      {
-        return;
+        
+        emitControllers.Add(controller);
       }
 
       var source = Emitter.Emit(emitControllers, options, context.CancellationToken);

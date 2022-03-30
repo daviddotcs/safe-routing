@@ -147,6 +147,25 @@ public sealed class ControllerTests
   }
 
   [Fact]
+  public Task ControllersWithExcludedAncestorControllersAreIncluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+      using SafeRouting;
+
+      [ExcludeFromRouteGenerator]
+      public abstract class BaseController : Controller
+      {
+      }
+
+      public sealed class ProductsController : BaseController
+      {
+        public IActionResult Index() => View();
+      }
+    ");
+  }
+
+  [Fact]
   public Task ControllersWithoutControllerSuffixAreNamedAsIs()
   {
     return TestHelper.Verify(@"
@@ -167,25 +186,6 @@ public sealed class ControllerTests
 
       public sealed class ProductsController : Controller
       {
-      }
-    ");
-  }
-
-  [Fact]
-  public Task ExcludedAncestorControllersArentConsidered()
-  {
-    return TestHelper.Verify(@"
-      using Microsoft.AspNetCore.Mvc;
-      using SafeRouting;
-
-      [ExcludeFromRouteGenerator]
-      public abstract class BaseController : Controller
-      {
-      }
-
-      public sealed class ProductsController : BaseController
-      {
-        public IActionResult Index() => View();
       }
     ");
   }
@@ -254,7 +254,7 @@ public sealed class ControllerTests
   }
 
   [Fact]
-  public Task MultipleControllersAreHandled()
+  public Task MultipleControllersWithDifferentNamesAreIncluded()
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
