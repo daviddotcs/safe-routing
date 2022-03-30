@@ -16,7 +16,7 @@
     <RepositoryUrl>https://github.com/daviddotcs/safe-routing</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageProjectUrl>https://github.com/daviddotcs/safe-routing</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/daviddotcs/safe-routing/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>See https://github.com/daviddotcs/safe-routing/releases for release notes.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

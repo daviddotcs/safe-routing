@@ -1,24 +1,9 @@
-[//]: # (Generated file, do not edit manually. Source: README.source.md)
-# Safe Routing Source Generator for ASP.NET Core
+﻿# Safe Routing Source Generator for ASP.NET Core
 
 [![SafeRouting NuGet Package](https://img.shields.io/nuget/v/SafeRouting.svg?style=for-the-badge&logo=nuget)](https://www.nuget.org/packages/SafeRouting)
 [![GitHub Release](https://img.shields.io/github/v/release/daviddotcs/safe-routing?label=GitHub&logo=github&style=for-the-badge)](https://github.com/daviddotcs/safe-routing/releases/latest)
 
 Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview) which analyses a project's razor pages and MVC controllers, producing strongly-typed representations of those routes as you type. This enables you to link between pages with compile time safety instead of using the standard _"stringly typed"_ approach.
-
-- [Usage Example](#usage-example)
-- [Installation](#installation)
-    - [Tag Helpers](#tag-helpers)
-    - [Extension Methods](#extension-methods)
-- [Getting Started](#getting-started)
-    - [Binding Source Attributes](#binding-source-attributes)
-    - [Helper Attributes](#helper-attributes)
-    - [Areas](#areas)
-    - [Using Razor Class Libraries](#using-razor-class-libraries)
-- [Configuration](#configuration)
-    - [Available Configuration Options](#available-configuration-options)
-- [Limitations](#limitations)
-- [Building the NuGet Package](#building-the-nuget-package)
 
 ## Usage Example
 

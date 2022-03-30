@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -18,7 +18,7 @@
     <None Include="$(OutputPath)\SafeRouting.Common.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\SafeRouting.Common.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
     <None Include="$(OutputPath)\SafeRouting.Common.xml" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\README.source.md" Link="README.md" Pack="true" PackagePath="\README.md" />
     <None Include="..\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
