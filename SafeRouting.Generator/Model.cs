@@ -5,16 +5,16 @@ namespace SafeRouting.Generator
 {
   internal sealed class CandidateClassInfo
   {
-    public CandidateClassInfo(ClassDeclarationSyntax classDeclarationSyntax, INamedTypeSymbol classSymbol, SemanticModel semanticModel, bool isController, bool isPage)
+    public CandidateClassInfo(TypeDeclarationSyntax typeDeclarationSyntax, INamedTypeSymbol classSymbol, SemanticModel semanticModel, bool isController, bool isPage)
     {
-      ClassDeclarationSyntax = classDeclarationSyntax;
+      TypeDeclarationSyntax = typeDeclarationSyntax;
       ClassSymbol = classSymbol;
       SemanticModel = semanticModel;
       IsController = isController;
       IsPage = isPage;
     }
 
-    public ClassDeclarationSyntax ClassDeclarationSyntax { get; }
+    public TypeDeclarationSyntax TypeDeclarationSyntax { get; }
     public INamedTypeSymbol ClassSymbol { get; }
     public SemanticModel SemanticModel { get; }
     public bool IsController { get; }
@@ -35,13 +35,13 @@ namespace SafeRouting.Generator
 
   internal sealed class ControllerInfo : IMvcObjectInfo
   {
-    public ControllerInfo(string routeValue, string name, string? area, string fullyQualifiedTypeName, ClassDeclarationSyntax classDeclarationSyntax, IReadOnlyCollection<MvcPropertyInfo> properties, IReadOnlyCollection<ControllerMethodInfo> methods)
+    public ControllerInfo(string routeValue, string name, string? area, string fullyQualifiedTypeName, TypeDeclarationSyntax typeDeclarationSyntax, IReadOnlyCollection<MvcPropertyInfo> properties, IReadOnlyCollection<ControllerMethodInfo> methods)
     {
       RouteValue = routeValue;
       Name = name;
       Area = area;
       FullyQualifiedTypeName = fullyQualifiedTypeName;
-      ClassDeclarationSyntax = classDeclarationSyntax;
+      TypeDeclarationSyntax = typeDeclarationSyntax;
       Properties = properties;
       Methods = methods;
     }
@@ -50,7 +50,7 @@ namespace SafeRouting.Generator
     public string Name { get; }
     public string? Area { get; }
     public string FullyQualifiedTypeName { get; }
-    public ClassDeclarationSyntax ClassDeclarationSyntax { get; }
+    public TypeDeclarationSyntax TypeDeclarationSyntax { get; }
     public IReadOnlyCollection<MvcPropertyInfo> Properties { get; }
     public IReadOnlyCollection<ControllerMethodInfo> Methods { get; }
 
@@ -62,14 +62,14 @@ namespace SafeRouting.Generator
 
   internal sealed class PageInfo : IMvcObjectInfo
   {
-    public PageInfo(string routeValue, string name, string? area, string pageNamespace, string fullyQualifiedTypeName, ClassDeclarationSyntax classDeclarationSyntax, IReadOnlyCollection<MvcPropertyInfo> properties, IReadOnlyCollection<PageMethodInfo> methods)
+    public PageInfo(string routeValue, string name, string? area, string pageNamespace, string fullyQualifiedTypeName, TypeDeclarationSyntax typeDeclarationSyntax, IReadOnlyCollection<MvcPropertyInfo> properties, IReadOnlyCollection<PageMethodInfo> methods)
     {
       RouteValue = routeValue;
       Name = name;
       Area = area;
       PageNamespace = pageNamespace;
       FullyQualifiedTypeName = fullyQualifiedTypeName;
-      ClassDeclarationSyntax = classDeclarationSyntax;
+      TypeDeclarationSyntax = typeDeclarationSyntax;
       Properties = properties;
       Methods = methods;
     }
@@ -79,7 +79,7 @@ namespace SafeRouting.Generator
     public string? Area { get; }
     public string PageNamespace { get; }
     public string FullyQualifiedTypeName { get; }
-    public ClassDeclarationSyntax ClassDeclarationSyntax { get; }
+    public TypeDeclarationSyntax TypeDeclarationSyntax { get; }
     public IReadOnlyCollection<MvcPropertyInfo> Properties { get; }
     public IReadOnlyCollection<PageMethodInfo> Methods { get; }
 

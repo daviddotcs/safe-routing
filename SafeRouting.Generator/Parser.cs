@@ -41,18 +41,19 @@ namespace SafeRouting.Generator
     }
 
     public static bool IsCandidateNode(SyntaxNode node)
-      => node is ClassDeclarationSyntax classDeclarationSyntax
-        && classDeclarationSyntax.TypeParameterList is null
-        && classDeclarationSyntax.Parent is not TypeDeclarationSyntax
-        && (classDeclarationSyntax.AttributeLists.Count > 0 || classDeclarationSyntax.BaseList?.Types.Count > 0)
-        && classDeclarationSyntax.Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword))
-        && !classDeclarationSyntax.Modifiers.Any(t => t.IsKind(SyntaxKind.StaticKeyword) || t.IsKind(SyntaxKind.AbstractKeyword));
+      => node is TypeDeclarationSyntax typeDeclarationSyntax
+        && node is not InterfaceDeclarationSyntax
+        && typeDeclarationSyntax.TypeParameterList is null
+        && typeDeclarationSyntax.Parent is not TypeDeclarationSyntax
+        && (typeDeclarationSyntax.AttributeLists.Count > 0 || typeDeclarationSyntax.BaseList?.Types.Count > 0)
+        && typeDeclarationSyntax.Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword))
+        && !typeDeclarationSyntax.Modifiers.Any(t => t.IsKind(SyntaxKind.StaticKeyword) || t.IsKind(SyntaxKind.AbstractKeyword));
 
     public static CandidateClassInfo? TransformCandidateClassNode(GeneratorSyntaxContext context, CancellationToken cancellationToken)
     {
-      var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
+      var typeDeclarationSyntax = (TypeDeclarationSyntax)context.Node;
 
-      if (context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax, cancellationToken) is not INamedTypeSymbol classSymbol)
+      if (context.SemanticModel.GetDeclaredSymbol(typeDeclarationSyntax, cancellationToken) is not INamedTypeSymbol classSymbol)
       {
         return null;
       }
@@ -114,7 +115,7 @@ namespace SafeRouting.Generator
         return null;
       }
 
-      return new CandidateClassInfo(classDeclarationSyntax, classSymbol, context.SemanticModel, isController, isPage);
+      return new CandidateClassInfo(typeDeclarationSyntax, classSymbol, context.SemanticModel, isController, isPage);
     }
 
     public static ControllerInfo? GetControllerInfo(CandidateClassInfo classInfo, SourceProductionContext context)
@@ -147,7 +148,7 @@ namespace SafeRouting.Generator
         return null;
       }
 
-      return new ControllerInfo(controllerName, generatorName, areaName, classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.ClassDeclarationSyntax, properties, methods);
+      return new ControllerInfo(controllerName, generatorName, areaName, classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods);
     }
 
     public static PageInfo? GetPageInfo(CandidateClassInfo classInfo, SourceProductionContext context)
@@ -158,7 +159,7 @@ namespace SafeRouting.Generator
       }
 
       var classSymbol = classInfo.ClassSymbol;
-      var classDeclarationSyntax = classInfo.ClassDeclarationSyntax;
+      var classDeclarationSyntax = classInfo.TypeDeclarationSyntax;
 
       var filePath = classDeclarationSyntax.SyntaxTree.FilePath;
       if (string.IsNullOrEmpty(filePath))
@@ -710,7 +711,7 @@ namespace SafeRouting.Generator
 
             if (!methodNames.Add(method.Name))
             {
-              context.ReportDiagnostic(CreateConflictingMethodsDiagnostic(classSymbol.Name, method.Name, classInfo.ClassDeclarationSyntax.GetLocation()));
+              context.ReportDiagnostic(CreateConflictingMethodsDiagnostic(classSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
               continue;
             }
 

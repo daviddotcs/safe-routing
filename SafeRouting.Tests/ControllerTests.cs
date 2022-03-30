@@ -340,6 +340,20 @@ public sealed class ControllerTests
   }
 
   [Fact]
+  public Task RecordControllersAreIncluded()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      [Controller]
+      public sealed record FooController
+      {
+        public IActionResult Index() => new ContentResult();
+      }
+    ");
+  }
+
+  [Fact]
   public Task RouteGeneratorNameAttributesRenameClasses()
   {
     return TestHelper.Verify(@"

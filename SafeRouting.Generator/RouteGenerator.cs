@@ -57,7 +57,7 @@ namespace SafeRouting.Generator
       var (candidateClasses, options) = values;
 
       var controllers = candidateClasses
-        .GroupBy(x => x.ClassDeclarationSyntax)
+        .GroupBy(x => x.TypeDeclarationSyntax)
         .Select(x => Parser.GetControllerInfo(x.First(), context))
         .OfType<ControllerInfo>()
         .ToArray();
@@ -74,7 +74,7 @@ namespace SafeRouting.Generator
       {
         if (!controllerNames.Add($"{controller.Area} {controller.Name}"))
         {
-          context.ReportDiagnostic(Parser.CreateConflictingControllerDiagnostic(controller.Name, controller.ClassDeclarationSyntax.GetLocation()));
+          context.ReportDiagnostic(Parser.CreateConflictingControllerDiagnostic(controller.Name, controller.TypeDeclarationSyntax.GetLocation()));
           continue;
         }
         
@@ -91,7 +91,7 @@ namespace SafeRouting.Generator
       var (candidateClasses, options) = values;
 
       var pages = candidateClasses
-        .GroupBy(x => x.ClassDeclarationSyntax)
+        .GroupBy(x => x.TypeDeclarationSyntax)
         .Select(x => Parser.GetPageInfo(x.First(), context))
         .OfType<PageInfo>()
         .ToArray();
@@ -108,7 +108,7 @@ namespace SafeRouting.Generator
       {
         if (!pageIdentifiers.Add($"{page.Area}_{page.PageNamespace}_{page.Name}"))
         {
-          context.ReportDiagnostic(Parser.CreateConflictingPageClassDiagnostic(page.FullyQualifiedTypeName, page.ClassDeclarationSyntax.GetLocation()));
+          context.ReportDiagnostic(Parser.CreateConflictingPageClassDiagnostic(page.FullyQualifiedTypeName, page.TypeDeclarationSyntax.GetLocation()));
           continue;
         }
 
