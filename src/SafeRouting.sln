@@ -12,7 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		build.csx = build.csx
 		Directory.Build.props = Directory.Build.props
-		..\README.md = ..\README.md
+		lib.csx = lib.csx
+		README.source.md = README.source.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.IntegrationTests", "Test\SafeRouting.IntegrationTests\SafeRouting.IntegrationTests.csproj", "{AD2626C2-645E-4C55-923E-BEE2B7CDF48C}"

@@ -219,7 +219,7 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 dotnet tool install -g dotnet-script
 ```
 
-* Within the `src`, run the build script with the new build number as an argument, e.g.; 1.2.3.
+* Within the `src` directory, run the build script with the new build number as an argument, e.g.; 1.2.3.
 
 ```
 dotnet script build.csx -- 1.2.3
