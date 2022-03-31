@@ -22,17 +22,17 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.IndexRouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
-        routeInfo[routeInfo.Parameters.C] = c;
-        routeInfo[routeInfo.Parameters.D] = d;
-        routeInfo[routeInfo.Parameters.E] = e;
-        routeInfo[routeInfo.Parameters.F] = f;
-        routeInfo[routeInfo.Parameters.G] = g;
-        routeInfo[routeInfo.Parameters.H] = h;
-        routeInfo[routeInfo.Parameters.I] = i;
-        routeInfo[routeInfo.Parameters.J] = j;
-        routeInfo[routeInfo.Parameters.K] = k;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.C.Name] = c;
+        routeInfo.RouteValues[routeInfo.Parameters.D.Name] = d;
+        routeInfo.RouteValues[routeInfo.Parameters.E.Name] = e;
+        routeInfo.RouteValues[routeInfo.Parameters.F.Name] = f;
+        routeInfo.RouteValues[routeInfo.Parameters.G.Name] = g;
+        routeInfo.RouteValues[routeInfo.Parameters.H.Name] = h;
+        routeInfo.RouteValues[routeInfo.Parameters.I.Name] = i;
+        routeInfo.RouteValues[routeInfo.Parameters.J.Name] = j;
+        routeInfo.RouteValues[routeInfo.Parameters.K.Name] = k;
         return routeInfo;
       }
     }

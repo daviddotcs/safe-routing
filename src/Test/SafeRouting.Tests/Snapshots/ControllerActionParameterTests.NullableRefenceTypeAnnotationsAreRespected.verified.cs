@@ -22,8 +22,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.ARouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
     }

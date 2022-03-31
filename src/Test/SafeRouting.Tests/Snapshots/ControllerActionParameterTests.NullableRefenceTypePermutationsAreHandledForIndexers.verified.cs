@@ -22,8 +22,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T01RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -34,8 +34,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T02RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -46,8 +46,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T03RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -58,8 +58,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T04RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -74,8 +74,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T05RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -86,8 +86,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T06RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -98,8 +98,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T07RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -110,8 +110,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T08RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -122,8 +122,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T09RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -138,8 +138,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T10RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -150,8 +150,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T11RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -162,8 +162,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T12RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -174,8 +174,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T13RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -186,8 +186,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T14RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -202,8 +202,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T15RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -214,8 +214,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T16RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -226,8 +226,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T17RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -238,8 +238,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T18RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -250,8 +250,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T19RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -266,8 +266,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T20RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -282,8 +282,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T21RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -298,8 +298,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T22RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -314,8 +314,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T23RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -330,8 +330,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T24RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
       
@@ -346,8 +346,8 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.T25RouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.A] = a;
-        routeInfo[routeInfo.Parameters.B] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
         return routeInfo;
       }
     }

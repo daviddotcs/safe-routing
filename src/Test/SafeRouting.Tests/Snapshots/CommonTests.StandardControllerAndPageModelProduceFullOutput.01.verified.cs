@@ -22,8 +22,8 @@ namespace Routes
       {
         var routeInfo = new Support.Pages_Products_Edit.GetRouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.Name] = name;
-        routeInfo[routeInfo.Parameters.Bar] = bar;
+        routeInfo.RouteValues[routeInfo.Parameters.Name.Name] = name;
+        routeInfo.RouteValues[routeInfo.Parameters.Bar.Name] = bar;
         return routeInfo;
       }
     }

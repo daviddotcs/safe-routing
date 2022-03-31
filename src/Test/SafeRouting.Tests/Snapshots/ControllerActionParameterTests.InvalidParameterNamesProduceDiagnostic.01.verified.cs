@@ -22,7 +22,7 @@ namespace Routes
       {
         var routeInfo = new Support.Controllers_Products.IndexRouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo[routeInfo.Parameters.MyValue] = myValue;
+        routeInfo.RouteValues[routeInfo.Parameters.MyValue.Name] = myValue;
         return routeInfo;
       }
     }

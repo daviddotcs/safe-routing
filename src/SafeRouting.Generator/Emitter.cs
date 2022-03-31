@@ -109,7 +109,7 @@ namespace SafeRouting.Generator
 
       foreach (var parameter in parameters)
       {
-        writer.WriteLine($"routeInfo[routeInfo.Parameters.{CSharpSupport.CamelToPascalCase(parameter.Name)}] = {parameter.Name};");
+        writer.WriteLine($"routeInfo.RouteValues[routeInfo.Parameters.{CSharpSupport.CamelToPascalCase(parameter.Name)}.Name] = {parameter.Name};");
       }
 
       writer.WriteLine("return routeInfo;");
