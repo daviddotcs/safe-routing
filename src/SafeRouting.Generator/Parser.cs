@@ -2,6 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace SafeRouting.Generator
 {
@@ -211,18 +213,6 @@ namespace SafeRouting.Generator
       return new PageInfo(pagePath, generatorName, areaName, pageNamespace, classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classDeclarationSyntax, properties, methods);
     }
 
-    public static Diagnostic CreateConflictingMethodsDiagnostic(string className, string methodName, Location location) => Diagnostic.Create(ConflictingMethodsDescriptor, location, className, methodName);
-
-    public static Diagnostic CreateInvalidOptionDiagnostic(string optionKey, string errorText) => Diagnostic.Create(InvalidOptionsDescriptor, location: null, optionKey, errorText);
-
-    public static Diagnostic CreateInvalidIdentifierDiagnostic(string identifier, Location? location) => Diagnostic.Create(InvalidIdentifierDescriptor, location, identifier);
-
-    public static Diagnostic CreateConflictingControllerDiagnostic(string controllerName, Location location) => Diagnostic.Create(ConflictingControllerDescriptor, location, controllerName);
-
-    public static Diagnostic CreateConflictingPageClassDiagnostic(string pageClassName, Location location) => Diagnostic.Create(ConflictingPageClassDescriptor, location, pageClassName);
-
-    public static Diagnostic CreateUnsupportedLanguageVersionDiagnostic() => Diagnostic.Create(UnsupportedLanguageVersionDescriptor, location: null);
-
     private static void GetControllerAttributes(SourceProductionContext context, INamedTypeSymbol classSymbol, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName)
     {
       areaName = null;
@@ -262,7 +252,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
               }
               break;
           }
@@ -295,7 +285,7 @@ namespace SafeRouting.Generator
             continue;
           }
 
-          var displayName = member.ToDisplayString(RoslynSupport.UniqueClassMemberSymbolDisplayFormat);
+          var displayName = member.ToDisplayString(UniqueClassMemberSymbolDisplayFormat);
 
           if (!accessedMembers.Add(displayName))
           {
@@ -330,7 +320,7 @@ namespace SafeRouting.Generator
 
             if (!urlAffectedIdentifiers.Add(urlAffectedIdentifier))
             {
-              context.ReportDiagnostic(CreateConflictingMethodsDiagnostic(classInfo.ClassSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
+              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.ClassSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
               continue;
             }
 
@@ -399,7 +389,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
               }
             }
             break;
@@ -411,7 +401,7 @@ namespace SafeRouting.Generator
     private static ControllerMethodInfo? GetControllerMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
       var name = methodSymbol.Name;
-      var escapedName = methodSymbol.ToDisplayString(RoslynSupport.EscapedIdentifierSymbolDisplayFormat);
+      var escapedName = methodSymbol.ToDisplayString(EscapedIdentifierSymbolDisplayFormat);
       if (name.EndsWith("Async", StringComparison.Ordinal))
       {
         name = name.Substring(0, name.Length - "Async".Length);
@@ -442,7 +432,7 @@ namespace SafeRouting.Generator
         }
       }
 
-      return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, methodSymbol.ToDisplayString(RoslynSupport.UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
+      return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
     }
     private static bool TryGetMvcMethodParameterAttributes(SourceProductionContext context, IParameterSymbol parameterSymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
     {
@@ -507,7 +497,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
               }
             }
             break;
@@ -597,7 +587,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
               }
             }
             break;
@@ -655,7 +645,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
               }
             }
             break;
@@ -686,7 +676,7 @@ namespace SafeRouting.Generator
             continue;
           }
 
-          var displayName = member.ToDisplayString(RoslynSupport.UniqueClassMemberSymbolDisplayFormat);
+          var displayName = member.ToDisplayString(UniqueClassMemberSymbolDisplayFormat);
 
           if (!accessedMembers.Add(displayName))
           {
@@ -711,7 +701,7 @@ namespace SafeRouting.Generator
 
             if (!methodNames.Add(method.Name))
             {
-              context.ReportDiagnostic(CreateConflictingMethodsDiagnostic(classSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
+              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
               continue;
             }
 
@@ -725,7 +715,7 @@ namespace SafeRouting.Generator
     }
     private static PageMethodInfo? GetPageMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
-      if (!RoslynSupport.ParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
+      if (!ParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
       {
         return null;
       }
@@ -749,7 +739,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
               }
             }
             break;
@@ -771,7 +761,7 @@ namespace SafeRouting.Generator
         }
       }
 
-      return new PageMethodInfo(name, name, handlerName, methodSymbol.ToDisplayString(RoslynSupport.UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
+      return new PageMethodInfo(name, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
     }
     private static TypeInfo GetTypeInfo(ISymbol symbol, ITypeSymbol typeSymbol, SemanticModel semanticModel)
     {
@@ -780,7 +770,7 @@ namespace SafeRouting.Generator
         .AnnotationsEnabled();
 
       var parameterTypeName = annotationsEnabled
-        ? typeSymbol.ToDisplayString(RoslynSupport.FullyQualifiedWithAnnotationsFormat)
+        ? typeSymbol.ToDisplayString(FullyQualifiedWithAnnotationsFormat)
         : typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 
       var parameterTypeNameSansAnnotations = annotationsEnabled
@@ -789,12 +779,49 @@ namespace SafeRouting.Generator
 
       return new TypeInfo(parameterTypeName, parameterTypeNameSansAnnotations, annotationsEnabled);
     }
+    private static bool ParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
+    {
+      var methodNameMatch = RazorPageMethodNameRegex.Match(methodName);
+      if (!methodNameMatch.Success)
+      {
+        name = null;
+        handler = null;
+        return false;
+      }
 
-    private static DiagnosticDescriptor ConflictingMethodsDescriptor => new("CSR0001", "Conflicting methods", "The class '{0}' contains multiple methods which map to the route method '{1}'.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor InvalidOptionsDescriptor => new("CSR0002", "Invalid options", "Value for the option '{0}' is invalid. {1}", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor InvalidIdentifierDescriptor => new("CSR0003", "Invalid identifier", "The text '{0}' is not a valid C# identifier.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor ConflictingControllerDescriptor => new("CSR0004", "Conflicting Controller", "The controller '{0}' conflicts with another controller of the same name.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor ConflictingPageClassDescriptor => new("CSR0005", "Conflicting PageModel Class", "The page class '{0}' conflicts with another page class with the same resulting name.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor UnsupportedLanguageVersionDescriptor => new("CSR0006", "Unsupported Language Version", "C# 8 or later is required for route generation.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
+      handler = methodNameMatch.Groups["handler"].Value;
+      if (string.IsNullOrEmpty(handler))
+      {
+        handler = null;
+      }
+
+      name = methodNameMatch.Groups["name"].Value;
+
+      return true;
+    }
+
+    private static SymbolDisplayFormat UniqueClassMemberSymbolDisplayFormat { get; } = new SymbolDisplayFormat(
+      globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Included,
+      typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+      genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+      memberOptions: SymbolDisplayMemberOptions.IncludeParameters,
+      delegateStyle: SymbolDisplayDelegateStyle.NameAndParameters,
+      extensionMethodStyle: SymbolDisplayExtensionMethodStyle.StaticMethod,
+      parameterOptions: SymbolDisplayParameterOptions.IncludeType,
+      propertyStyle: SymbolDisplayPropertyStyle.NameOnly,
+      localOptions: SymbolDisplayLocalOptions.None,
+      kindOptions: SymbolDisplayKindOptions.None,
+      miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+
+    private static SymbolDisplayFormat UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat { get; } = UniqueClassMemberSymbolDisplayFormat
+      .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+    private static SymbolDisplayFormat EscapedIdentifierSymbolDisplayFormat { get; } = new SymbolDisplayFormat(
+      miscellaneousOptions: SymbolDisplayMiscellaneousOptions.EscapeKeywordIdentifiers);
+
+    private static SymbolDisplayFormat FullyQualifiedWithAnnotationsFormat { get; } = SymbolDisplayFormat.FullyQualifiedFormat
+      .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+    private static Regex RazorPageMethodNameRegex { get; } = new Regex(@"^On(?<name>(?<verb>Delete|Get|Head|Options|Patch|Post|Put)(?<handler>.*?))(Async)?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
   }
 }

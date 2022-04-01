@@ -18,7 +18,7 @@ namespace SafeRouting.Generator
       {
         if (!isSupportedLanguageVersion)
         {
-          context.ReportDiagnostic(Parser.CreateUnsupportedLanguageVersionDiagnostic());
+          context.ReportDiagnostic(Diagnostics.CreateUnsupportedLanguageVersionDiagnostic());
         }
       });
 
@@ -29,7 +29,7 @@ namespace SafeRouting.Generator
       {
         foreach (var error in value.OptionErrors)
         {
-          context.ReportDiagnostic(Parser.CreateInvalidOptionDiagnostic(error.Key, error.Value));
+          context.ReportDiagnostic(Diagnostics.CreateInvalidOptionDiagnostic(error.Key, error.Value));
         }
       });
 
@@ -74,7 +74,7 @@ namespace SafeRouting.Generator
       {
         if (!controllerNames.Add($"{controller.Area} {controller.Name}"))
         {
-          context.ReportDiagnostic(Parser.CreateConflictingControllerDiagnostic(controller.Name, controller.TypeDeclarationSyntax.GetLocation()));
+          context.ReportDiagnostic(Diagnostics.CreateConflictingControllerDiagnostic(controller.Name, controller.TypeDeclarationSyntax.GetLocation()));
           continue;
         }
         
@@ -108,7 +108,7 @@ namespace SafeRouting.Generator
       {
         if (!pageIdentifiers.Add($"{page.Area}_{page.PageNamespace}_{page.Name}"))
         {
-          context.ReportDiagnostic(Parser.CreateConflictingPageClassDiagnostic(page.FullyQualifiedTypeName, page.TypeDeclarationSyntax.GetLocation()));
+          context.ReportDiagnostic(Diagnostics.CreateConflictingPageClassDiagnostic(page.FullyQualifiedTypeName, page.TypeDeclarationSyntax.GetLocation()));
           continue;
         }
 
