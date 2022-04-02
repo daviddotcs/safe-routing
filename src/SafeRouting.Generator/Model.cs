@@ -57,7 +57,7 @@ namespace SafeRouting.Generator
     string OriginalName,
     string EscapedOriginalName,
     string EscapedName,
-    string StringEscapedRouteKey,
+    string RouteKey,
     TypeInfo Type,
     MvcBindingSourceInfo BindingSource);
 
@@ -107,10 +107,9 @@ namespace SafeRouting.Generator
     string OriginalName,
     string EscapedName,
     string PropertyName,
-    string StringEscapedRouteKey,
+    string RouteKey,
     TypeInfo Type,
-    bool HasExplicitDefault,
-    object? ExplicitDefaultValue,
+    ExpressionSyntax? DefaultValueExpression,
     MvcBindingSourceInfo? BindingSource)
   {
     public bool AffectsUrl()

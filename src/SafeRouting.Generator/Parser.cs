@@ -469,10 +469,11 @@ namespace SafeRouting.Generator
 
       var escapedName = CSharpSupport.EscapeIdentifier(generatorName);
       var propertyName = CSharpSupport.EscapeIdentifier(CSharpSupport.CamelToPascalCase(generatorName));
-      var stringEscapedRouteKey = CSharpSupport.EscapeStringLiteral(bindingSource?.Name ?? name);
+      var routeKey = bindingSource?.Name ?? name;
       var type = GetTypeInfo(parameterSymbol, parameterSymbol.Type, semanticModel);
+      var defaultValueExpression = GetSanitisedDefaultValue(parameterSymbol, semanticModel, context.CancellationToken);
 
-      return new MvcMethodParameterInfo(name, escapedName, propertyName, stringEscapedRouteKey, type, parameterSymbol.HasExplicitDefaultValue, parameterSymbol.HasExplicitDefaultValue ? parameterSymbol.ExplicitDefaultValue : null, bindingSource);
+      return new MvcMethodParameterInfo(name, escapedName, propertyName, routeKey, type, defaultValueExpression, bindingSource);
     }
     private static bool TryGetMvcPropertyAttributes(SourceProductionContext context, IPropertySymbol propertySymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
     {
@@ -564,10 +565,10 @@ namespace SafeRouting.Generator
       var originalName = propertySymbol.Name;
       var escapedOriginalName = CSharpSupport.EscapeIdentifier(originalName);
       var escapedName = CSharpSupport.EscapeIdentifier(generatorName);
-      var stringEscapedRouteKey = CSharpSupport.EscapeStringLiteral(bindingSource.Name ?? originalName);
+      var routeKey = bindingSource.Name ?? originalName;
       var type = GetTypeInfo(propertySymbol, propertySymbol.Type, semanticModel);
 
-      return new MvcPropertyInfo(originalName, escapedOriginalName, escapedName, stringEscapedRouteKey, type, bindingSource);
+      return new MvcPropertyInfo(originalName, escapedOriginalName, escapedName, routeKey, type, bindingSource);
     }
     private static void GetPageAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName)
     {
@@ -712,6 +713,26 @@ namespace SafeRouting.Generator
       var escapedName= CSharpSupport.EscapeIdentifier(name);
 
       return new PageMethodInfo(name, escapedName, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
+    }
+    private static ExpressionSyntax? GetSanitisedDefaultValue(IParameterSymbol parameterSymbol, SemanticModel semanticModel, CancellationToken cancellationToken)
+    {
+      if (!parameterSymbol.HasExplicitDefaultValue)
+      {
+        return null;
+      }
+
+      foreach (var reference in parameterSymbol.DeclaringSyntaxReferences)
+      {
+        var node = reference.GetSyntax(cancellationToken);
+        if (node is ParameterSyntax parameterSyntax
+          && parameterSyntax.Default is EqualsValueClauseSyntax equalsValueClauseSyntax
+          && new DefaultValueExpressionRewriter(semanticModel, cancellationToken).Visit(equalsValueClauseSyntax.Value) is ExpressionSyntax rewrittenExpression)
+        {
+          return rewrittenExpression;
+        }
+      }
+
+      return null;
     }
     private static TypeInfo GetTypeInfo(ISymbol symbol, ITypeSymbol typeSymbol, SemanticModel semanticModel)
     {

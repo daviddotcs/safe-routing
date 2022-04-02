@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Reflection;
 
 namespace SafeRouting.Generator
@@ -24,21 +25,10 @@ namespace SafeRouting.Generator
         ? value.ToLowerInvariant()
         : value.Substring(0, 1).ToLowerInvariant() + value.Substring(1);
 
-    public static string EscapeCharLiteral(char value)
-      => value switch
-      {
-        '\'' => "\\'",
-        '\\' => "\\\\",
-        _ => value.ToString()
-      };
-
     public static string EscapeIdentifier(string identifier)
       => IdentifierRequiresEscaping(identifier)
         ? $"@{identifier}"
         : identifier;
-
-    public static string EscapeStringLiteral(string value)
-      => value.Replace("\\", "\\\\").Replace("\"", "\\\"");
 
     public static string EscapeXmlDocType(string value)
       => value.Replace('<', '{').Replace('>', '}');
@@ -48,6 +38,9 @@ namespace SafeRouting.Generator
 
     public static string GetExcludeFromCodeCoverageAttribute()
       => "[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]";
+
+    public static LiteralExpressionSyntax ToStringLiteralExpression(string value)
+      => SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(value));
 
     private static AssemblyName AssemblyName { get; } = Assembly.GetAssembly(typeof(GeneratorSupport)).GetName();
   }

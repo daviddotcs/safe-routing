@@ -100,17 +100,22 @@ namespace SafeRouting.Generator
       writer.WriteLine("{");
       writer.Indent++;
 
-      writer.Write("[\"area\"] = \"");
+      writer.Write("[\"area\"] = ");
       if ((method.Area ?? item.Area) is string area)
       {
-        writer.Write(CSharpSupport.EscapeStringLiteral(area));
+        CSharpSupport.ToStringLiteralExpression(area).WriteTo(writer);
       }
-      writer.Write("\"");
+      else
+      {
+        writer.Write("\"\"");
+      }
 
       foreach (var parameter in parameters)
       {
         writer.WriteLine(",");
-        writer.Write($"[\"{parameter.StringEscapedRouteKey}\"] = {parameter.EscapedName}");
+        writer.Write("[");
+        CSharpSupport.ToStringLiteralExpression(parameter.RouteKey).WriteTo(writer);
+        writer.Write($"] = {parameter.EscapedName}");
       }
 
       writer.WriteLine();
@@ -171,26 +176,10 @@ namespace SafeRouting.Generator
 
         writer.Write($"{parameter.Type.FullyQualifiedName} {parameter.EscapedName}");
 
-        if (parameter.HasExplicitDefault)
+        if (parameter.DefaultValueExpression is not null)
         {
-          var valueString = (parameter.Type.FullyQualifiedName, parameter.ExplicitDefaultValue) switch
-          {
-            // Use default keyword for null to handle default struct values
-            (_, null) => "default",
-
-            (_, bool boolValue) => boolValue ? "true" : "false",
-            (_, char charValue) => $"'{CSharpSupport.EscapeCharLiteral(charValue)}'",
-            (_, string stringValue) => $"\"{CSharpSupport.EscapeStringLiteral(stringValue)}\"",
-
-            // Cast to the designated type in case of enum values which come in as ints
-            (not "int", int intValue) => FormattableString.Invariant($"({parameter.Type.FullyQualifiedName}){intValue:D}"),
-
-            // Get the string value for anything else
-            (_, var value) => value.ToString()
-          };
-
           writer.Write(" = ");
-          writer.Write(valueString);
+          parameter.DefaultValueExpression.WriteTo(writer);
         }
       }
 
@@ -229,7 +218,7 @@ namespace SafeRouting.Generator
           scopeType: "ParameterData",
           valueType: parameter.Type,
           propertyName: parameter.PropertyName,
-          stringEscapedKeyName: parameter.StringEscapedRouteKey);
+          routeKeyName: parameter.RouteKey);
       }
 
       writer.Indent--;
@@ -261,13 +250,13 @@ namespace SafeRouting.Generator
           scopeType: "PropertyData",
           valueType: property.Type,
           propertyName: property.EscapedName,
-          stringEscapedKeyName: property.StringEscapedRouteKey);
+          routeKeyName: property.RouteKey);
       }
 
       writer.Indent--;
       writer.WriteLine("}");
     }
-    private static void WriteRouteKeyProperty(IndentedTextWriter writer, string scopeType, TypeInfo valueType, string propertyName, string stringEscapedKeyName)
+    private static void WriteRouteKeyProperty(IndentedTextWriter writer, string scopeType, TypeInfo valueType, string propertyName, string routeKeyName)
     {
       var indentLevel = writer.Indent;
 
@@ -280,7 +269,9 @@ namespace SafeRouting.Generator
 
       writer.Write($"public global::{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}> {propertyName}");
       writer.Write(" { get; } = new global::");
-      writer.WriteLine($"{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}>(\"{stringEscapedKeyName}\");");
+      writer.Write($"{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}>(");
+      CSharpSupport.ToStringLiteralExpression(routeKeyName).WriteTo(writer);
+      writer.WriteLine(");");
 
       if (!valueType.AnnotationsEnabled)
       {
@@ -344,7 +335,16 @@ namespace SafeRouting.Generator
       writer.WriteLine("/// <summary>");
       writer.WriteLine($"/// The name of the {item.DivisionName.ToLowerInvariant()} for the route.");
       writer.WriteLine("/// </summary>");
-      writer.WriteLine($"public string{(method.DivisionRouteValue is null ? "?" : null)} {item.DivisionName}Name => {(method.DivisionRouteValue is null ? "null" : $"\"{CSharpSupport.EscapeStringLiteral(method.DivisionRouteValue)}\"")};");
+      writer.Write($"public string{(method.DivisionRouteValue is null ? "?" : null)} {item.DivisionName}Name => ");
+      if (method.DivisionRouteValue is null)
+      {
+        writer.WriteLine("null;");
+      }
+      else
+      {
+        CSharpSupport.ToStringLiteralExpression(method.DivisionRouteValue).WriteTo(writer);
+        writer.WriteLine(";");
+      }
 
       writer.WriteLine("/// <summary>");
       writer.WriteLine("/// Values for the route.");

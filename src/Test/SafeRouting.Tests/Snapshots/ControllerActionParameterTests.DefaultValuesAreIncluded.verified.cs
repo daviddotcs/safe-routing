@@ -18,7 +18,7 @@ namespace Routes
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char)"/>.
       /// </summary>
-      public static Support.Controllers_Products.IndexRouteValues Index(global::System.DateTime a = default, int b = 5, string c = "he\"llo\\", global::System.DayOfWeek d = (global::System.DayOfWeek)3, bool e = false, bool f = true, string g = "ProductsController", char h = '?', char i = '*', char j = '\'', char k = '\\')
+      public static Support.Controllers_Products.IndexRouteValues Index(global::System.DateTime a = default(global::System.DateTime), int b = 5, string c = "he\"llo\\", global::System.DayOfWeek d = global::System.DayOfWeek.Wednesday, bool e = false, bool f = true, string g = "ProductsController", char h = '?', char i = (char)42, char j = '\'', char k = '\\')
       {
         return new Support.Controllers_Products.IndexRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
