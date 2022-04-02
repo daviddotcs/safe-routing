@@ -55,69 +55,19 @@ namespace SafeRouting.Generator
     {
       var typeDeclarationSyntax = (TypeDeclarationSyntax)context.Node;
 
-      if (context.SemanticModel.GetDeclaredSymbol(typeDeclarationSyntax, cancellationToken) is not INamedTypeSymbol classSymbol)
+      if (context.SemanticModel.GetDeclaredSymbol(typeDeclarationSyntax, cancellationToken) is not INamedTypeSymbol typeSymbol)
       {
         return null;
       }
 
-      var isController = false;
-      var hasControllerAttribute = false;
-      var isExcludedController = false;
-      var isPage = false;
-      var isAncestor = false;
-
-      foreach (var typeSymbol in classSymbol.EnumerateSelfAndBaseTypes())
-      {
-        switch (typeSymbol.ToDisplayString())
-        {
-          case AspNetClassNames.Controller:
-          case AspNetClassNames.ControllerBase:
-            isController = true;
-            break;
-
-          case AspNetClassNames.PageModel:
-            isPage = true;
-            break;
-        }
-
-        if (isController || isPage)
-        {
-          break;
-        }  
-
-        foreach (var attribute in typeSymbol.GetAttributes())
-        {
-          switch (attribute.AttributeClass?.ToDisplayString())
-          {
-            case AspNetClassNames.ControllerAttribute:
-              hasControllerAttribute = true;
-              break;
-
-            case AspNetClassNames.NonControllerAttribute:
-              isExcludedController = true;
-              break;
-
-            case GeneratorClassNames.ExcludeFromRouteGeneratorAttribute:
-              if (!isAncestor)
-              {
-                return null;
-              }
-              break;
-          }
-        }
-
-        isAncestor = true;
-      }
-
-      isController |= hasControllerAttribute;
-      isController &= !isExcludedController;
+      var (isController, isPage) = IsControllerOrPage(typeSymbol);
 
       if (!isController && !isPage)
       {
         return null;
       }
 
-      return new CandidateClassInfo(typeDeclarationSyntax, classSymbol, context.SemanticModel, isController, isPage);
+      return new CandidateClassInfo(typeDeclarationSyntax, typeSymbol, context.SemanticModel, isController, isPage);
     }
 
     public static ControllerInfo? GetControllerInfo(CandidateClassInfo classInfo, SourceProductionContext context)
@@ -127,12 +77,12 @@ namespace SafeRouting.Generator
         return null;
       }
 
-      var classSymbol = classInfo.ClassSymbol;
+      var typeSymbol = classInfo.TypeSymbol;
 
       // https://github.com/dotnet/aspnetcore/blob/2862028573708e5684bf17526c43127e178525d4/src/Mvc/Mvc.Core/src/ApplicationModels/DefaultApplicationModelProvider.cs#L167
-      var controllerName = classSymbol.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase)
-        ? classSymbol.Name.Substring(0, classSymbol.Name.Length - "Controller".Length)
-        : classSymbol.Name;
+      var controllerName = typeSymbol.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase)
+        ? typeSymbol.Name.Substring(0, typeSymbol.Name.Length - "Controller".Length)
+        : typeSymbol.Name;
 
       if (controllerName.Length == 0)
       {
@@ -141,16 +91,16 @@ namespace SafeRouting.Generator
 
       var generatorName = controllerName;
 
-      GetControllerAttributes(context, classSymbol, out var areaName, out var defaultBindingSource, out var defaultBindingLevel, ref generatorName);
+      GetControllerAttributes(context, typeSymbol, out var areaName, out var defaultBindingSource, out var defaultBindingLevel, ref generatorName);
 
-      GetControllerMembers(classInfo, context, classSymbol, defaultBindingSource, defaultBindingLevel, out var properties, out var methods);
+      GetControllerMembers(classInfo, context, typeSymbol, defaultBindingSource, defaultBindingLevel, out var properties, out var methods);
 
       if (methods.Count == 0)
       {
         return null;
       }
 
-      return new ControllerInfo(controllerName, generatorName, areaName, classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods);
+      return new ControllerInfo(controllerName, generatorName, areaName, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods);
     }
 
     public static PageInfo? GetPageInfo(CandidateClassInfo classInfo, SourceProductionContext context)
@@ -160,10 +110,10 @@ namespace SafeRouting.Generator
         return null;
       }
 
-      var classSymbol = classInfo.ClassSymbol;
-      var classDeclarationSyntax = classInfo.TypeDeclarationSyntax;
+      var typeSymbol = classInfo.TypeSymbol;
+      var typeDeclarationSyntax = classInfo.TypeDeclarationSyntax;
 
-      var filePath = classDeclarationSyntax.SyntaxTree.FilePath;
+      var filePath = typeDeclarationSyntax.SyntaxTree.FilePath;
       if (string.IsNullOrEmpty(filePath))
       {
         return null;
@@ -201,25 +151,25 @@ namespace SafeRouting.Generator
 
       var generatorName = pageName;
 
-      GetPageAttributes(context, classSymbol, out var defaultBindingSource, ref generatorName);
+      GetPageAttributes(context, typeSymbol, out var defaultBindingSource, ref generatorName);
 
-      GetPageMembers(classInfo, context, classSymbol, defaultBindingSource, out var properties, out var methods);
+      GetPageMembers(classInfo, context, typeSymbol, defaultBindingSource, out var properties, out var methods);
 
       if (methods.Count == 0)
       {
         return null;
       }
 
-      return new PageInfo(pagePath, generatorName, areaName, pageNamespace, classSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classDeclarationSyntax, properties, methods);
+      return new PageInfo(pagePath, generatorName, areaName, pageNamespace, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), typeDeclarationSyntax, properties, methods);
     }
 
-    private static void GetControllerAttributes(SourceProductionContext context, INamedTypeSymbol classSymbol, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName)
+    private static void GetControllerAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName)
     {
       areaName = null;
       defaultBindingSource = null;
       defaultBindingLevel = null;
 
-      foreach (var symbol in classSymbol.EnumerateSelfAndBaseTypes())
+      foreach (var symbol in typeSymbol.EnumerateSelfAndBaseTypes())
       {
         foreach (var attribute in symbol.GetAttributes())
         {
@@ -241,7 +191,7 @@ namespace SafeRouting.Generator
               break;
 
             case GeneratorClassNames.RouteGeneratorNameAttribute:
-              if (!ReferenceEquals(symbol, classSymbol) || !attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
+              if (!ReferenceEquals(symbol, typeSymbol) || !attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
               {
                 break;
               }
@@ -259,7 +209,7 @@ namespace SafeRouting.Generator
         }
       }
     }
-    private static void GetControllerMembers(CandidateClassInfo classInfo, SourceProductionContext context, INamedTypeSymbol classSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, out List<MvcPropertyInfo> properties, out IReadOnlyCollection<ControllerMethodInfo> methods)
+    private static void GetControllerMembers(CandidateClassInfo classInfo, SourceProductionContext context, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, out List<MvcPropertyInfo> properties, out IReadOnlyCollection<ControllerMethodInfo> methods)
     {
       properties = new List<MvcPropertyInfo>();
       var methodIdentifierDictionary = new Dictionary<string, ControllerMethodInfo>(StringComparer.Ordinal);
@@ -268,17 +218,17 @@ namespace SafeRouting.Generator
       var urlAffectedIdentifiers = new HashSet<string>(StringComparer.Ordinal);
       var methodNames = new HashSet<string>(StringComparer.Ordinal);
 
-      foreach (var targetSymbol in classSymbol.EnumerateSelfAndBaseTypes())
+      foreach (var symbol in typeSymbol.EnumerateSelfAndBaseTypes())
       {
-        var className = targetSymbol.ToDisplayString();
-        if (string.Equals(className, AspNetClassNames.Controller, StringComparison.Ordinal)
-          || string.Equals(className, AspNetClassNames.ControllerBase, StringComparison.Ordinal)
-          || string.Equals(className, "object", StringComparison.Ordinal))
+        var typeName = symbol.ToDisplayString();
+        if (string.Equals(typeName, AspNetClassNames.Controller, StringComparison.Ordinal)
+          || string.Equals(typeName, AspNetClassNames.ControllerBase, StringComparison.Ordinal)
+          || string.Equals(typeName, "object", StringComparison.Ordinal))
         {
           break;
         }
 
-        foreach (var member in targetSymbol.GetMembers())
+        foreach (var member in symbol.GetMembers())
         {
           if (member.IsAbstract || member.IsImplicitlyDeclared || member.IsStatic || member.DeclaredAccessibility != Accessibility.Public)
           {
@@ -320,7 +270,7 @@ namespace SafeRouting.Generator
 
             if (!urlAffectedIdentifiers.Add(urlAffectedIdentifier))
             {
-              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.ClassSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
+              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.TypeSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
               continue;
             }
 
@@ -342,7 +292,7 @@ namespace SafeRouting.Generator
           }
         }
 
-        if (ReferenceEquals(targetSymbol, defaultBindingLevel))
+        if (ReferenceEquals(symbol, defaultBindingLevel))
         {
           // Inherited members don't receive default binding
           defaultBindingSource = null;
@@ -374,8 +324,6 @@ namespace SafeRouting.Generator
             break;
 
           case AspNetClassNames.NonActionAttribute:
-            return false;
-
           case GeneratorClassNames.ExcludeFromRouteGeneratorAttribute:
             return false;
 
@@ -605,10 +553,7 @@ namespace SafeRouting.Generator
         return null;
       }
 
-      if (bindingSource is null)
-      {
-        bindingSource = defaultBindingSource;
-      }
+      bindingSource ??= defaultBindingSource;
 
       if (bindingSource is null)
       {
@@ -619,11 +564,11 @@ namespace SafeRouting.Generator
 
       return new MvcPropertyInfo(propertySymbol.Name, generatorName, type, bindingSource);
     }
-    private static void GetPageAttributes(SourceProductionContext context, INamedTypeSymbol classSymbol, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName)
+    private static void GetPageAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName)
     {
       defaultBindingSource = null;
 
-      foreach (var attribute in classSymbol.GetAttributes())
+      foreach (var attribute in typeSymbol.GetAttributes())
       {
         switch (attribute.AttributeClass?.ToDisplayString())
         {
@@ -652,24 +597,24 @@ namespace SafeRouting.Generator
         }
       }
     }
-    private static void GetPageMembers(CandidateClassInfo classInfo, SourceProductionContext context, INamedTypeSymbol classSymbol, MvcBindingSourceInfo? defaultBindingSource, out List<MvcPropertyInfo> properties, out List<PageMethodInfo> methods)
+    private static void GetPageMembers(CandidateClassInfo classInfo, SourceProductionContext context, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, out List<MvcPropertyInfo> properties, out List<PageMethodInfo> methods)
     {
       properties = new List<MvcPropertyInfo>();
       methods = new List<PageMethodInfo>();
       var accessedMembers = new HashSet<string>(StringComparer.Ordinal);
       var methodNames = new HashSet<string>(StringComparer.Ordinal);
 
-      foreach (var typeSymbol in classSymbol.EnumerateSelfAndBaseTypes())
+      foreach (var symbol in typeSymbol.EnumerateSelfAndBaseTypes())
       {
-        var className = typeSymbol.ToDisplayString();
+        var typeName = symbol.ToDisplayString();
 
-        if (string.Equals(className, AspNetClassNames.PageModel, StringComparison.Ordinal)
-          || string.Equals(className, "object", StringComparison.Ordinal))
+        if (string.Equals(typeName, AspNetClassNames.PageModel, StringComparison.Ordinal)
+          || string.Equals(typeName, "object", StringComparison.Ordinal))
         {
           break;
         }
 
-        foreach (var member in typeSymbol.GetMembers())
+        foreach (var member in symbol.GetMembers())
         {
           if (member.IsAbstract || member.IsImplicitlyDeclared || member.IsStatic || member.DeclaredAccessibility != Accessibility.Public)
           {
@@ -701,7 +646,7 @@ namespace SafeRouting.Generator
 
             if (!methodNames.Add(method.Name))
             {
-              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
+              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(typeSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
               continue;
             }
 
@@ -725,8 +670,6 @@ namespace SafeRouting.Generator
         switch (attribute.AttributeClass?.ToDisplayString())
         {
           case AspNetClassNames.NonHandlerAttribute:
-            return null;
-
           case GeneratorClassNames.ExcludeFromRouteGeneratorAttribute:
             return null;
 
@@ -778,6 +721,55 @@ namespace SafeRouting.Generator
         : parameterTypeName;
 
       return new TypeInfo(parameterTypeName, parameterTypeNameSansAnnotations, annotationsEnabled);
+    }
+    private static (bool IsController, bool IsPage) IsControllerOrPage(INamedTypeSymbol typeSymbol)
+    {
+      var isCandidateController = false;
+      var isExcludedController = false;
+      var inheritsFromPageModel = false;
+      var isAncestor = false;
+
+      (bool IsController, bool IsPage) ToResult() => (IsController: isCandidateController && !isExcludedController, IsPage: inheritsFromPageModel);
+
+      foreach (var symbol in typeSymbol.EnumerateSelfAndBaseTypes())
+      {
+        switch (symbol.ToDisplayString())
+        {
+          case AspNetClassNames.Controller:
+          case AspNetClassNames.ControllerBase:
+            isCandidateController = true;
+            return ToResult();
+
+          case AspNetClassNames.PageModel:
+            inheritsFromPageModel = true;
+            return ToResult();
+        }
+
+        foreach (var attribute in symbol.GetAttributes())
+        {
+          switch (attribute.AttributeClass?.ToDisplayString())
+          {
+            case AspNetClassNames.ControllerAttribute:
+              isCandidateController = true;
+              break;
+
+            case AspNetClassNames.NonControllerAttribute:
+              isExcludedController = true;
+              break;
+
+            case GeneratorClassNames.ExcludeFromRouteGeneratorAttribute:
+              if (!isAncestor)
+              {
+                return (IsController: false, IsPage: false);
+              }
+              break;
+          }
+        }
+
+        isAncestor = true;
+      }
+
+      return ToResult();
     }
     private static bool ParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
     {

@@ -5,17 +5,17 @@ namespace SafeRouting.Generator
 {
   internal sealed class CandidateClassInfo
   {
-    public CandidateClassInfo(TypeDeclarationSyntax typeDeclarationSyntax, INamedTypeSymbol classSymbol, SemanticModel semanticModel, bool isController, bool isPage)
+    public CandidateClassInfo(TypeDeclarationSyntax typeDeclarationSyntax, INamedTypeSymbol typeSymbol, SemanticModel semanticModel, bool isController, bool isPage)
     {
       TypeDeclarationSyntax = typeDeclarationSyntax;
-      ClassSymbol = classSymbol;
+      TypeSymbol = typeSymbol;
       SemanticModel = semanticModel;
       IsController = isController;
       IsPage = isPage;
     }
 
     public TypeDeclarationSyntax TypeDeclarationSyntax { get; }
-    public INamedTypeSymbol ClassSymbol { get; }
+    public INamedTypeSymbol TypeSymbol { get; }
     public SemanticModel SemanticModel { get; }
     public bool IsController { get; }
     public bool IsPage { get; }
