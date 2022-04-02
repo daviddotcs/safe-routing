@@ -10,7 +10,7 @@
       HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier.,
       Message: The text '%&*$#(.' is not a valid C# identifier.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     },
     {
@@ -23,7 +23,7 @@
       HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier.,
       Message: The text '' is not a valid C# identifier.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     },
     {
@@ -36,7 +36,7 @@
       HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier.,
       Message: The text '3' is not a valid C# identifier.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     },
     {
@@ -49,7 +49,7 @@
       HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier.,
       Message: The text '@' is not a valid C# identifier.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     }
   ]

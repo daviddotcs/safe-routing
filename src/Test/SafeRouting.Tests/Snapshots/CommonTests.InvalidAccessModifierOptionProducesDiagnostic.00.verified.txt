@@ -10,7 +10,7 @@
       HelpLink: ,
       MessageFormat: Value for the option '{0}' is invalid. {1},
       Message: Value for the option 'safe_routing.generated_namespace' is invalid. 'invalid access modifier' is not a supported access modifier, must be public or internal.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     }
   ]

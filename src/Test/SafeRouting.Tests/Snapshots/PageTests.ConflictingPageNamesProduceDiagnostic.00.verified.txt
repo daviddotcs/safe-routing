@@ -10,7 +10,7 @@
       HelpLink: ,
       MessageFormat: The page class '{0}' conflicts with another page class with the same resulting name.,
       Message: The page class 'global::B.EditModel' conflicts with another page class with the same resulting name.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     }
   ]

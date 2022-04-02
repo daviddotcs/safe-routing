@@ -22,11 +22,52 @@ namespace SafeRouting.Generator
     public static Diagnostic CreateUnsupportedLanguageVersionDiagnostic()
       => Diagnostic.Create(UnsupportedLanguageVersionDescriptor, location: null);
 
-    private static DiagnosticDescriptor ConflictingMethodsDescriptor => new("CSR0001", "Conflicting methods", "The class '{0}' contains multiple methods which map to the route method '{1}'.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor InvalidOptionsDescriptor => new("CSR0002", "Invalid options", "Value for the option '{0}' is invalid. {1}", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor InvalidIdentifierDescriptor => new("CSR0003", "Invalid identifier", "The text '{0}' is not a valid C# identifier.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor ConflictingControllerDescriptor => new("CSR0004", "Conflicting Controller", "The controller '{0}' conflicts with another controller of the same name.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor ConflictingPageClassDescriptor => new("CSR0005", "Conflicting PageModel Class", "The page class '{0}' conflicts with another page class with the same resulting name.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
-    private static DiagnosticDescriptor UnsupportedLanguageVersionDescriptor => new("CSR0006", "Unsupported Language Version", "C# 8 or later is required for route generation.", "Foundation", DiagnosticSeverity.Error, isEnabledByDefault: true);
+    private static DiagnosticDescriptor ConflictingMethodsDescriptor { get; } = new(
+      id: "CSR0001",
+      title: "Conflicting methods",
+      messageFormat: "The class '{0}' contains multiple methods which map to the route method '{1}'.",
+      category: typeof(RouteGenerator).FullName,
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    private static DiagnosticDescriptor InvalidOptionsDescriptor { get; } = new(
+      id: "CSR0002",
+      title: "Invalid options",
+      messageFormat: "Value for the option '{0}' is invalid. {1}",
+      category: typeof(RouteGenerator).FullName,
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    private static DiagnosticDescriptor InvalidIdentifierDescriptor { get; } = new(
+      id: "CSR0003",
+      title: "Invalid identifier",
+      messageFormat: "The text '{0}' is not a valid C# identifier.",
+      category: typeof(RouteGenerator).FullName,
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    private static DiagnosticDescriptor ConflictingControllerDescriptor { get; } = new(
+      id: "CSR0004",
+      title: "Conflicting Controller",
+      messageFormat: "The controller '{0}' conflicts with another controller of the same name.",
+      category: typeof(RouteGenerator).FullName,
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    private static DiagnosticDescriptor ConflictingPageClassDescriptor { get; } = new(
+      id: "CSR0005",
+      title: "Conflicting PageModel Class",
+      messageFormat: "The page class '{0}' conflicts with another page class with the same resulting name.",
+      category: typeof(RouteGenerator).FullName,
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    private static DiagnosticDescriptor UnsupportedLanguageVersionDescriptor { get; } = new(
+      id: "CSR0006",
+      title: "Unsupported Language Version",
+      messageFormat: "C# 8 or later is required for route generation.",
+      category: typeof(RouteGenerator).FullName,
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
   }
 }

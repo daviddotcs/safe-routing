@@ -10,7 +10,7 @@
       HelpLink: ,
       MessageFormat: C# 8 or later is required for route generation.,
       Message: C# 8 or later is required for route generation.,
-      Category: Foundation,
+      Category: SafeRouting.Generator.RouteGenerator,
       CustomTags: []
     }
   ]
