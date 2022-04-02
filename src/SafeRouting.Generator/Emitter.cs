@@ -442,7 +442,7 @@ namespace SafeRouting.Generator
           
           if (!string.Equals(resultType.FullyQualifiedName, type.FullyQualifiedName, StringComparison.Ordinal))
           {
-            resultType = new TypeInfo(type.FullyQualifiedNameSansAnnotations, type.FullyQualifiedNameSansAnnotations, annotationsEnabled: false);
+            resultType = type with { FullyQualifiedName = type.FullyQualifiedNameSansAnnotations, AnnotationsEnabled = false };
           }
         }
 

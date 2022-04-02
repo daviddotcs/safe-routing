@@ -285,7 +285,7 @@ namespace SafeRouting.Generator
                 uniqueName = FormattableString.Invariant($"{method.Name}{suffix++:D}");
               } while (!methodNames.Add(uniqueName));
 
-              method = new ControllerMethodInfo(method.Name, method.EscapedName, uniqueName, method.ActionName, method.Area, method.FullyQualifiedMethodDeclaration, method.Parameters);
+              method = method with { UniqueName = uniqueName };
             }
 
             methodIdentifierDictionary[identifier] = method;

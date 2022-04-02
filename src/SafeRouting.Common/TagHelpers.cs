@@ -59,7 +59,7 @@ public sealed class RouteValuesTagHelper : TagHelper
       _ => null
     };
 
-    if (url != null)
+    if (url is not null)
     {
       output.Attributes.SetAttribute(urlAttributeName, url);
     }
