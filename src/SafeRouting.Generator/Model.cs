@@ -91,11 +91,12 @@ namespace SafeRouting.Generator
 
   internal sealed class MvcPropertyInfo
   {
-    public MvcPropertyInfo(string originalName, string escapedOriginalName, string escapedName, TypeInfo type, MvcBindingSourceInfo bindingSource)
+    public MvcPropertyInfo(string originalName, string escapedOriginalName, string escapedName, string stringEscapedRouteKey, TypeInfo type, MvcBindingSourceInfo bindingSource)
     {
       OriginalName = originalName;
       EscapedOriginalName = escapedOriginalName;
       EscapedName = escapedName;
+      StringEscapedRouteKey = stringEscapedRouteKey;
       Type = type;
       BindingSource = bindingSource;
     }
@@ -103,6 +104,7 @@ namespace SafeRouting.Generator
     public string OriginalName { get; }
     public string EscapedOriginalName { get; }
     public string EscapedName { get; }
+    public string StringEscapedRouteKey { get; }
     public TypeInfo Type { get; }
     public MvcBindingSourceInfo BindingSource { get; }
   }
@@ -174,11 +176,12 @@ namespace SafeRouting.Generator
 
   internal sealed class MvcMethodParameterInfo
   {
-    public MvcMethodParameterInfo(string originalName, string escapedName, string propertyName, TypeInfo type, bool hasExplicitDefault, object? explicitDefaultValue, MvcBindingSourceInfo? bindingSource)
+    public MvcMethodParameterInfo(string originalName, string escapedName, string propertyName, string stringEscapedRouteKey, TypeInfo type, bool hasExplicitDefault, object? explicitDefaultValue, MvcBindingSourceInfo? bindingSource)
     {
       OriginalName = originalName;
       EscapedName = escapedName;
       PropertyName = propertyName;
+      StringEscapedRouteKey = stringEscapedRouteKey;
       Type = type;
       HasExplicitDefault = hasExplicitDefault;
       ExplicitDefaultValue = explicitDefaultValue;
@@ -188,6 +191,7 @@ namespace SafeRouting.Generator
     public string OriginalName { get; }
     public string EscapedName { get; }
     public string PropertyName { get; }
+    public string StringEscapedRouteKey { get; }
     public TypeInfo Type { get; }
     public bool HasExplicitDefault { get; }
     public object? ExplicitDefaultValue { get; }

@@ -20,11 +20,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.ARouteValues A(string a, string? b)
       {
-        var routeInfo = new Support.Controllers_Products.ARouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.ARouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
     }
   }
@@ -39,6 +40,15 @@ namespace Routes
     public sealed class ARouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="ARouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public ARouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -49,7 +59,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.A(string, string?)"/> which can be used in the route.

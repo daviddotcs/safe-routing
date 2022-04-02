@@ -20,9 +20,10 @@ namespace Routes
       /// </summary>
       public static Support.Pages_Products_Edit.GetRouteValues Get()
       {
-        var routeInfo = new Support.Pages_Products_Edit.GetRouteValues();
-        routeInfo.RouteValues["area"] = "";
-        return routeInfo;
+        return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = ""
+        });
       }
       
       /// <summary>
@@ -30,9 +31,10 @@ namespace Routes
       /// </summary>
       public static Support.Pages_Products_Edit.GetInRouteValues GetIn()
       {
-        var routeInfo = new Support.Pages_Products_Edit.GetInRouteValues();
-        routeInfo.RouteValues["area"] = "";
-        return routeInfo;
+        return new Support.Pages_Products_Edit.GetInRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = ""
+        });
       }
       
       /// <summary>
@@ -40,9 +42,10 @@ namespace Routes
       /// </summary>
       public static Support.Pages_Products_Edit.GetOutRouteValues GetOut()
       {
-        var routeInfo = new Support.Pages_Products_Edit.GetOutRouteValues();
-        routeInfo.RouteValues["area"] = "";
-        return routeInfo;
+        return new Support.Pages_Products_Edit.GetOutRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = ""
+        });
       }
     }
   }
@@ -57,6 +60,15 @@ namespace Routes
     public sealed class GetRouteValues : global::SafeRouting.IPageRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="GetRouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public GetRouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the page for the route.
       /// </summary>
       public string PageName => "/Products/Edit";
@@ -67,7 +79,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
     
     /// <summary>
@@ -77,6 +89,15 @@ namespace Routes
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public sealed class GetInRouteValues : global::SafeRouting.IPageRouteValues
     {
+      /// <summary>
+      /// Initialises a new instance of the <see cref="GetInRouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public GetInRouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -88,7 +109,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
     
     /// <summary>
@@ -98,6 +119,15 @@ namespace Routes
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public sealed class GetOutRouteValues : global::SafeRouting.IPageRouteValues
     {
+      /// <summary>
+      /// Initialises a new instance of the <see cref="GetOutRouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public GetOutRouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -109,7 +139,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
   }
 }

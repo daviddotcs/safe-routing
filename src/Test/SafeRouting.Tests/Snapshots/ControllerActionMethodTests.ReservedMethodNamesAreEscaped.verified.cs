@@ -20,9 +20,10 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.classRouteValues @class()
       {
-        var routeInfo = new Support.Controllers_Products.classRouteValues();
-        routeInfo.RouteValues["area"] = "";
-        return routeInfo;
+        return new Support.Controllers_Products.classRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = ""
+        });
       }
     }
   }
@@ -37,6 +38,15 @@ namespace Routes
     public sealed class classRouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="classRouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public classRouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -47,7 +57,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
   }
 }

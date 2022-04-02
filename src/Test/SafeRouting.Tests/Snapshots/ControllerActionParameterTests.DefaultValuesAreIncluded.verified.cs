@@ -20,20 +20,21 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.IndexRouteValues Index(global::System.DateTime a = default, int b = 5, string c = "he\"llo\\", global::System.DayOfWeek d = (global::System.DayOfWeek)3, bool e = false, bool f = true, string g = "ProductsController", char h = '?', char i = '*', char j = '\'', char k = '\\')
       {
-        var routeInfo = new Support.Controllers_Products.IndexRouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        routeInfo.RouteValues[routeInfo.Parameters.C.Name] = c;
-        routeInfo.RouteValues[routeInfo.Parameters.D.Name] = d;
-        routeInfo.RouteValues[routeInfo.Parameters.E.Name] = e;
-        routeInfo.RouteValues[routeInfo.Parameters.F.Name] = f;
-        routeInfo.RouteValues[routeInfo.Parameters.G.Name] = g;
-        routeInfo.RouteValues[routeInfo.Parameters.H.Name] = h;
-        routeInfo.RouteValues[routeInfo.Parameters.I.Name] = i;
-        routeInfo.RouteValues[routeInfo.Parameters.J.Name] = j;
-        routeInfo.RouteValues[routeInfo.Parameters.K.Name] = k;
-        return routeInfo;
+        return new Support.Controllers_Products.IndexRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b,
+          ["c"] = c,
+          ["d"] = d,
+          ["e"] = e,
+          ["f"] = f,
+          ["g"] = g,
+          ["h"] = h,
+          ["i"] = i,
+          ["j"] = j,
+          ["k"] = k
+        });
       }
     }
   }
@@ -48,6 +49,15 @@ namespace Routes
     public sealed class IndexRouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="IndexRouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public IndexRouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -58,7 +68,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char)"/> which can be used in the route.

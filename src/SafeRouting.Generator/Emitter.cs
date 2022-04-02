@@ -96,21 +96,26 @@ namespace SafeRouting.Generator
       writer.WriteLine("{");
       writer.Indent++;
 
-      writer.WriteLine($"var routeInfo = new {returnType}();");
+      writer.WriteLine($"return new {returnType}(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()");
+      writer.WriteLine("{");
+      writer.Indent++;
 
-      writer.Write("routeInfo.RouteValues[\"area\"] = \"");
+      writer.Write("[\"area\"] = \"");
       if ((method.Area ?? item.Area) is string area)
       {
         writer.Write(CSharpSupport.EscapeStringLiteral(area));
       }
-      writer.WriteLine("\";");
+      writer.Write("\"");
 
       foreach (var parameter in parameters)
       {
-        writer.WriteLine($"routeInfo.RouteValues[routeInfo.Parameters.{parameter.PropertyName}.Name] = {parameter.EscapedName};");
+        writer.WriteLine(",");
+        writer.Write($"[\"{parameter.StringEscapedRouteKey}\"] = {parameter.EscapedName}");
       }
 
-      writer.WriteLine("return routeInfo;");
+      writer.WriteLine();
+      writer.Indent--;
+      writer.WriteLine("});");
 
       // End of method block
       writer.Indent--;
@@ -224,7 +229,7 @@ namespace SafeRouting.Generator
           scopeType: "ParameterData",
           valueType: parameter.Type,
           propertyName: parameter.PropertyName,
-          keyName: parameter.BindingSource?.Name ?? parameter.OriginalName);
+          stringEscapedKeyName: parameter.StringEscapedRouteKey);
       }
 
       writer.Indent--;
@@ -256,13 +261,13 @@ namespace SafeRouting.Generator
           scopeType: "PropertyData",
           valueType: property.Type,
           propertyName: property.EscapedName,
-          keyName: property.BindingSource?.Name ?? property.OriginalName);
+          stringEscapedKeyName: property.StringEscapedRouteKey);
       }
 
       writer.Indent--;
       writer.WriteLine("}");
     }
-    private static void WriteRouteKeyProperty(IndentedTextWriter writer, string scopeType, TypeInfo valueType, string propertyName, string keyName)
+    private static void WriteRouteKeyProperty(IndentedTextWriter writer, string scopeType, TypeInfo valueType, string propertyName, string stringEscapedKeyName)
     {
       var indentLevel = writer.Indent;
 
@@ -275,7 +280,7 @@ namespace SafeRouting.Generator
 
       writer.Write($"public global::{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}> {propertyName}");
       writer.Write(" { get; } = new global::");
-      writer.WriteLine($"{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}>(\"{CSharpSupport.EscapeStringLiteral(keyName)}\");");
+      writer.WriteLine($"{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}>(\"{stringEscapedKeyName}\");");
 
       if (!valueType.AnnotationsEnabled)
       {
@@ -320,6 +325,18 @@ namespace SafeRouting.Generator
       writer.Indent++;
 
       writer.WriteLine("/// <summary>");
+      writer.WriteLine($"/// Initialises a new instance of the <see cref=\"{methodClassName}\"/> class.");
+      writer.WriteLine("/// </summary>");
+      writer.WriteLine($"/// <param name=\"routeValues\">The initial values for the route.</param>");
+      writer.WriteLine($"public {methodClassName}(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)");
+      writer.WriteLine("{");
+      writer.Indent++;
+      writer.WriteLine("RouteValues = routeValues;");
+      writer.Indent--;
+      writer.WriteLine("}");
+      writer.WriteLine();
+
+      writer.WriteLine("/// <summary>");
       writer.WriteLine($"/// The name of the {item.Noun.ToLowerInvariant()} for the route.");
       writer.WriteLine("/// </summary>");
       writer.WriteLine($"public string {item.Noun}Name => \"{item.RouteValue}\";");
@@ -327,19 +344,12 @@ namespace SafeRouting.Generator
       writer.WriteLine("/// <summary>");
       writer.WriteLine($"/// The name of the {item.DivisionName.ToLowerInvariant()} for the route.");
       writer.WriteLine("/// </summary>");
-      writer.Write("public string");
-      if (method.DivisionRouteValue is null)
-      {
-        writer.Write("?");
-      }
-      writer.Write($" {item.DivisionName}Name => ");
-      writer.Write(method.DivisionRouteValue is null ? "null" : $"\"{CSharpSupport.EscapeStringLiteral(method.DivisionRouteValue)}\"");
-      writer.WriteLine(";");
+      writer.WriteLine($"public string{(method.DivisionRouteValue is null ? "?" : null)} {item.DivisionName}Name => {(method.DivisionRouteValue is null ? "null" : $"\"{CSharpSupport.EscapeStringLiteral(method.DivisionRouteValue)}\"")};");
 
       writer.WriteLine("/// <summary>");
       writer.WriteLine("/// Values for the route.");
       writer.WriteLine("/// </summary>");
-      writer.WriteLine("public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();");
+      writer.WriteLine("public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }");
 
       if (item.Properties.Count > 0)
       {

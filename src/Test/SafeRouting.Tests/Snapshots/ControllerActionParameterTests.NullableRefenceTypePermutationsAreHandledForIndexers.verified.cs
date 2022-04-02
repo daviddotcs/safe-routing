@@ -20,11 +20,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T01RouteValues T01(global::System.Collections.Generic.IEnumerable<string> a, global::System.Collections.Generic.IEnumerable<string> b)
       {
-        var routeInfo = new Support.Controllers_Products.T01RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T01RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -32,11 +33,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T02RouteValues T02(global::System.Collections.Generic.IEnumerable<string> a, global::System.Collections.Generic.IEnumerable<string>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T02RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T02RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -44,11 +46,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T03RouteValues T03(global::System.Collections.Generic.IEnumerable<string> a, global::System.Collections.Generic.IEnumerable<string?> b)
       {
-        var routeInfo = new Support.Controllers_Products.T03RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T03RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -56,11 +59,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T04RouteValues T04(global::System.Collections.Generic.IEnumerable<string> a, global::System.Collections.Generic.IEnumerable<string?>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T04RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T04RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -72,11 +76,12 @@ namespace Routes
 #nullable restore
       )
       {
-        var routeInfo = new Support.Controllers_Products.T05RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T05RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -84,11 +89,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T06RouteValues T06(global::System.Collections.Generic.IEnumerable<string>? a, global::System.Collections.Generic.IEnumerable<string> b)
       {
-        var routeInfo = new Support.Controllers_Products.T06RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T06RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -96,11 +102,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T07RouteValues T07(global::System.Collections.Generic.IEnumerable<string>? a, global::System.Collections.Generic.IEnumerable<string>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T07RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T07RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -108,11 +115,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T08RouteValues T08(global::System.Collections.Generic.IEnumerable<string>? a, global::System.Collections.Generic.IEnumerable<string?> b)
       {
-        var routeInfo = new Support.Controllers_Products.T08RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T08RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -120,11 +128,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T09RouteValues T09(global::System.Collections.Generic.IEnumerable<string>? a, global::System.Collections.Generic.IEnumerable<string?>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T09RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T09RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -136,11 +145,12 @@ namespace Routes
 #nullable restore
       )
       {
-        var routeInfo = new Support.Controllers_Products.T10RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T10RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -148,11 +158,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T11RouteValues T11(global::System.Collections.Generic.IEnumerable<string?> a, global::System.Collections.Generic.IEnumerable<string> b)
       {
-        var routeInfo = new Support.Controllers_Products.T11RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T11RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -160,11 +171,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T12RouteValues T12(global::System.Collections.Generic.IEnumerable<string?> a, global::System.Collections.Generic.IEnumerable<string>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T12RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T12RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -172,11 +184,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T13RouteValues T13(global::System.Collections.Generic.IEnumerable<string?> a, global::System.Collections.Generic.IEnumerable<string?> b)
       {
-        var routeInfo = new Support.Controllers_Products.T13RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T13RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -184,11 +197,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T14RouteValues T14(global::System.Collections.Generic.IEnumerable<string?> a, global::System.Collections.Generic.IEnumerable<string?>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T14RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T14RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -200,11 +214,12 @@ namespace Routes
 #nullable restore
       )
       {
-        var routeInfo = new Support.Controllers_Products.T15RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T15RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -212,11 +227,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T16RouteValues T16(global::System.Collections.Generic.IEnumerable<string?>? a, global::System.Collections.Generic.IEnumerable<string> b)
       {
-        var routeInfo = new Support.Controllers_Products.T16RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T16RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -224,11 +240,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T17RouteValues T17(global::System.Collections.Generic.IEnumerable<string?>? a, global::System.Collections.Generic.IEnumerable<string>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T17RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T17RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -236,11 +253,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T18RouteValues T18(global::System.Collections.Generic.IEnumerable<string?>? a, global::System.Collections.Generic.IEnumerable<string?> b)
       {
-        var routeInfo = new Support.Controllers_Products.T18RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T18RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -248,11 +266,12 @@ namespace Routes
       /// </summary>
       public static Support.Controllers_Products.T19RouteValues T19(global::System.Collections.Generic.IEnumerable<string?>? a, global::System.Collections.Generic.IEnumerable<string?>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T19RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T19RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -264,11 +283,12 @@ namespace Routes
 #nullable restore
       )
       {
-        var routeInfo = new Support.Controllers_Products.T20RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T20RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -280,11 +300,12 @@ namespace Routes
 #nullable restore
         global::System.Collections.Generic.IEnumerable<string> b)
       {
-        var routeInfo = new Support.Controllers_Products.T21RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T21RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -296,11 +317,12 @@ namespace Routes
 #nullable restore
         global::System.Collections.Generic.IEnumerable<string>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T22RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T22RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -312,11 +334,12 @@ namespace Routes
 #nullable restore
         global::System.Collections.Generic.IEnumerable<string?> b)
       {
-        var routeInfo = new Support.Controllers_Products.T23RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T23RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -328,11 +351,12 @@ namespace Routes
 #nullable restore
         global::System.Collections.Generic.IEnumerable<string?>? b)
       {
-        var routeInfo = new Support.Controllers_Products.T24RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T24RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
       
       /// <summary>
@@ -344,11 +368,12 @@ namespace Routes
 #nullable restore
       )
       {
-        var routeInfo = new Support.Controllers_Products.T25RouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        return routeInfo;
+        return new Support.Controllers_Products.T25RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["a"] = a,
+          ["b"] = b
+        });
       }
     }
   }
@@ -363,6 +388,15 @@ namespace Routes
     public sealed class T01RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T01RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T01RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -373,7 +407,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T01(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -429,6 +463,15 @@ namespace Routes
     public sealed class T02RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T02RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T02RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -439,7 +482,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T02(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
@@ -497,6 +540,15 @@ namespace Routes
     public sealed class T03RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T03RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T03RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -507,7 +559,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T03(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
@@ -565,6 +617,15 @@ namespace Routes
     public sealed class T04RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T04RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T04RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -575,7 +636,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T04(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
@@ -633,6 +694,15 @@ namespace Routes
     public sealed class T05RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T05RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T05RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -643,7 +713,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T05(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -703,6 +773,15 @@ namespace Routes
     public sealed class T06RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T06RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T06RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -713,7 +792,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T06(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -771,6 +850,15 @@ namespace Routes
     public sealed class T07RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T07RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T07RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -781,7 +869,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T07(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
@@ -837,6 +925,15 @@ namespace Routes
     public sealed class T08RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T08RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T08RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -847,7 +944,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T08(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
@@ -905,6 +1002,15 @@ namespace Routes
     public sealed class T09RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T09RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T09RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -915,7 +1021,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T09(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
@@ -973,6 +1079,15 @@ namespace Routes
     public sealed class T10RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T10RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T10RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -983,7 +1098,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T10(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -1043,6 +1158,15 @@ namespace Routes
     public sealed class T11RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T11RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T11RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1053,7 +1177,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T11(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -1111,6 +1235,15 @@ namespace Routes
     public sealed class T12RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T12RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T12RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1121,7 +1254,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T12(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
@@ -1179,6 +1312,15 @@ namespace Routes
     public sealed class T13RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T13RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T13RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1189,7 +1331,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T13(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
@@ -1245,6 +1387,15 @@ namespace Routes
     public sealed class T14RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T14RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T14RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1255,7 +1406,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T14(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
@@ -1313,6 +1464,15 @@ namespace Routes
     public sealed class T15RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T15RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T15RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1323,7 +1483,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T15(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -1383,6 +1543,15 @@ namespace Routes
     public sealed class T16RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T16RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T16RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1393,7 +1562,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T16(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -1451,6 +1620,15 @@ namespace Routes
     public sealed class T17RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T17RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T17RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1461,7 +1639,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T17(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
@@ -1519,6 +1697,15 @@ namespace Routes
     public sealed class T18RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T18RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T18RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1529,7 +1716,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T18(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
@@ -1587,6 +1774,15 @@ namespace Routes
     public sealed class T19RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T19RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T19RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1597,7 +1793,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T19(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
@@ -1653,6 +1849,15 @@ namespace Routes
     public sealed class T20RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T20RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T20RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1663,7 +1868,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T20(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -1723,6 +1928,15 @@ namespace Routes
     public sealed class T21RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T21RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T21RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1733,7 +1947,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T21(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
@@ -1793,6 +2007,15 @@ namespace Routes
     public sealed class T22RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T22RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T22RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1803,7 +2026,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T22(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
@@ -1863,6 +2086,15 @@ namespace Routes
     public sealed class T23RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T23RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T23RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1873,7 +2105,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T23(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
@@ -1933,6 +2165,15 @@ namespace Routes
     public sealed class T24RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T24RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T24RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -1943,7 +2184,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T24(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
@@ -2003,6 +2244,15 @@ namespace Routes
     public sealed class T25RouteValues : global::SafeRouting.IControllerRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="T25RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public T25RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the controller for the route.
       /// </summary>
       public string ControllerName => "Products";
@@ -2013,7 +2263,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T25(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.

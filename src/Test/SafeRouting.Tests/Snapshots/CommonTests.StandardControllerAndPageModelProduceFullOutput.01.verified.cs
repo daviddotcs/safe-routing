@@ -20,11 +20,12 @@ namespace Routes
       /// </summary>
       public static Support.Pages_Products_Edit.GetRouteValues Get(string name, global::System.Collections.Generic.Dictionary<string, object> bar)
       {
-        var routeInfo = new Support.Pages_Products_Edit.GetRouteValues();
-        routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.Name.Name] = name;
-        routeInfo.RouteValues[routeInfo.Parameters.Bar.Name] = bar;
-        return routeInfo;
+        return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["name"] = name,
+          ["bar"] = bar
+        });
       }
     }
   }
@@ -57,6 +58,15 @@ namespace Routes
     public sealed class GetRouteValues : global::SafeRouting.IPageRouteValues
     {
       /// <summary>
+      /// Initialises a new instance of the <see cref="GetRouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public GetRouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+      
+      /// <summary>
       /// The name of the page for the route.
       /// </summary>
       public string PageName => "/Products/Edit";
@@ -67,7 +77,7 @@ namespace Routes
       /// <summary>
       /// Values for the route.
       /// </summary>
-      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
       
       /// <summary>
       /// Properties of <see cref="global::EditModel"/> which can be used in the route.
