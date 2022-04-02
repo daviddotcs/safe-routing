@@ -16,16 +16,13 @@ namespace Routes
     public static class Products
     {
       /// <summary>
-      /// Generates route values for <see cref="global::ProductsController.Index(string, string, string, string)"/>.
+      /// Generates route values for <see cref="global::ProductsController.Index(string)"/>.
       /// </summary>
-      public static Support.Controllers_Products.IndexRouteValues Index(string a, string b, string c, string d)
+      public static Support.Controllers_Products.IndexRouteValues Index(string @class)
       {
         var routeInfo = new Support.Controllers_Products.IndexRouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
-        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
-        routeInfo.RouteValues[routeInfo.Parameters.C.Name] = c;
-        routeInfo.RouteValues[routeInfo.Parameters.D.Name] = d;
+        routeInfo.RouteValues[routeInfo.Parameters.Class.Name] = @class;
         return routeInfo;
       }
     }
@@ -34,7 +31,7 @@ namespace Routes
   namespace Support.Controllers_Products
   {
     /// <summary>
-    /// Represents route values for routes to <see cref="global::ProductsController.Index(string, string, string, string)"/>.
+    /// Represents route values for routes to <see cref="global::ProductsController.Index(string)"/>.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -54,7 +51,7 @@ namespace Routes
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
       
       /// <summary>
-      /// Parameters of <see cref="global::ProductsController.Index(string, string, string, string)"/> which can be used in the route.
+      /// Parameters of <see cref="global::ProductsController.Index(string)"/> which can be used in the route.
       /// </summary>
       public Index.ParameterData Parameters { get; } = new Index.ParameterData();
       /// <summary>
@@ -81,31 +78,16 @@ namespace Routes
     namespace Index
     {
       /// <summary>
-      /// Represents route keys for parameters to <see cref="global::ProductsController.Index(string, string, string, string)"/>.
+      /// Represents route keys for parameters to <see cref="global::ProductsController.Index(string)"/>.
       /// </summary>
       [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
       [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
       public sealed class ParameterData
       {
         /// <summary>
-        /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string)"/>.
+        /// Route key for the <c>class</c> parameter in <see cref="global::ProductsController.Index(string)"/>.
         /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, string> A { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("a");
-        
-        /// <summary>
-        /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string)"/>.
-        /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, string> B { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("b");
-        
-        /// <summary>
-        /// Route key for the <c>c</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string)"/>.
-        /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, string> C { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("c");
-        
-        /// <summary>
-        /// Route key for the <c>d</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string)"/>.
-        /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, string> D { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("d");
+        public global::SafeRouting.RouteKey<ParameterData, string> Class { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("class");
       }
     }
   }

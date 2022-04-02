@@ -91,16 +91,18 @@ namespace SafeRouting.Generator
 
   internal sealed class MvcPropertyInfo
   {
-    public MvcPropertyInfo(string originalName, string name, TypeInfo type, MvcBindingSourceInfo bindingSource)
+    public MvcPropertyInfo(string originalName, string escapedOriginalName, string escapedName, TypeInfo type, MvcBindingSourceInfo bindingSource)
     {
       OriginalName = originalName;
-      Name = name;
+      EscapedOriginalName = escapedOriginalName;
+      EscapedName = escapedName;
       Type = type;
       BindingSource = bindingSource;
     }
 
     public string OriginalName { get; }
-    public string Name { get; }
+    public string EscapedOriginalName { get; }
+    public string EscapedName { get; }
     public TypeInfo Type { get; }
     public MvcBindingSourceInfo BindingSource { get; }
   }
@@ -146,9 +148,10 @@ namespace SafeRouting.Generator
 
   internal sealed class PageMethodInfo : IMvcMethodInfo
   {
-    public PageMethodInfo(string name, string uniqueName, string? handlerName, string fullyQualifiedMethodDeclaration, IReadOnlyCollection<MvcMethodParameterInfo> parameters)
+    public PageMethodInfo(string name, string escapedName, string uniqueName, string? handlerName, string fullyQualifiedMethodDeclaration, IReadOnlyCollection<MvcMethodParameterInfo> parameters)
     {
       Name = name;
+      EscapedName = escapedName;
       UniqueName = uniqueName;
       HandlerName = handlerName;
       FullyQualifiedMethodDeclaration = fullyQualifiedMethodDeclaration;
@@ -156,12 +159,12 @@ namespace SafeRouting.Generator
     }
 
     public string Name { get; }
+    public string EscapedName { get; }
     public string UniqueName { get; }
     public string? HandlerName { get; }
     public string FullyQualifiedMethodDeclaration { get; }
     public IReadOnlyCollection<MvcMethodParameterInfo> Parameters { get; }
 
-    string IMvcMethodInfo.EscapedName => Name;
     string? IMvcMethodInfo.DivisionRouteValue => HandlerName;
     string? IMvcMethodInfo.Area => null;
 
@@ -171,10 +174,11 @@ namespace SafeRouting.Generator
 
   internal sealed class MvcMethodParameterInfo
   {
-    public MvcMethodParameterInfo(string originalName, string name, TypeInfo type, bool hasExplicitDefault, object? explicitDefaultValue, MvcBindingSourceInfo? bindingSource)
+    public MvcMethodParameterInfo(string originalName, string escapedName, string propertyName, TypeInfo type, bool hasExplicitDefault, object? explicitDefaultValue, MvcBindingSourceInfo? bindingSource)
     {
       OriginalName = originalName;
-      Name = name;
+      EscapedName = escapedName;
+      PropertyName = propertyName;
       Type = type;
       HasExplicitDefault = hasExplicitDefault;
       ExplicitDefaultValue = explicitDefaultValue;
@@ -182,7 +186,8 @@ namespace SafeRouting.Generator
     }
 
     public string OriginalName { get; }
-    public string Name { get; }
+    public string EscapedName { get; }
+    public string PropertyName { get; }
     public TypeInfo Type { get; }
     public bool HasExplicitDefault { get; }
     public object? ExplicitDefaultValue { get; }

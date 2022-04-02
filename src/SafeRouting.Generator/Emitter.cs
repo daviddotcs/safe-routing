@@ -107,7 +107,7 @@ namespace SafeRouting.Generator
 
       foreach (var parameter in parameters)
       {
-        writer.WriteLine($"routeInfo.RouteValues[routeInfo.Parameters.{CSharpSupport.CamelToPascalCase(parameter.Name)}.Name] = {parameter.Name};");
+        writer.WriteLine($"routeInfo.RouteValues[routeInfo.Parameters.{parameter.PropertyName}.Name] = {parameter.EscapedName};");
       }
 
       writer.WriteLine("return routeInfo;");
@@ -123,7 +123,7 @@ namespace SafeRouting.Generator
       writer.WriteLine("/// </summary>");
       writer.WriteLine(CSharpSupport.GetGeneratedCodeAttribute());
       writer.WriteLine(CSharpSupport.GetExcludeFromCodeCoverageAttribute());
-      writer.WriteLine($"{options.GeneratedAccessModifier} static class {item.OutputClassName}");
+      writer.WriteLine($"{options.GeneratedAccessModifier} static class {CSharpSupport.EscapeIdentifier(item.OutputClassName)}");
       writer.WriteLine("{");
       writer.Indent++;
 
@@ -164,7 +164,7 @@ namespace SafeRouting.Generator
           writer.Indent = indentLevel + 1;
         }
 
-        writer.Write($"{parameter.Type.FullyQualifiedName} {parameter.Name}");
+        writer.Write($"{parameter.Type.FullyQualifiedName} {parameter.EscapedName}");
 
         if (parameter.HasExplicitDefault)
         {
@@ -223,7 +223,7 @@ namespace SafeRouting.Generator
         WriteRouteKeyProperty(writer,
           scopeType: "ParameterData",
           valueType: parameter.Type,
-          propertyName: CSharpSupport.CamelToPascalCase(parameter.Name),
+          propertyName: parameter.PropertyName,
           keyName: parameter.BindingSource?.Name ?? parameter.OriginalName);
       }
 
@@ -250,12 +250,12 @@ namespace SafeRouting.Generator
         }
 
         writer.WriteLine("/// <summary>");
-        writer.WriteLine($"/// Route key for the property <see cref=\"{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}.{property.OriginalName}\"/>.");
+        writer.WriteLine($"/// Route key for the property <see cref=\"{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}.{property.EscapedOriginalName}\"/>.");
         writer.WriteLine("/// </summary>");
         WriteRouteKeyProperty(writer,
           scopeType: "PropertyData",
           valueType: property.Type,
-          propertyName: property.Name,
+          propertyName: property.EscapedName,
           keyName: property.BindingSource?.Name ?? property.OriginalName);
       }
 

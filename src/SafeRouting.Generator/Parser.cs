@@ -29,7 +29,7 @@ namespace SafeRouting.Generator
       var generatedNamespace = GeneratorSupport.DefaultGeneratedRootNamespace;
       if (optionsProvider.GlobalOptions.TryGetValue(GeneratorSupport.GeneratedNamespaceOption, out var generatedNamespaceValue))
       {
-        if (generatedNamespaceValue.Split('.').All(x => CSharpSupport.IsValidIdentifier(x)))
+        if (generatedNamespaceValue.Split('.').All(x => SyntaxFacts.IsValidIdentifier(x)))
         {
           generatedNamespace = generatedNamespaceValue;
         }
@@ -196,7 +196,7 @@ namespace SafeRouting.Generator
                 break;
               }
 
-              if (CSharpSupport.IsValidIdentifier(generatorNameValue))
+              if (SyntaxFacts.IsValidIdentifier(generatorNameValue))
               {
                 generatorName = CSharpSupport.CamelToPascalCase(generatorNameValue);
               }
@@ -301,7 +301,7 @@ namespace SafeRouting.Generator
 
       methods = methodIdentifierDictionary.Values;
     }
-    private static bool TryGetControllerMethodAttributes(SourceProductionContext context, IMethodSymbol methodSymbol, out string? areaName, ref string name, ref string escapedName, ref string actionName)
+    private static bool TryGetControllerMethodAttributes(SourceProductionContext context, IMethodSymbol methodSymbol, out string? areaName, ref string name, ref string actionName)
     {
       areaName = null;
 
@@ -330,10 +330,9 @@ namespace SafeRouting.Generator
           case GeneratorClassNames.RouteGeneratorNameAttribute:
             if (attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
             {
-              if (CSharpSupport.IsValidIdentifier(generatorNameValue))
+              if (SyntaxFacts.IsValidIdentifier(generatorNameValue))
               {
                 name = CSharpSupport.CamelToPascalCase(generatorNameValue);
-                escapedName = name;
               }
               else
               {
@@ -348,17 +347,13 @@ namespace SafeRouting.Generator
     }
     private static ControllerMethodInfo? GetControllerMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
-      var name = methodSymbol.Name;
-      var escapedName = methodSymbol.ToDisplayString(EscapedIdentifierSymbolDisplayFormat);
-      if (name.EndsWith("Async", StringComparison.Ordinal))
-      {
-        name = name.Substring(0, name.Length - "Async".Length);
-        escapedName = name;
-      }
+      var name = methodSymbol.Name.EndsWith("Async", StringComparison.Ordinal)
+        ? methodSymbol.Name.Substring(0, methodSymbol.Name.Length - "Async".Length)
+        : methodSymbol.Name;
 
       var actionName = name;
 
-      if (!TryGetControllerMethodAttributes(context, methodSymbol, out var areaName, ref name, ref escapedName, ref actionName)
+      if (!TryGetControllerMethodAttributes(context, methodSymbol, out var areaName, ref name, ref actionName)
         || name.Length == 0)
       {
         return null;
@@ -380,7 +375,10 @@ namespace SafeRouting.Generator
         }
       }
 
-      return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
+      var escapedName = CSharpSupport.EscapeIdentifier(name);
+      var fullyQualifiedMethodDeclaration = methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat);
+
+      return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, fullyQualifiedMethodDeclaration, parameters);
     }
     private static bool TryGetMvcMethodParameterAttributes(SourceProductionContext context, IParameterSymbol parameterSymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
     {
@@ -439,7 +437,7 @@ namespace SafeRouting.Generator
           case GeneratorClassNames.RouteGeneratorNameAttribute:
             if (attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
             {
-              if (CSharpSupport.IsValidIdentifier(generatorNameValue))
+              if (SyntaxFacts.IsValidIdentifier(generatorNameValue))
               {
                 generatorName = CSharpSupport.PascalToCamelCase(generatorNameValue);
               }
@@ -469,9 +467,11 @@ namespace SafeRouting.Generator
         return null;
       }
 
+      var escapedName = CSharpSupport.EscapeIdentifier(generatorName);
+      var propertyName = CSharpSupport.EscapeIdentifier(CSharpSupport.CamelToPascalCase(generatorName));
       var type = GetTypeInfo(parameterSymbol, parameterSymbol.Type, semanticModel);
 
-      return new MvcMethodParameterInfo(name, generatorName, type, parameterSymbol.HasExplicitDefaultValue, parameterSymbol.HasExplicitDefaultValue ? parameterSymbol.ExplicitDefaultValue : null, bindingSource);
+      return new MvcMethodParameterInfo(name, escapedName, propertyName, type, parameterSymbol.HasExplicitDefaultValue, parameterSymbol.HasExplicitDefaultValue ? parameterSymbol.ExplicitDefaultValue : null, bindingSource);
     }
     private static bool TryGetMvcPropertyAttributes(SourceProductionContext context, IPropertySymbol propertySymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
     {
@@ -529,7 +529,7 @@ namespace SafeRouting.Generator
           case GeneratorClassNames.RouteGeneratorNameAttribute:
             if (attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
             {
-              if (CSharpSupport.IsValidIdentifier(generatorNameValue))
+              if (SyntaxFacts.IsValidIdentifier(generatorNameValue))
               {
                 generatorName = CSharpSupport.CamelToPascalCase(generatorNameValue);
               }
@@ -560,9 +560,12 @@ namespace SafeRouting.Generator
         return null;
       }
 
+      var originalName = propertySymbol.Name;
+      var escapedOriginalName = CSharpSupport.EscapeIdentifier(originalName);
+      var escapedName = CSharpSupport.EscapeIdentifier(generatorName);
       var type = GetTypeInfo(propertySymbol, propertySymbol.Type, semanticModel);
 
-      return new MvcPropertyInfo(propertySymbol.Name, generatorName, type, bindingSource);
+      return new MvcPropertyInfo(originalName, escapedOriginalName, escapedName, type, bindingSource);
     }
     private static void GetPageAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName)
     {
@@ -584,7 +587,7 @@ namespace SafeRouting.Generator
           case GeneratorClassNames.RouteGeneratorNameAttribute:
             if (attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
             {
-              if (CSharpSupport.IsValidIdentifier(generatorNameValue))
+              if (SyntaxFacts.IsValidIdentifier(generatorNameValue))
               {
                 generatorName = CSharpSupport.CamelToPascalCase(generatorNameValue);
               }
@@ -676,7 +679,7 @@ namespace SafeRouting.Generator
           case GeneratorClassNames.RouteGeneratorNameAttribute:
             if (attribute.TryGetOptionalStringArgumentAttribute(out var generatorNameValue))
             {
-              if (CSharpSupport.IsValidIdentifier(generatorNameValue))
+              if (SyntaxFacts.IsValidIdentifier(generatorNameValue))
               {
                 name = CSharpSupport.CamelToPascalCase(generatorNameValue);
               }
@@ -704,7 +707,9 @@ namespace SafeRouting.Generator
         }
       }
 
-      return new PageMethodInfo(name, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
+      var escapedName= CSharpSupport.EscapeIdentifier(name);
+
+      return new PageMethodInfo(name, escapedName, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
     }
     private static TypeInfo GetTypeInfo(ISymbol symbol, ITypeSymbol typeSymbol, SemanticModel semanticModel)
     {
@@ -807,9 +812,6 @@ namespace SafeRouting.Generator
 
     private static SymbolDisplayFormat UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat { get; } = UniqueClassMemberSymbolDisplayFormat
       .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
-
-    private static SymbolDisplayFormat EscapedIdentifierSymbolDisplayFormat { get; } = new SymbolDisplayFormat(
-      miscellaneousOptions: SymbolDisplayMiscellaneousOptions.EscapeKeywordIdentifiers);
 
     private static SymbolDisplayFormat FullyQualifiedWithAnnotationsFormat { get; } = SymbolDisplayFormat.FullyQualifiedFormat
       .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);

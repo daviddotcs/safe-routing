@@ -190,7 +190,6 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 * Pages must have a `PageModel` inheriting class within a `.cshtml.cs` file in either a `Pages` or `Areas/{area name}/Pages` directory at any depth to be discovered.
 * Multiple classes which inherit from `PageModel` cannot be declared in the same `.cshtml.cs` file.
 * Custom attributes which affect routing are unsupported and will be ignored by the source generator.
-* Using identifiers which need to be escaped with `@` for names of classes, properties, or parameters is unsupported.
 * Nullable annotations on parameter and property types are respected, but attributes affecting nullability are not copied across to the generated code.
 * Generic classes, nested classes, and non-public classes which inherit from `PageModel` are ignored by the source generator.
 * For .NET 7, it is recommended to either continue using the `[FromServices]` attribute for parameters which are implicitly injected, or to replace it with `[ExcludeFromRouteGenerator]`. Otherwise injected parameters will be included in the method signatures of the generated route methods.

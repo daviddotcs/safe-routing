@@ -16,13 +16,24 @@ namespace Routes
     public static class Products
     {
       /// <summary>
-      /// Generates route values for <see cref="global::ProductsController.Index(string)"/>.
+      /// Generates route values for <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
       /// </summary>
-      public static Support.Controllers_Products.IndexRouteValues Index(string renamed)
+      public static Support.Controllers_Products.IndexRouteValues Index(string a, string b, string renamedC, string camelCaseRenamedD, string @class, string ᛯ, string @_, string è, string aःb, string j0, string k‿a, string l­a)
       {
         var routeInfo = new Support.Controllers_Products.IndexRouteValues();
         routeInfo.RouteValues["area"] = "";
-        routeInfo.RouteValues[routeInfo.Parameters.Renamed.Name] = renamed;
+        routeInfo.RouteValues[routeInfo.Parameters.A.Name] = a;
+        routeInfo.RouteValues[routeInfo.Parameters.B.Name] = b;
+        routeInfo.RouteValues[routeInfo.Parameters.RenamedC.Name] = renamedC;
+        routeInfo.RouteValues[routeInfo.Parameters.CamelCaseRenamedD.Name] = camelCaseRenamedD;
+        routeInfo.RouteValues[routeInfo.Parameters.Class.Name] = @class;
+        routeInfo.RouteValues[routeInfo.Parameters.ᛯ.Name] = ᛯ;
+        routeInfo.RouteValues[routeInfo.Parameters.@_.Name] = @_;
+        routeInfo.RouteValues[routeInfo.Parameters.È.Name] = è;
+        routeInfo.RouteValues[routeInfo.Parameters.Aःb.Name] = aःb;
+        routeInfo.RouteValues[routeInfo.Parameters.J0.Name] = j0;
+        routeInfo.RouteValues[routeInfo.Parameters.K‿a.Name] = k‿a;
+        routeInfo.RouteValues[routeInfo.Parameters.L­a.Name] = l­a;
         return routeInfo;
       }
     }
@@ -31,7 +42,7 @@ namespace Routes
   namespace Support.Controllers_Products
   {
     /// <summary>
-    /// Represents route values for routes to <see cref="global::ProductsController.Index(string)"/>.
+    /// Represents route values for routes to <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -51,7 +62,7 @@ namespace Routes
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; } = new global::Microsoft.AspNetCore.Routing.RouteValueDictionary();
       
       /// <summary>
-      /// Parameters of <see cref="global::ProductsController.Index(string)"/> which can be used in the route.
+      /// Parameters of <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/> which can be used in the route.
       /// </summary>
       public Index.ParameterData Parameters { get; } = new Index.ParameterData();
       /// <summary>
@@ -78,16 +89,71 @@ namespace Routes
     namespace Index
     {
       /// <summary>
-      /// Represents route keys for parameters to <see cref="global::ProductsController.Index(string)"/>.
+      /// Represents route keys for parameters to <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
       /// </summary>
       [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
       [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
       public sealed class ParameterData
       {
         /// <summary>
-        /// Route key for the <c>myParameter</c> parameter in <see cref="global::ProductsController.Index(string)"/>.
+        /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
         /// </summary>
-        public global::SafeRouting.RouteKey<ParameterData, string> Renamed { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("myParameter");
+        public global::SafeRouting.RouteKey<ParameterData, string> A { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("a");
+        
+        /// <summary>
+        /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> B { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("b");
+        
+        /// <summary>
+        /// Route key for the <c>c</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> RenamedC { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("c");
+        
+        /// <summary>
+        /// Route key for the <c>d</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> CamelCaseRenamedD { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("d");
+        
+        /// <summary>
+        /// Route key for the <c>e</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> Class { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("e");
+        
+        /// <summary>
+        /// Route key for the <c>f</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> ᛯ { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("f");
+        
+        /// <summary>
+        /// Route key for the <c>g</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> @_ { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("g");
+        
+        /// <summary>
+        /// Route key for the <c>h</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> È { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("h");
+        
+        /// <summary>
+        /// Route key for the <c>i</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> Aःb { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("i");
+        
+        /// <summary>
+        /// Route key for the <c>j</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> J0 { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("j");
+        
+        /// <summary>
+        /// Route key for the <c>k</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> K‿a { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("k");
+        
+        /// <summary>
+        /// Route key for the <c>l</c> parameter in <see cref="global::ProductsController.Index(string, string, string, string, string, string, string, string, string, string, string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> L­a { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("l");
       }
     }
   }

@@ -191,6 +191,19 @@ public sealed class ControllerTests
   }
 
   [Fact]
+  public Task EscapedControllerNamesAreHandled()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class @class : Controller
+      {
+        public IActionResult Index() => View();
+      }
+    ");
+  }
+
+  [Fact]
   public Task ExcludedControllersAreExcluded()
   {
     return TestHelper.Verify(@"

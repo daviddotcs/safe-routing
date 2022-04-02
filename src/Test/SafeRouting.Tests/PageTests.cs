@@ -74,6 +74,21 @@ public sealed class PageTests
   }
 
   [Fact]
+  public Task EscapedPageNamesAreHandled()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class @class : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+  }
+
+  [Fact]
   public Task ExcludedPagesAreExcluded()
   {
     return TestHelper.Verify(@"

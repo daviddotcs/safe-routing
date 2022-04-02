@@ -74,6 +74,22 @@ public sealed class ControllerPropertyTests
   }
 
   [Fact]
+  public Task EscapedPropertyNamesAreHandled()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      [BindProperties]
+      public sealed class ProductsController : Controller
+      {
+        public string? @class { get; set; }
+
+        public IActionResult Index() => View();
+      }
+    ");
+  }
+
+  [Fact]
   public Task ExcludedPropertiesAreExcluded()
   {
     return TestHelper.Verify(@"

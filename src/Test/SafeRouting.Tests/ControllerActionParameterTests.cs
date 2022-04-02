@@ -56,6 +56,19 @@ public sealed class ControllerActionParameterTests
   }
 
   [Fact]
+  public Task EscapedParameterNamesAreHandled()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class ProductsController : Controller
+      {
+        public IActionResult Index(string @class) => View();
+      }
+    ");
+  }
+
+  [Fact]
   public Task ExcludedParametersAreExcluded()
   {
     return TestHelper.Verify(@"
@@ -78,7 +91,12 @@ public sealed class ControllerActionParameterTests
 
       public sealed class ProductsController : Controller
       {
-        public IActionResult Index([RouteGeneratorName(""%&*$#(."")] string myValue) => View();
+        public IActionResult Index(
+          [RouteGeneratorName(""%&*$#(."")] string a,
+          [RouteGeneratorName("""")] string b,
+          [RouteGeneratorName(""3"")] string c,
+          [RouteGeneratorName(""@"")] string d
+        ) => View();
       }
     ");
   }
@@ -227,7 +245,20 @@ public sealed class ControllerActionParameterTests
 
       public sealed class ProductsController : Controller
       {
-        public IActionResult Index([RouteGeneratorName(""Renamed"")] string myParameter) => View();
+        public IActionResult Index(
+          [RouteGeneratorName(""A"")] string a,
+          [RouteGeneratorName(""b"")] string b,
+          [RouteGeneratorName(""RenamedC"")] string c,
+          [RouteGeneratorName(""camelCaseRenamedD"")] string d,
+          [RouteGeneratorName(""class"")] string e,
+          [RouteGeneratorName(""\u16EF"")] string f, // Nl category
+          [RouteGeneratorName(""_"")] string g,
+          [RouteGeneratorName(""e\u0300"")] string h, // Mn category
+          [RouteGeneratorName(""a\u0903b"")] string i, // Mc category
+          [RouteGeneratorName(""j0"")] string j, // Nd category
+          [RouteGeneratorName(""k\u203Fa"")] string k, // Pc category
+          [RouteGeneratorName(""l\u00ADa"")] string l // Cf category
+        ) => View();
       }
     ");
   }
