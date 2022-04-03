@@ -463,8 +463,8 @@ namespace SafeRouting.Generator
       public string TitleCaseNoun { get; }
       public string TitleCasePluralNoun { get; }
 
-      public static MemberType Parameter { get; } = new MemberType("Parameter", "Parameters");
-      public static MemberType Property { get; } = new MemberType("Property", "Properties");
+      public static MemberType Parameter { get; } = new("Parameter", "Parameters");
+      public static MemberType Property { get; } = new("Property", "Properties");
     }
   }
 }

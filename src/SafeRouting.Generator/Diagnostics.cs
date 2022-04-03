@@ -22,7 +22,7 @@ namespace SafeRouting.Generator
     public static Diagnostic CreateUnsupportedLanguageVersionDiagnostic()
       => Diagnostic.Create(UnsupportedLanguageVersionDescriptor, location: null);
 
-    private static DiagnosticDescriptor ConflictingMethodsDescriptor { get; } = new(
+    private static readonly DiagnosticDescriptor ConflictingMethodsDescriptor = new(
       id: "CSR0001",
       title: "Conflicting methods",
       messageFormat: "The class '{0}' contains multiple methods which map to the route method '{1}'.",
@@ -30,7 +30,7 @@ namespace SafeRouting.Generator
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
-    private static DiagnosticDescriptor InvalidOptionsDescriptor { get; } = new(
+    private static readonly DiagnosticDescriptor InvalidOptionsDescriptor = new(
       id: "CSR0002",
       title: "Invalid options",
       messageFormat: "Value for the option '{0}' is invalid. {1}",
@@ -38,7 +38,7 @@ namespace SafeRouting.Generator
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
-    private static DiagnosticDescriptor InvalidIdentifierDescriptor { get; } = new(
+    private static readonly DiagnosticDescriptor InvalidIdentifierDescriptor = new(
       id: "CSR0003",
       title: "Invalid identifier",
       messageFormat: "The text '{0}' is not a valid C# identifier.",
@@ -46,7 +46,7 @@ namespace SafeRouting.Generator
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
-    private static DiagnosticDescriptor ConflictingControllerDescriptor { get; } = new(
+    private static readonly DiagnosticDescriptor ConflictingControllerDescriptor = new(
       id: "CSR0004",
       title: "Conflicting Controller",
       messageFormat: "The controller '{0}' conflicts with another controller of the same name.",
@@ -54,7 +54,7 @@ namespace SafeRouting.Generator
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
-    private static DiagnosticDescriptor ConflictingPageClassDescriptor { get; } = new(
+    private static readonly DiagnosticDescriptor ConflictingPageClassDescriptor = new(
       id: "CSR0005",
       title: "Conflicting PageModel Class",
       messageFormat: "The page class '{0}' conflicts with another page class with the same resulting name.",
@@ -62,7 +62,7 @@ namespace SafeRouting.Generator
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
-    private static DiagnosticDescriptor UnsupportedLanguageVersionDescriptor { get; } = new(
+    private static readonly DiagnosticDescriptor UnsupportedLanguageVersionDescriptor = new(
       id: "CSR0006",
       title: "Unsupported Language Version",
       messageFormat: "C# 8 or later is required for route generation.",

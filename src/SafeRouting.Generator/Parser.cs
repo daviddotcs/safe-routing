@@ -247,65 +247,25 @@ namespace SafeRouting.Generator
 
         foreach (var member in symbol.GetMembers())
         {
-          if (member.IsAbstract || member.IsImplicitlyDeclared || member.IsStatic || member.DeclaredAccessibility != Accessibility.Public)
-          {
-            continue;
-          }
-
-          var displayName = member.ToDisplayString(UniqueClassMemberSymbolDisplayFormat);
-
-          if (!accessedMembers.Add(displayName))
+          if (member.IsAbstract || member.IsImplicitlyDeclared || member.IsStatic || member.DeclaredAccessibility != Accessibility.Public
+            || !accessedMembers.Add(member.ToDisplayString(UniqueClassMemberSymbolDisplayFormat)))
           {
             continue;
           }
 
           if (member is IPropertySymbol propertySymbol)
           {
-            if (propertySymbol.GetMethod?.DeclaredAccessibility != Accessibility.Public || propertySymbol.SetMethod?.DeclaredAccessibility != Accessibility.Public || GetMvcPropertyInfo(context, propertySymbol, defaultBindingSource, classInfo.SemanticModel) is not MvcPropertyInfo propertyInfo)
+            if (GetMvcPropertyInfo(context, propertySymbol, defaultBindingSource, classInfo.SemanticModel) is MvcPropertyInfo propertyInfo)
             {
-              continue;
+              properties.Add(propertyInfo);
             }
-
-            properties.Add(propertyInfo);
           }
           else if (member is IMethodSymbol methodSymbol)
           {
-            if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod || GetControllerMethodInfo(context, methodSymbol, classInfo.SemanticModel) is not ControllerMethodInfo method)
+            if (GetControllerMethodInfo(context, methodSymbol, classInfo.SemanticModel) is ControllerMethodInfo method)
             {
-              continue;
+              AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifierDictionary, urlAffectedIdentifiers, methodNames, context);
             }
-
-            var identifier = $"{method.Name}({string.Join(", ", method.Parameters.Select(x => x.Type.FullyQualifiedName))})";
-
-            // Collapse multiple methods with the same parameters
-            if (methodIdentifierDictionary.ContainsKey(identifier))
-            {
-              continue;
-            }
-
-            var urlAffectedIdentifier = $"{method.Name}({string.Join(", ", method.Parameters.Where(x => x.AffectsUrl()).Select(x => x.Type.FullyQualifiedName))})";
-
-            if (!urlAffectedIdentifiers.Add(urlAffectedIdentifier))
-            {
-              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.TypeSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
-              continue;
-            }
-
-            // Methods with the same name but different parameters need to be given unique identifiers for the code generated classes
-            if (!methodNames.Add(method.Name))
-            {
-              var suffix = 2;
-              string uniqueName;
-
-              do
-              {
-                uniqueName = FormattableString.Invariant($"{method.Name}{suffix++:D}");
-              } while (!methodNames.Add(uniqueName));
-
-              method = method with { UniqueName = uniqueName };
-            }
-
-            methodIdentifierDictionary[identifier] = method;
           }
         }
 
@@ -364,6 +324,11 @@ namespace SafeRouting.Generator
     }
     private static ControllerMethodInfo? GetControllerMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
+      if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod)
+      {
+        return null;
+      }
+
       var name = methodSymbol.Name.EndsWith("Async", StringComparison.Ordinal)
         ? methodSymbol.Name.Substring(0, methodSymbol.Name.Length - "Async".Length)
         : methodSymbol.Name;
@@ -397,6 +362,40 @@ namespace SafeRouting.Generator
 
       return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, fullyQualifiedMethodDeclaration, parameters);
     }
+    private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, IDictionary<string, ControllerMethodInfo> methodIdentifierDictionary, ISet<string> urlAffectedIdentifiers, ISet<string> methodNames, SourceProductionContext context)
+    {
+      var identifier = $"{method.Name}({string.Join(", ", method.Parameters.Select(x => x.Type.FullyQualifiedName))})";
+
+      // Collapse multiple methods with the same parameters
+      if (methodIdentifierDictionary.ContainsKey(identifier))
+      {
+        return;
+      }
+
+      var urlAffectedIdentifier = $"{method.Name}({string.Join(", ", method.Parameters.Where(x => x.AffectsUrl()).Select(x => x.Type.FullyQualifiedName))})";
+
+      if (!urlAffectedIdentifiers.Add(urlAffectedIdentifier))
+      {
+        context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.TypeSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
+        return;
+      }
+
+      // Methods with the same name but different parameters need to be given unique identifiers for the code generated classes
+      if (!methodNames.Add(method.Name))
+      {
+        var suffix = 2;
+        string uniqueName;
+
+        do
+        {
+          uniqueName = FormattableString.Invariant($"{method.Name}{suffix++:D}");
+        } while (!methodNames.Add(uniqueName));
+
+        method = method with { UniqueName = uniqueName };
+      }
+
+      methodIdentifierDictionary[identifier] = method;
+    }
     private static bool TryGetMvcMethodParameterAttributes(SourceProductionContext context, IParameterSymbol parameterSymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
     {
       bindingSource = null;
@@ -406,38 +405,23 @@ namespace SafeRouting.Generator
         switch (attribute.AttributeClass?.ToDisplayString())
         {
           case AspNetClassNames.FromBodyAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Body);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Body);
             break;
 
           case AspNetClassNames.FromFormAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Form);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Form);
             break;
 
           case AspNetClassNames.FromHeaderAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Header);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Header);
             break;
 
           case AspNetClassNames.FromQueryAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Query);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Query);
             break;
 
           case AspNetClassNames.FromRouteAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Route);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Route);
             break;
 
           case AspNetClassNames.FromServicesAttribute:
@@ -501,45 +485,27 @@ namespace SafeRouting.Generator
         switch (attribute.AttributeClass?.ToDisplayString())
         {
           case AspNetClassNames.BindPropertyAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Custom);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Custom);
             break;
 
           case AspNetClassNames.FromBodyAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Body);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Body);
             break;
 
           case AspNetClassNames.FromFormAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Form);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Form);
             break;
 
           case AspNetClassNames.FromHeaderAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Header);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Header);
             break;
 
           case AspNetClassNames.FromQueryAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Query);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Query);
             break;
 
           case AspNetClassNames.FromRouteAttribute:
-            if (bindingSource is null)
-            {
-              bindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Route);
-            }
+            bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Route);
             break;
 
           case GeneratorClassNames.ExcludeFromRouteGeneratorAttribute:
@@ -565,6 +531,11 @@ namespace SafeRouting.Generator
     }
     private static MvcPropertyInfo? GetMvcPropertyInfo(SourceProductionContext context, IPropertySymbol propertySymbol, MvcBindingSourceInfo? defaultBindingSource, SemanticModel semanticModel)
     {
+      if (propertySymbol.GetMethod?.DeclaredAccessibility != Accessibility.Public || propertySymbol.SetMethod?.DeclaredAccessibility != Accessibility.Public)
+      {
+        return null;
+      }
+
       var generatorName = propertySymbol.Name;
 
       if (!TryGetMvcPropertyAttributes(context, propertySymbol, ref generatorName, out var bindingSource))
@@ -596,12 +567,7 @@ namespace SafeRouting.Generator
         switch (attribute.AttributeClass?.ToDisplayString())
         {
           case AspNetClassNames.BindPropertiesAttribute:
-            if (defaultBindingSource is not null)
-            {
-              break;
-            }
-
-            defaultBindingSource = new MvcBindingSourceInfo(MvcBindingSourceType.Custom);
+            defaultBindingSource ??= new MvcBindingSourceInfo(MvcBindingSourceType.Custom);
             break;
 
           case GeneratorClassNames.RouteGeneratorNameAttribute:
@@ -653,16 +619,14 @@ namespace SafeRouting.Generator
 
           if (member is IPropertySymbol propertySymbol)
           {
-            if (propertySymbol.GetMethod?.DeclaredAccessibility != Accessibility.Public || propertySymbol.SetMethod?.DeclaredAccessibility != Accessibility.Public || GetMvcPropertyInfo(context, propertySymbol, defaultBindingSource, classInfo.SemanticModel) is not MvcPropertyInfo propertyInfo)
+            if (GetMvcPropertyInfo(context, propertySymbol, defaultBindingSource, classInfo.SemanticModel) is MvcPropertyInfo propertyInfo)
             {
-              continue;
+              properties.Add(propertyInfo);
             }
-
-            properties.Add(propertyInfo);
           }
           else if (member is IMethodSymbol methodSymbol)
           {
-            if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod || GetPageMethodInfo(context, methodSymbol, classInfo.SemanticModel) is not PageMethodInfo method)
+            if (GetPageMethodInfo(context, methodSymbol, classInfo.SemanticModel) is not PageMethodInfo method)
             {
               continue;
             }
@@ -683,7 +647,8 @@ namespace SafeRouting.Generator
     }
     private static PageMethodInfo? GetPageMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
-      if (!ParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
+      if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod
+        || !ParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
       {
         return null;
       }
@@ -837,7 +802,7 @@ namespace SafeRouting.Generator
       return true;
     }
 
-    private static SymbolDisplayFormat UniqueClassMemberSymbolDisplayFormat { get; } = new SymbolDisplayFormat(
+    private static readonly SymbolDisplayFormat UniqueClassMemberSymbolDisplayFormat = new(
       globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Included,
       typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
       genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
@@ -850,12 +815,12 @@ namespace SafeRouting.Generator
       kindOptions: SymbolDisplayKindOptions.None,
       miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
 
-    private static SymbolDisplayFormat UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat { get; } = UniqueClassMemberSymbolDisplayFormat
+    private static readonly SymbolDisplayFormat UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat = UniqueClassMemberSymbolDisplayFormat
       .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 
-    private static SymbolDisplayFormat FullyQualifiedWithAnnotationsFormat { get; } = SymbolDisplayFormat.FullyQualifiedFormat
+    private static readonly SymbolDisplayFormat FullyQualifiedWithAnnotationsFormat = SymbolDisplayFormat.FullyQualifiedFormat
       .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 
-    private static Regex RazorPageMethodNameRegex { get; } = new Regex(@"^On(?<name>(?<verb>Delete|Get|Head|Options|Patch|Post|Put)(?<handler>.*?))(Async)?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
+    private static readonly Regex RazorPageMethodNameRegex = new(@"^On(?<name>(?<verb>Delete|Get|Head|Options|Patch|Post|Put)(?<handler>.*?))(Async)?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
   }
 }
