@@ -57,8 +57,8 @@ namespace SafeRouting.Generator
       var (candidateClasses, options) = values;
 
       var controllers = candidateClasses
-        .GroupBy(x => x.TypeDeclarationSyntax)
-        .Select(x => Parser.GetControllerInfo(x.First(), context))
+        .Distinct(CandidateClassInfoEqualityComparer.Default)
+        .Select(x => Parser.GetControllerInfo(x, context))
         .OfType<ControllerInfo>()
         .ToArray();
 
@@ -91,8 +91,8 @@ namespace SafeRouting.Generator
       var (candidateClasses, options) = values;
 
       var pages = candidateClasses
-        .GroupBy(x => x.TypeDeclarationSyntax)
-        .Select(x => Parser.GetPageInfo(x.First(), context))
+        .Distinct(CandidateClassInfoEqualityComparer.Default)
+        .Select(x => Parser.GetPageInfo(x, context))
         .OfType<PageInfo>()
         .ToArray();
 

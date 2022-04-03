@@ -10,6 +10,18 @@ namespace SafeRouting.Generator
     bool IsController,
     bool IsPage);
 
+  internal sealed class CandidateClassInfoEqualityComparer : IEqualityComparer<CandidateClassInfo>
+  {
+    public bool Equals(CandidateClassInfo x, CandidateClassInfo y)
+      => Comparer.Equals(x.TypeDeclarationSyntax, y.TypeDeclarationSyntax);
+
+    public int GetHashCode(CandidateClassInfo obj) => obj.GetHashCode();
+
+    public static CandidateClassInfoEqualityComparer Default { get; } = new CandidateClassInfoEqualityComparer();
+
+    private static readonly EqualityComparer<TypeDeclarationSyntax> Comparer = EqualityComparer<TypeDeclarationSyntax>.Default;
+  }
+
   internal interface IMvcObjectInfo
   {
     string RouteValue { get; }
