@@ -11,35 +11,12 @@ namespace SafeRouting.Generator
   {
     public static GeneratorOptions GetOptions(AnalyzerConfigOptionsProvider optionsProvider)
     {
-      var optionErrors = new Dictionary<string, string>(AnalyzerConfigOptions.KeyComparer);
+      var diagnostics = new List<Diagnostic>();
 
-      var generatedAccessModifier = GeneratorSupport.DefaultGeneratedAccessModifier;
-      if (optionsProvider.GlobalOptions.TryGetValue(GeneratorSupport.GeneratedAccessModifierOption, out var generatedAccessModifierValue))
-      {
-        if (new[] { "public", "internal" }.Any(x => string.Equals(x, generatedAccessModifierValue, StringComparison.Ordinal)))
-        {
-          generatedAccessModifier = generatedAccessModifierValue;
-        }
-        else
-        {
-          optionErrors[GeneratorSupport.GeneratedNamespaceOption] = $"'{generatedAccessModifierValue}' is not a supported access modifier, must be public or internal.";
-        }
-      }
+      var generatedAccessModifier = GetGeneratedAccessModifierOption(optionsProvider.GlobalOptions, diagnostics);
+      var generatedNamespace = GetGeneratedNamespaceOption(optionsProvider.GlobalOptions, diagnostics);
 
-      var generatedNamespace = GeneratorSupport.DefaultGeneratedRootNamespace;
-      if (optionsProvider.GlobalOptions.TryGetValue(GeneratorSupport.GeneratedNamespaceOption, out var generatedNamespaceValue))
-      {
-        if (generatedNamespaceValue.Split('.').All(x => SyntaxFacts.IsValidIdentifier(x)))
-        {
-          generatedNamespace = generatedNamespaceValue;
-        }
-        else
-        {
-          optionErrors[GeneratorSupport.GeneratedNamespaceOption] = $"'{generatedNamespaceValue}' is not a valid namespace identifier.";
-        }
-      }
-
-      return new GeneratorOptions(generatedAccessModifier, generatedNamespace, optionErrors);
+      return new GeneratorOptions(generatedAccessModifier, generatedNamespace, diagnostics);
     }
 
     public static bool IsCandidateNode(SyntaxNode node)
@@ -163,6 +140,46 @@ namespace SafeRouting.Generator
       return new PageInfo(pagePath, generatorName, areaName, pageNamespace, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), typeDeclarationSyntax, properties, methods);
     }
 
+    private static string GetGeneratedAccessModifierOption(AnalyzerConfigOptions options, IList<Diagnostic> diagnostics)
+    {
+      var generatedAccessModifier = GeneratorSupport.DefaultGeneratedAccessModifier;
+
+      if (!options.TryGetValue(GeneratorSupport.GeneratedAccessModifierOption, out var generatedAccessModifierValue))
+      {
+        return generatedAccessModifier;
+      }
+
+      if (new[] { "public", "internal" }.Any(x => string.Equals(x, generatedAccessModifierValue, StringComparison.Ordinal)))
+      {
+        generatedAccessModifier = generatedAccessModifierValue;
+      }
+      else
+      {
+        diagnostics.Add(Diagnostics.CreateInvalidOptionDiagnostic(GeneratorSupport.GeneratedAccessModifierOption, $"'{generatedAccessModifierValue}' is not a supported access modifier, must be public or internal."));
+      }
+
+      return generatedAccessModifier;
+    }
+    private static string GetGeneratedNamespaceOption(AnalyzerConfigOptions options, IList<Diagnostic> diagnostics)
+    {
+      var generatedNamespace = GeneratorSupport.DefaultGeneratedRootNamespace;
+
+      if (!options.TryGetValue(GeneratorSupport.GeneratedNamespaceOption, out var generatedNamespaceValue))
+      {
+        return generatedNamespace;
+      }
+
+      if (generatedNamespaceValue.Split('.').All(x => SyntaxFacts.IsValidIdentifier(x)))
+      {
+        generatedNamespace = generatedNamespaceValue;
+      }
+      else
+      {
+        diagnostics.Add(Diagnostics.CreateInvalidOptionDiagnostic(GeneratorSupport.GeneratedNamespaceOption, $"'{generatedNamespaceValue}' is not a valid namespace identifier."));
+      }
+
+      return generatedNamespace;
+    }
     private static void GetControllerAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName)
     {
       areaName = null;

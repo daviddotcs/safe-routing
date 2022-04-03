@@ -147,5 +147,5 @@ namespace SafeRouting.Generator
   internal sealed record GeneratorOptions(
     string GeneratedAccessModifier,
     string GeneratedNamespace,
-    Dictionary<string, string> OptionErrors);
+    IReadOnlyCollection<Diagnostic> Diagnostics);
 }

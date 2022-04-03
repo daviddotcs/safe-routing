@@ -27,9 +27,9 @@ namespace SafeRouting.Generator
 
       context.RegisterSourceOutput(optionsProvider, static (context, value) =>
       {
-        foreach (var error in value.OptionErrors)
+        foreach (var diagnostic in value.Diagnostics)
         {
-          context.ReportDiagnostic(Diagnostics.CreateInvalidOptionDiagnostic(error.Key, error.Value));
+          context.ReportDiagnostic(diagnostic);
         }
       });
 
