@@ -12,8 +12,8 @@ using System.Text.RegularExpressions;
 
 const string NugetPackageName = "SafeRouting";
 const string GeneratorProject = "SafeRouting.Generator";
-const string IntegrationTestsProject = "SafeRouting.IntegrationTests";
-const string NugetIntegrationTestsProject = "SafeRouting.NugetIntegrationTests";
+const string IntegrationTestsProject = "SafeRouting.Tests.Integration";
+const string NugetIntegrationTestsProject = "SafeRouting.Tests.NugetIntegration";
 
 // Set current directory to the src folder so the build script can be invoked from any directory
 var sourceDirectory = new FileInfo(GetCallerFilePath()).Directory!;

@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace SafeRouting.Tests;
+namespace SafeRouting.Tests.Unit;
 
 [UsesVerify]
 public sealed class CommonTests

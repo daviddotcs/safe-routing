@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.Generator", "SafeRouting.Generator\SafeRouting.Generator.csproj", "{44F2ECF2-896B-40D6-B37C-682FB10C1D30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.Tests", "Test\SafeRouting.Tests\SafeRouting.Tests.csproj", "{6D3EBC6F-1063-4383-A137-D43AED620218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.Tests.Unit", "Test\SafeRouting.Tests.Unit\SafeRouting.Tests.Unit.csproj", "{6D3EBC6F-1063-4383-A137-D43AED620218}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{720E8FE0-894B-40A7-8749-41AD729CE75C}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.source.md = README.source.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.IntegrationTests", "Test\SafeRouting.IntegrationTests\SafeRouting.IntegrationTests.csproj", "{AD2626C2-645E-4C55-923E-BEE2B7CDF48C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.Tests.Integration", "Test\SafeRouting.Tests.Integration\SafeRouting.Tests.Integration.csproj", "{AD2626C2-645E-4C55-923E-BEE2B7CDF48C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.Demo", "Demo\SafeRouting.Demo\SafeRouting.Demo.csproj", "{50D825DB-73F5-4EF0-83DA-344365FF4ABA}"
 EndProject

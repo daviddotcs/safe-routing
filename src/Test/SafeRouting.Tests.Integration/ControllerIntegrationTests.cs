@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace SafeRouting.IntegrationTests;
+namespace SafeRouting.Tests.Integration;
 
 public sealed class ControllerIntegrationTests
 {

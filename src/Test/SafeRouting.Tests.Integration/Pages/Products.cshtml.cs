@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SafeRouting.IntegrationTests.Pages;
+namespace SafeRouting.Tests.Integration.Pages;
 
 public sealed class ProductsModel : PageModel
 {

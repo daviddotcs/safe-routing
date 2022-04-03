@@ -1,4 +1,4 @@
-﻿namespace SafeRouting.Tests;
+﻿namespace SafeRouting.Tests.Unit;
 
 [UsesVerify]
 public sealed class PageHandlerParameterTests

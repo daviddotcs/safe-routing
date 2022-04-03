@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SafeRouting.Tests;
+namespace SafeRouting.Tests.Unit;
 
 internal static class TestHelper
 {

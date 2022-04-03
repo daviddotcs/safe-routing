@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SafeRouting.IntegrationTests.Controllers;
+namespace SafeRouting.Tests.Integration.Controllers;
 
 public sealed class AccountsController : Controller
 {

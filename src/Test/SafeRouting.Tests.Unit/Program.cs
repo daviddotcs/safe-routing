@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace SafeRouting.Tests;
+namespace SafeRouting.Tests.Unit;
 
 public static class ModuleInitializer
 {

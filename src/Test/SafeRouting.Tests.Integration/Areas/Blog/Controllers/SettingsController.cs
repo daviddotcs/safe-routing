@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SafeRouting.IntegrationTests.Areas.Blog.Controllers;
+namespace SafeRouting.Tests.Integration.Areas.Blog.Controllers;
 
 [Area("Blog")]
 public sealed class SettingsController : Controller
