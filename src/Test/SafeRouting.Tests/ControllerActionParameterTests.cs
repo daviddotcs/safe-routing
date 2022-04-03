@@ -50,7 +50,21 @@ public sealed class ControllerActionParameterTests
           char h = '?',
           char i = (char)42,
           char j = '\'',
-          char k = '\\') => View();
+          char k = '\\',
+          int l = sizeof(double),
+          byte m = unchecked((byte)~0x1^2),
+          string n = 
+
+/* delimited comment 1 */
+// single-line comment 1
+
+            $""_{nameof(ProductsController)}_"" + ""z_"" /* delimited comment inside expression */ + nameof(ProductsController) // single-line comment inside expression
+              + $""{nameof(ProductsController) + nameof(ProductsController)}""
+
+/* delimited comment 2 */
+// single-line comment 2
+
+        ) => View();
       }
     ");
   }

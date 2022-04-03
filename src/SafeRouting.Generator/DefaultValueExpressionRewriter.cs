@@ -7,8 +7,9 @@ namespace SafeRouting.Generator;
 /// <summary>
 /// Rewrites expressions representing the default values of parameters so they
 /// can be transplanted into the generated source. This includes collapsing
-/// <c>nameof</c> operations into their resulting literal strings, and
-/// fully-qualifying any referenced types.
+/// <c>nameof</c> operations into their resulting literal strings,
+/// fully-qualifying any referenced types, and removing all trivia such as
+/// comments and whitespace.
 /// </summary>
 public sealed class DefaultValueExpressionRewriter : CSharpSyntaxRewriter
 {
@@ -17,6 +18,9 @@ public sealed class DefaultValueExpressionRewriter : CSharpSyntaxRewriter
     this.semanticModel = semanticModel;
     this.cancellationToken = cancellationToken;
   }
+
+  public override SyntaxNode? Visit(SyntaxNode? node)
+    => base.Visit(node)?.WithoutTrivia();
 
   public override SyntaxNode? VisitIdentifierName(IdentifierNameSyntax node)
   {
@@ -44,6 +48,9 @@ public sealed class DefaultValueExpressionRewriter : CSharpSyntaxRewriter
 
     return base.VisitInvocationExpression(node);
   }
+
+  public override SyntaxTrivia VisitTrivia(SyntaxTrivia trivia)
+    => default;
 
   private readonly SemanticModel semanticModel;
   private readonly CancellationToken cancellationToken;
