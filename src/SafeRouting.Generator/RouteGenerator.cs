@@ -32,10 +32,11 @@ namespace SafeRouting.Generator
           context.ReportDiagnostic(diagnostic);
         }
       });
-
-      IncrementalValuesProvider<CandidateClassInfo> candidateClassProvider = context.SyntaxProvider
+      
+      var candidateClassProvider = context.SyntaxProvider
         .CreateSyntaxProvider(static (x, _) => Parser.IsCandidateNode(x), Parser.TransformCandidateClassNode)
-        .Where(static x => x is not null)!;
+        .Where(static x => x is not null)!
+        .WithComparer(CandidateClassInfoEqualityComparer.Default);
 
       var controllerClassProvider = candidateClassProvider
         .Where(static x => x.IsController)
@@ -57,7 +58,6 @@ namespace SafeRouting.Generator
       var (candidateClasses, options) = values;
 
       var controllers = candidateClasses
-        .Distinct(CandidateClassInfoEqualityComparer.Default)
         .Select(x => Parser.GetControllerInfo(x, context))
         .OfType<ControllerInfo>()
         .ToArray();
@@ -91,7 +91,6 @@ namespace SafeRouting.Generator
       var (candidateClasses, options) = values;
 
       var pages = candidateClasses
-        .Distinct(CandidateClassInfoEqualityComparer.Default)
         .Select(x => Parser.GetPageInfo(x, context))
         .OfType<PageInfo>()
         .ToArray();
