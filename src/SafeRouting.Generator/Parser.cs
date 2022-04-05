@@ -648,7 +648,7 @@ namespace SafeRouting.Generator
     private static PageMethodInfo? GetPageMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
     {
       if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod
-        || !ParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
+        || !TryParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
       {
         return null;
       }
@@ -781,7 +781,7 @@ namespace SafeRouting.Generator
 
       return ToResult();
     }
-    private static bool ParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
+    private static bool TryParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
     {
       var methodNameMatch = RazorPageMethodNameRegex.Match(methodName);
       if (!methodNameMatch.Success)

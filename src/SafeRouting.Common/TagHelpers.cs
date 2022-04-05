@@ -33,7 +33,7 @@ public sealed class RouteValuesTagHelper : TagHelper
   /// <param name="urlHelperFactory">A factory to be injected.</param>
   public RouteValuesTagHelper(IUrlHelperFactory urlHelperFactory)
   {
-    UrlHelperFactory = urlHelperFactory;
+    this.urlHelperFactory = urlHelperFactory;
   }
 
   /// <inheritdoc/>
@@ -65,9 +65,9 @@ public sealed class RouteValuesTagHelper : TagHelper
     }
   }
 
-  private IUrlHelper Url => UrlHelperFactory.GetUrlHelper(ViewContext);
+  private IUrlHelper Url => urlHelperFactory.GetUrlHelper(ViewContext);
 
-  private readonly IUrlHelperFactory UrlHelperFactory;
+  private readonly IUrlHelperFactory urlHelperFactory;
 
   private const string ForRouteAttributeName = "for-route";
   private const string AnchorTagName = "a";
