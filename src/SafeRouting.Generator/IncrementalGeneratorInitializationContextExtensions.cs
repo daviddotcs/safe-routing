@@ -8,4 +8,12 @@ public static class IncrementalGeneratorInitializationContextExtensions
   {
     context.RegisterSourceOutput(diagnostics, static (context, diagnostic) => context.ReportDiagnostic(diagnostic));
   }
+
+  public static IncrementalValuesProvider<T> Filter<T>(this IncrementalValuesProvider<T> source, IncrementalValueProvider<bool> conditionalProvider)
+  {
+    return source
+      .Combine(conditionalProvider)
+      .Where(static x => x.Right)
+      .Select(static (x, _) => x.Left);
+  }
 }

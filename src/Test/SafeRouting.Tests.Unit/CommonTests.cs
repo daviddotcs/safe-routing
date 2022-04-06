@@ -226,6 +226,40 @@ public sealed class CommonTests
   [InlineData(LanguageVersion.CSharp7_3)]
   public Task UnsupportedLanguageVersionsProduceDiagnostic(LanguageVersion version)
   {
-    return TestHelper.Verify(@"", languageVersion: version, nullableContextOptions: Microsoft.CodeAnalysis.NullableContextOptions.Disable, parameters: new object[] { version }, testCompilation: false);
+    var source = @"
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+      using System.Collections.Generic;
+
+      [BindProperties]
+      public sealed class ProductsController : Controller
+      {
+        public string? Name { get; set; }
+        public Dictionary<string, object>? Foo { get; set; }
+
+        public IActionResult Index(int id, Dictionary<string, object> bar)
+        {
+          return View();
+        }
+      }
+
+      [BindProperties]
+      public sealed class EditModel : PageModel
+      {
+        public string? Title { get; set; }
+        public Dictionary<string, object>? Foo { get; set; }
+
+        public void OnGet(string name, Dictionary<string, object> bar)
+        {
+        }
+      }
+    ";
+
+    return TestHelper.Verify(source,
+      path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
+      languageVersion: version,
+      nullableContextOptions: Microsoft.CodeAnalysis.NullableContextOptions.Disable,
+      parameters: new object[] { version },
+      testCompilation: false);
   }
 }

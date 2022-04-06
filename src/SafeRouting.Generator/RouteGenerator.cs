@@ -33,6 +33,7 @@ namespace SafeRouting.Generator
       // Controllers and Pages
       var candidateClassProvider = context.SyntaxProvider
         .CreateSyntaxProvider(static (x, _) => Parser.IsCandidateNode(x), Parser.TransformCandidateClassNode)
+        .Filter(supportedLanguageVersionProvider)
         .Where(static x => x is not null)!
         .WithComparer(CandidateClassInfoEqualityComparer.Default);
 
