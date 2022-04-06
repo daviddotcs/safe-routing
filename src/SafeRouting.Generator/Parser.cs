@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
@@ -47,11 +48,13 @@ namespace SafeRouting.Generator
       return new CandidateClassInfo(typeDeclarationSyntax, typeSymbol, context.SemanticModel, isController, isPage);
     }
 
-    public static ControllerInfo? GetControllerInfo(CandidateClassInfo classInfo, SourceProductionContext context)
+    public static (ControllerInfo? ControllerInfo, List<Diagnostic> Diagnostics) GetControllerInfo(CandidateClassInfo classInfo, CancellationToken cancellationToken)
     {
+      var diagnostics = new List<Diagnostic>();
+
       if (!classInfo.IsController)
       {
-        return null;
+        return (null, diagnostics);
       }
 
       var typeSymbol = classInfo.TypeSymbol;
@@ -63,28 +66,50 @@ namespace SafeRouting.Generator
 
       if (controllerName.Length == 0)
       {
-        return null;
+        return (null, diagnostics);
       }
 
       var generatorName = controllerName;
 
-      GetControllerAttributes(context, typeSymbol, out var areaName, out var defaultBindingSource, out var defaultBindingLevel, ref generatorName);
+      GetControllerAttributes(typeSymbol, diagnostics, out var areaName, out var defaultBindingSource, out var defaultBindingLevel, ref generatorName, cancellationToken);
 
-      GetControllerMembers(classInfo, context, typeSymbol, defaultBindingSource, defaultBindingLevel, out var properties, out var methods);
+      GetControllerMembers(classInfo, typeSymbol, defaultBindingSource, defaultBindingLevel, diagnostics, out var properties, out var methods, cancellationToken);
 
       if (methods.Count == 0)
       {
-        return null;
+        return (null, diagnostics);
       }
 
-      return new ControllerInfo(controllerName, generatorName, areaName, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods);
+      return (new ControllerInfo(controllerName, generatorName, areaName, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods), diagnostics);
     }
 
-    public static PageInfo? GetPageInfo(CandidateClassInfo classInfo, SourceProductionContext context)
+    public static (ImmutableArray<ControllerInfo> Controllers, ImmutableArray<Diagnostic> Diagnostics) GetUniqueControllers(ImmutableArray<ControllerInfo> controllers)
     {
+      var controllerNames = new HashSet<string>(StringComparer.Ordinal);
+      var emitControllers = ImmutableArray.CreateBuilder<ControllerInfo>(controllers.Length);
+      var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+
+      foreach (var controller in controllers)
+      {
+        if (!controllerNames.Add($"{controller.Area} {controller.Name}"))
+        {
+          diagnostics.Add(Diagnostics.CreateConflictingControllerDiagnostic(controller.Name, controller.TypeDeclarationSyntax.GetLocation()));
+          continue;
+        }
+
+        emitControllers.Add(controller);
+      }
+
+      return (emitControllers.ToImmutable(), diagnostics.ToImmutable());
+    }
+
+    public static (PageInfo? PageInfo, List<Diagnostic> Diagnostics) GetPageInfo(CandidateClassInfo classInfo, CancellationToken cancellationToken)
+    {
+      var diagnostics = new List<Diagnostic>();
+
       if (!classInfo.IsPage)
       {
-        return null;
+        return (null, diagnostics);
       }
 
       var typeSymbol = classInfo.TypeSymbol;
@@ -93,13 +118,13 @@ namespace SafeRouting.Generator
       var filePath = typeDeclarationSyntax.SyntaxTree.FilePath;
       if (string.IsNullOrEmpty(filePath))
       {
-        return null;
+        return (null, diagnostics);
       }
 
       var fileInfo = new FileInfo(filePath);
       if (!fileInfo.Name.EndsWith(".cshtml.cs", StringComparison.InvariantCultureIgnoreCase))
       {
-        return null;
+        return (null, diagnostics);
       }
 
       var directory = fileInfo.Directory;
@@ -112,7 +137,7 @@ namespace SafeRouting.Generator
 
       if (directory is null)
       {
-        return null;
+        return (null, diagnostics);
       }
 
       var pageNamespace = string.Join("_", pathSegments);
@@ -128,19 +153,39 @@ namespace SafeRouting.Generator
 
       var generatorName = pageName;
 
-      GetPageAttributes(context, typeSymbol, out var defaultBindingSource, ref generatorName);
+      GetPageAttributes(typeSymbol, diagnostics, out var defaultBindingSource, ref generatorName, cancellationToken);
 
-      GetPageMembers(classInfo, context, typeSymbol, defaultBindingSource, out var properties, out var methods);
+      GetPageMembers(classInfo, typeSymbol, defaultBindingSource, diagnostics, out var properties, out var methods, cancellationToken);
 
       if (methods.Count == 0)
       {
-        return null;
+        return (null, diagnostics);
       }
 
-      return new PageInfo(pagePath, generatorName, areaName, pageNamespace, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), typeDeclarationSyntax, properties, methods);
+      return (new PageInfo(pagePath, generatorName, areaName, pageNamespace, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), typeDeclarationSyntax, properties, methods), diagnostics);
     }
 
-    private static string GetGeneratedAccessModifierOption(AnalyzerConfigOptions options, IList<Diagnostic> diagnostics)
+    public static (ImmutableArray<PageInfo> Pages, ImmutableArray<Diagnostic> Diagnostics) GetUniquePages(ImmutableArray<PageInfo> pages)
+    {
+      var pageIdentifiers = new HashSet<string>(StringComparer.Ordinal);
+      var emitPages = ImmutableArray.CreateBuilder<PageInfo>(pages.Length);
+      var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+
+      foreach (var page in pages)
+      {
+        if (!pageIdentifiers.Add($"{page.Area}_{page.PageNamespace}_{page.Name}"))
+        {
+          diagnostics.Add(Diagnostics.CreateConflictingPageClassDiagnostic(page.FullyQualifiedTypeName, page.TypeDeclarationSyntax.GetLocation()));
+          continue;
+        }
+
+        emitPages.Add(page);
+      }
+
+      return (emitPages.ToImmutable(), diagnostics.ToImmutable());
+    }
+
+    private static string GetGeneratedAccessModifierOption(AnalyzerConfigOptions options, List<Diagnostic> diagnostics)
     {
       var generatedAccessModifier = GeneratorSupport.DefaultGeneratedAccessModifier;
 
@@ -160,7 +205,7 @@ namespace SafeRouting.Generator
 
       return generatedAccessModifier;
     }
-    private static string GetGeneratedNamespaceOption(AnalyzerConfigOptions options, IList<Diagnostic> diagnostics)
+    private static string GetGeneratedNamespaceOption(AnalyzerConfigOptions options, List<Diagnostic> diagnostics)
     {
       var generatedNamespace = GeneratorSupport.DefaultGeneratedRootNamespace;
 
@@ -180,7 +225,7 @@ namespace SafeRouting.Generator
 
       return generatedNamespace;
     }
-    private static void GetControllerAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName)
+    private static void GetControllerAttributes(INamedTypeSymbol typeSymbol, List<Diagnostic> diagnostics, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName, CancellationToken cancellationToken)
     {
       areaName = null;
       defaultBindingSource = null;
@@ -219,14 +264,14 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                diagnostics.Add(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(cancellationToken).GetLocation()));
               }
               break;
           }
         }
       }
     }
-    private static void GetControllerMembers(CandidateClassInfo classInfo, SourceProductionContext context, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, out List<MvcPropertyInfo> properties, out IReadOnlyCollection<ControllerMethodInfo> methods)
+    private static void GetControllerMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, List<Diagnostic> diagnostics, out List<MvcPropertyInfo> properties, out IReadOnlyCollection<ControllerMethodInfo> methods, CancellationToken cancellationToken)
     {
       properties = new List<MvcPropertyInfo>();
       var methodIdentifierDictionary = new Dictionary<string, ControllerMethodInfo>(StringComparer.Ordinal);
@@ -255,16 +300,16 @@ namespace SafeRouting.Generator
 
           if (member is IPropertySymbol propertySymbol)
           {
-            if (GetMvcPropertyInfo(context, propertySymbol, defaultBindingSource, classInfo.SemanticModel) is MvcPropertyInfo propertyInfo)
+            if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is MvcPropertyInfo propertyInfo)
             {
               properties.Add(propertyInfo);
             }
           }
           else if (member is IMethodSymbol methodSymbol)
           {
-            if (GetControllerMethodInfo(context, methodSymbol, classInfo.SemanticModel) is ControllerMethodInfo method)
+            if (GetControllerMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is ControllerMethodInfo method)
             {
-              AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifierDictionary, urlAffectedIdentifiers, methodNames, context);
+              AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifierDictionary, urlAffectedIdentifiers, methodNames, diagnostics, cancellationToken);
             }
           }
         }
@@ -278,7 +323,7 @@ namespace SafeRouting.Generator
 
       methods = methodIdentifierDictionary.Values;
     }
-    private static bool TryGetControllerMethodAttributes(SourceProductionContext context, IMethodSymbol methodSymbol, out string? areaName, ref string name, ref string actionName)
+    private static bool TryGetControllerMethodAttributes(IMethodSymbol methodSymbol, List<Diagnostic> diagnostics, out string? areaName, ref string name, ref string actionName, CancellationToken cancellationToken)
     {
       areaName = null;
 
@@ -313,7 +358,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                diagnostics.Add(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(cancellationToken).GetLocation()));
               }
             }
             break;
@@ -322,7 +367,7 @@ namespace SafeRouting.Generator
 
       return true;
     }
-    private static ControllerMethodInfo? GetControllerMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
+    private static ControllerMethodInfo? GetControllerMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
     {
       if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod)
       {
@@ -335,7 +380,7 @@ namespace SafeRouting.Generator
 
       var actionName = name;
 
-      if (!TryGetControllerMethodAttributes(context, methodSymbol, out var areaName, ref name, ref actionName)
+      if (!TryGetControllerMethodAttributes(methodSymbol, diagnostics, out var areaName, ref name, ref actionName, cancellationToken)
         || name.Length == 0)
       {
         return null;
@@ -351,7 +396,7 @@ namespace SafeRouting.Generator
           return null;
         }
 
-        if (GetMvcMethodParameterInfo(context, parameterSymbol, semanticModel) is MvcMethodParameterInfo parameter)
+        if (GetMvcMethodParameterInfo(parameterSymbol, semanticModel, diagnostics, cancellationToken) is MvcMethodParameterInfo parameter)
         {
           parameters.Add(parameter);
         }
@@ -362,7 +407,7 @@ namespace SafeRouting.Generator
 
       return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, fullyQualifiedMethodDeclaration, parameters);
     }
-    private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, IDictionary<string, ControllerMethodInfo> methodIdentifierDictionary, ISet<string> urlAffectedIdentifiers, ISet<string> methodNames, SourceProductionContext context)
+    private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, Dictionary<string, ControllerMethodInfo> methodIdentifierDictionary, HashSet<string> urlAffectedIdentifiers, HashSet<string> methodNames, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
     {
       var identifier = $"{method.Name}({string.Join(", ", method.Parameters.Select(x => x.Type.FullyQualifiedName))})";
 
@@ -376,7 +421,7 @@ namespace SafeRouting.Generator
 
       if (!urlAffectedIdentifiers.Add(urlAffectedIdentifier))
       {
-        context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.TypeSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(context.CancellationToken).GetLocation()));
+        diagnostics.Add(Diagnostics.CreateConflictingMethodsDiagnostic(classInfo.TypeSymbol.Name, urlAffectedIdentifier, methodSymbol.DeclaringSyntaxReferences[0].GetSyntax(cancellationToken).GetLocation()));
         return;
       }
 
@@ -396,7 +441,7 @@ namespace SafeRouting.Generator
 
       methodIdentifierDictionary[identifier] = method;
     }
-    private static bool TryGetMvcMethodParameterAttributes(SourceProductionContext context, IParameterSymbol parameterSymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
+    private static bool TryGetMvcMethodParameterAttributes(IParameterSymbol parameterSymbol, List<Diagnostic> diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
     {
       bindingSource = null;
 
@@ -444,7 +489,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                diagnostics.Add(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(cancellationToken).GetLocation()));
               }
             }
             break;
@@ -453,7 +498,7 @@ namespace SafeRouting.Generator
 
       return true;
     }
-    private static MvcMethodParameterInfo? GetMvcMethodParameterInfo(SourceProductionContext context, IParameterSymbol parameterSymbol, SemanticModel semanticModel)
+    private static MvcMethodParameterInfo? GetMvcMethodParameterInfo(IParameterSymbol parameterSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
     {
       if (string.Equals(parameterSymbol.Type.ToDisplayString(), AspNetClassNames.CancellationToken, StringComparison.Ordinal))
       {
@@ -463,7 +508,7 @@ namespace SafeRouting.Generator
       var name = parameterSymbol.Name;
       var generatorName = name;
 
-      if (!TryGetMvcMethodParameterAttributes(context, parameterSymbol, ref generatorName, out var bindingSource))
+      if (!TryGetMvcMethodParameterAttributes(parameterSymbol, diagnostics, ref generatorName, out var bindingSource, cancellationToken))
       {
         return null;
       }
@@ -472,11 +517,11 @@ namespace SafeRouting.Generator
       var propertyName = CSharpSupport.EscapeIdentifier(CSharpSupport.CamelToPascalCase(generatorName));
       var routeKey = bindingSource?.Name ?? name;
       var type = GetTypeInfo(parameterSymbol, parameterSymbol.Type, semanticModel);
-      var defaultValueExpression = GetSanitisedDefaultValue(parameterSymbol, semanticModel, context.CancellationToken);
+      var defaultValueExpression = GetSanitisedDefaultValue(parameterSymbol, semanticModel, cancellationToken);
 
       return new MvcMethodParameterInfo(name, escapedName, propertyName, routeKey, type, defaultValueExpression, bindingSource);
     }
-    private static bool TryGetMvcPropertyAttributes(SourceProductionContext context, IPropertySymbol propertySymbol, ref string generatorName, out MvcBindingSourceInfo? bindingSource)
+    private static bool TryGetMvcPropertyAttributes(IPropertySymbol propertySymbol, List<Diagnostic> diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
     {
       bindingSource = null;
 
@@ -520,7 +565,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                diagnostics.Add(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(cancellationToken).GetLocation()));
               }
             }
             break;
@@ -529,7 +574,7 @@ namespace SafeRouting.Generator
 
       return true;
     }
-    private static MvcPropertyInfo? GetMvcPropertyInfo(SourceProductionContext context, IPropertySymbol propertySymbol, MvcBindingSourceInfo? defaultBindingSource, SemanticModel semanticModel)
+    private static MvcPropertyInfo? GetMvcPropertyInfo(IPropertySymbol propertySymbol, SemanticModel semanticModel, MvcBindingSourceInfo? defaultBindingSource, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
     {
       if (propertySymbol.GetMethod?.DeclaredAccessibility != Accessibility.Public || propertySymbol.SetMethod?.DeclaredAccessibility != Accessibility.Public)
       {
@@ -538,7 +583,7 @@ namespace SafeRouting.Generator
 
       var generatorName = propertySymbol.Name;
 
-      if (!TryGetMvcPropertyAttributes(context, propertySymbol, ref generatorName, out var bindingSource))
+      if (!TryGetMvcPropertyAttributes(propertySymbol, diagnostics, ref generatorName, out var bindingSource, cancellationToken))
       {
         return null;
       }
@@ -558,7 +603,7 @@ namespace SafeRouting.Generator
 
       return new MvcPropertyInfo(originalName, escapedOriginalName, escapedName, routeKey, type, bindingSource);
     }
-    private static void GetPageAttributes(SourceProductionContext context, INamedTypeSymbol typeSymbol, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName)
+    private static void GetPageAttributes(INamedTypeSymbol typeSymbol, List<Diagnostic> diagnostics, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName, CancellationToken cancellationToken)
     {
       defaultBindingSource = null;
 
@@ -579,14 +624,14 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                diagnostics.Add(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(cancellationToken).GetLocation()));
               }
             }
             break;
         }
       }
     }
-    private static void GetPageMembers(CandidateClassInfo classInfo, SourceProductionContext context, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, out List<MvcPropertyInfo> properties, out List<PageMethodInfo> methods)
+    private static void GetPageMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, List<Diagnostic> diagnostics, out List<MvcPropertyInfo> properties, out List<PageMethodInfo> methods, CancellationToken cancellationToken)
     {
       properties = new List<MvcPropertyInfo>();
       methods = new List<PageMethodInfo>();
@@ -619,21 +664,21 @@ namespace SafeRouting.Generator
 
           if (member is IPropertySymbol propertySymbol)
           {
-            if (GetMvcPropertyInfo(context, propertySymbol, defaultBindingSource, classInfo.SemanticModel) is MvcPropertyInfo propertyInfo)
+            if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is MvcPropertyInfo propertyInfo)
             {
               properties.Add(propertyInfo);
             }
           }
           else if (member is IMethodSymbol methodSymbol)
           {
-            if (GetPageMethodInfo(context, methodSymbol, classInfo.SemanticModel) is not PageMethodInfo method)
+            if (GetPageMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is not PageMethodInfo method)
             {
               continue;
             }
 
             if (!methodNames.Add(method.Name))
             {
-              context.ReportDiagnostic(Diagnostics.CreateConflictingMethodsDiagnostic(typeSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
+              diagnostics.Add(Diagnostics.CreateConflictingMethodsDiagnostic(typeSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
               continue;
             }
 
@@ -645,7 +690,7 @@ namespace SafeRouting.Generator
         defaultBindingSource = null;
       }
     }
-    private static PageMethodInfo? GetPageMethodInfo(SourceProductionContext context, IMethodSymbol methodSymbol, SemanticModel semanticModel)
+    private static PageMethodInfo? GetPageMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
     {
       if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod
         || !TryParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
@@ -670,7 +715,7 @@ namespace SafeRouting.Generator
               }
               else
               {
-                context.ReportDiagnostic(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(context.CancellationToken).GetLocation()));
+                diagnostics.Add(Diagnostics.CreateInvalidIdentifierDiagnostic(generatorNameValue, attribute.ApplicationSyntaxReference?.GetSyntax(cancellationToken).GetLocation()));
               }
             }
             break;
@@ -686,7 +731,7 @@ namespace SafeRouting.Generator
           return null;
         }
 
-        if (GetMvcMethodParameterInfo(context, parameterSymbol, semanticModel) is MvcMethodParameterInfo parameter)
+        if (GetMvcMethodParameterInfo(parameterSymbol, semanticModel, diagnostics, cancellationToken) is MvcMethodParameterInfo parameter)
         {
           parameters.Add(parameter);
         }
