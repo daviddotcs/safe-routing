@@ -194,7 +194,16 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 * Generic classes, nested classes, and non-public classes which inherit from `PageModel` are ignored by the source generator.
 * For .NET 7, it is recommended to either continue using the `[FromServices]` attribute for parameters which are implicitly injected, or to replace it with `[ExcludeFromRouteGenerator]`. Otherwise injected parameters will be included in the method signatures of the generated route methods.
 
-## Building the NuGet Package
+## Working with the Source Code
+
+### Projects
+
+* `SafeRouting.Common`: A class library which is included in the NuGet package to define types, tag helpers, and extension methods.
+* `SafeRouting.Generator`: The source generator itself.
+* `SafeRouting.Tests.Integration`: Integration tests to ensure the source generator works within a standard project.
+* `SafeRouting.Tests.Unit`: A series of snapshot tests to verify that the source generator is producing the expected output for given source code inputs. Each test which produces a diagnostic or generates source code will have matching `*.verified.*` files in the _Snapshots_ directory containing that expected output.
+
+### Building the NuGet Package
 
 * Ensure you have the latest .NET SDK installed via https://dotnet.microsoft.com/en-us/download/dotnet.
 * Install [dotnet-script](https://github.com/filipw/dotnet-script).
