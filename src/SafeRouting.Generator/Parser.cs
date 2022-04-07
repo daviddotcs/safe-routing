@@ -21,10 +21,8 @@ namespace SafeRouting.Generator
     }
 
     public static bool IsCandidateNode(SyntaxNode node)
-      => node is TypeDeclarationSyntax typeDeclarationSyntax
-        && node is not InterfaceDeclarationSyntax
-        && typeDeclarationSyntax.TypeParameterList is null
-        && typeDeclarationSyntax.Parent is not TypeDeclarationSyntax
+      => node is TypeDeclarationSyntax { TypeParameterList: null, Parent: not TypeDeclarationSyntax } typeDeclarationSyntax
+        and not InterfaceDeclarationSyntax
         && (typeDeclarationSyntax.AttributeLists.Count > 0 || typeDeclarationSyntax.BaseList?.Types.Count > 0)
         && typeDeclarationSyntax.Modifiers.Any(t => t.IsKind(SyntaxKind.PublicKeyword))
         && !typeDeclarationSyntax.Modifiers.Any(t => t.IsKind(SyntaxKind.StaticKeyword) || t.IsKind(SyntaxKind.AbstractKeyword));
