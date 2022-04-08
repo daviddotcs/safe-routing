@@ -50,6 +50,8 @@ public string AddMarkdownTableOfContents(string sourceFile)
   var tocBuilder = new StringBuilder();
   var firstHeadingLocation = -1;
 
+  tocBuilder.AppendLine("## Table of Contents").AppendLine();
+
   foreach (var heading in headings)
   {
     var attributes = Markdig.Renderers.Html.HtmlAttributesExtensions.TryGetAttributes(heading);

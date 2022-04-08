@@ -6,6 +6,8 @@
 
 Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview) which analyses a project's razor pages and MVC controllers, producing strongly-typed representations of those routes as you type. This enables you to link between pages with compile time safety instead of using the standard _"stringly typed"_ approach.
 
+## Table of Contents
+
 - [Usage Example](#usage-example)
 - [Installation](#installation)
     - [Tag Helpers](#tag-helpers)
@@ -26,7 +28,7 @@ Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csh
 
 Consider the following contrived example of a controller class.
 
-```C#
+```csharp
 public class ProductsController : Controller
 {
   [FromRoute]
@@ -42,13 +44,13 @@ public class ProductsController : Controller
 
 Ordinarily, you would need to write something like the following to redirect to the `Search` action from another controller or page:
 
-```C#
+```csharp
 return RedirectToAction("Search", "Products", new { Name = "chair" });
 ```
 
 Instead, by using the generated code, that can be simplified to the following:
 
-```C#
+```csharp
 return Routes.Controllers.Products.Search("chair").Redirect(this);
 ```
 
@@ -56,7 +58,7 @@ The controller name, action name, names of action method parameters, and names o
 
 Similarly, consider the following razor page model class:
 
-```C#
+```csharp
 public sealed class EditModel : PageModel
 {
   public Task OnGetAsync()
@@ -68,7 +70,7 @@ public sealed class EditModel : PageModel
 
 The generated code enables you to access the URL for the `OnGetAsync` handler with the following code:
 
-```C#
+```csharp
 string myUrl = Routes.Pages.Edit.Get().Url(Url);
 ```
 
@@ -110,7 +112,7 @@ Add `using SafeRouting.Extensions;` to your source code to access the extension 
 
 The following code snippet demonstrates accessing, modifying, and retrieving generated route information for the `ProductsController` class defined above.
 
-```C#
+```csharp
 // Enable the .Redirect() and .Url() extension methods
 using SafeRouting.Extensions;
 
@@ -146,7 +148,7 @@ return route.Redirect(this);
 
 The generated methods will closely resemble your original controller action methods and page handler methods, but will only include parameters which can be bound via the URL. Consider the following action method:
 
-```C#
+```csharp
 public IActionResult Index(
   string standard,
   [FromBody] string fromBody,
@@ -162,7 +164,7 @@ public IActionResult Index(
 
 The generated route helper method omits the parameters with the attributes `[FromBody]`, `[FromForm]`, `[FromHeader]`, and `[FromServices]` because they are not bound to any part of the URL. The generated helper method instead looks like this:
 
-```C#
+```csharp
 public static IndexRouteInfo Index(string standard, string fromQuery, string fromRoute)
 {
   // ...
