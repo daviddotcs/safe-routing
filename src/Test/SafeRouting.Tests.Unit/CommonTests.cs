@@ -11,6 +11,21 @@ public sealed class CommonTests
     return TestHelper.Verify(@"");
   }
 
+  [Theory]
+  [InlineData(LanguageVersion.CSharp10)]
+  public Task GlobalUsingsGeneratedForSupportedLanguageVersions(LanguageVersion version)
+  {
+    return TestHelper.Verify(@"", languageVersion: version, parameters: new object[] { version });
+  }
+
+  [Theory]
+  [InlineData(LanguageVersion.CSharp8)]
+  [InlineData(LanguageVersion.CSharp9)]
+  public Task GlobalUsingsNotGeneratedForUnsupportedLanguageVersions(LanguageVersion version)
+  {
+    return TestHelper.Verify(@"", languageVersion: version, parameters: new object[] { version });
+  }
+
   [Fact]
   public Task InternalAccessModifierOptionProducesInternalClasses()
   {

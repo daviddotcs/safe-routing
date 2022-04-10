@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SafeRouting.Extensions;
 
 namespace SafeRouting.Demo.Pages;
 
