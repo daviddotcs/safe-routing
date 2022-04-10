@@ -28,10 +28,7 @@ global using static SafeRouting.Extensions.RouteValueExtensions;";
       var isSupportedLanguageVersionProvider = languageVersionProvider
         .Select(static (x, _) => x >= LanguageVersion.CSharp8);
 
-      var isUnsupportedLanguageVersionProvider = isSupportedLanguageVersionProvider
-        .Select(static (x, _) => !x);
-
-      context.RegisterConditionalOutput(isUnsupportedLanguageVersionProvider, static context =>
+      context.RegisterConditionalOutput(isSupportedLanguageVersionProvider.Not(), static context =>
       {
         context.ReportDiagnostic(Diagnostics.CreateUnsupportedLanguageVersionDiagnostic());
       });
