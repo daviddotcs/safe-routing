@@ -7,7 +7,7 @@ public sealed class ProductModel : PageModel
 {
   public void OnGet() { }
 
-  public IActionResult OnGetRedirectToController() => Routes.Controllers.Accounts.Index().Redirect(this);
+  public IActionResult OnGetRedirectToController() => Routes.Controllers.Account.Index().Redirect(this);
 
   public IActionResult OnGetRedirectToPage() => Routes.Pages.Index.Get().Redirect(this);
 }

@@ -2,12 +2,12 @@
 @{
   var indexRoute = Routes.Pages.Index.Get();
   var productRoute = Routes.Pages.Product.Get();
-  var accountRoute = Routes.Controllers.Accounts.Index();
+  var accountRoute = Routes.Controllers.Account.Index();
   var blogRoute = Routes.Areas.Blog.Pages.Index.Get();
-  var blogSettingsRoute = Routes.Areas.Blog.Controllers.Settings.Index();
-  var blogAccountRoute = Routes.Controllers.Accounts.BlogAccount();
-  var redirectControllerToControllerRoute = Routes.Controllers.Accounts.RedirectToController();
-  var redirectControllerToPageRoute = Routes.Controllers.Accounts.RedirectToPage();
+  var blogPostRoute = Routes.Areas.Blog.Controllers.Post.Index();
+  var blogAccountRoute = Routes.Controllers.Account.BlogAccount();
+  var redirectControllerToControllerRoute = Routes.Controllers.Account.RedirectToController();
+  var redirectControllerToPageRoute = Routes.Controllers.Account.RedirectToPage();
   var redirectPageToControllerRoute = Routes.Pages.Product.GetRedirectToController();
   var redirectPageToPageRoute = Routes.Pages.Product.GetRedirectToPage();
   var libraryRoute = Routes.Areas.MyFeature.Pages.Page1.Get();
@@ -25,15 +25,15 @@
       <ul>
         <li><a for-route="indexRoute">Index Page</a> (@(indexRoute.Url(Url)))</li>
         <li><a for-route="productRoute">Product Page</a> (@(productRoute.Url(Url)))</li>
-        <li><a for-route="accountRoute">AccountsController Index</a> (@(accountRoute.Url(Url)))</li>
+        <li><a for-route="accountRoute">AccountController Index</a> (@(accountRoute.Url(Url)))</li>
         <li><a for-route="blogRoute">Blog Area Index Page</a> (@(blogRoute.Url(Url)))</li>
-        <li><a for-route="blogSettingsRoute">Blog Area Settings Index</a> (@(blogSettingsRoute.Url(Url)))</li>
+        <li><a for-route="blogPostRoute">Blog Area Post Index</a> (@(blogPostRoute.Url(Url)))</li>
         <li><a for-route="blogAccountRoute">Blog Account</a> (@(blogAccountRoute.Url(Url)))</li>
         <li><a for-route="redirectControllerToControllerRoute">Redirect controller to controller</a> (@(redirectControllerToControllerRoute.Url(Url)))</li>
         <li><a for-route="redirectControllerToPageRoute">Redirect controller to page</a> (@(redirectControllerToPageRoute.Url(Url)))</li>
         <li><a for-route="redirectPageToControllerRoute">Redirect page to controller</a> (@(redirectPageToControllerRoute.Url(Url)))</li>
         <li><a for-route="redirectPageToPageRoute">Redirect page to page</a> (@(redirectPageToPageRoute.Url(Url)))</li>
-        <li><a for-route="libraryRoute">Library Page1</a> (@(libraryRoute.Url(Url)))</li>
+        <li><a for-route="libraryRoute">SafeRouting.Demo.Library Page1</a> (@(libraryRoute.Url(Url)))</li>
       </ul>
     </nav>
   </header>

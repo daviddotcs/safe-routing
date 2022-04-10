@@ -3,7 +3,7 @@
 namespace SafeRouting.Demo.Areas.Blog.Controllers;
 
 [Area("Blog")]
-public sealed class SettingsController : Controller
+public sealed class PostController : Controller
 {
   public IActionResult Index() => View();
 }

@@ -10,12 +10,12 @@ Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csh
 Consider the following contrived example of a controller class.
 
 ```csharp
-public class ProductsController : Controller
+public class ProductController : Controller
 {
   [FromRoute]
   public int? Limit { get; set; }
 
-  [Route("/Products/Search/{name}/{Limit?}")]
+  [Route("/Product/Search/{name}/{Limit?}")]
   public IActionResult Search(string name)
   {
     // ...
@@ -23,16 +23,18 @@ public class ProductsController : Controller
 }
 ```
 
-Ordinarily, you would need to write something like the following to redirect to the `Search` action from another controller or page:
+Redirecting to the `Search` action could be rewritten as follows:
+
+**BEFORE:**
 
 ```csharp
-return RedirectToAction("Search", "Products", new { Name = "chair" });
+return RedirectToAction("Search", "Product", new { Name = "chair" });
 ```
 
-Instead, by using the generated code, that can be simplified to the following:
+**AFTER:**
 
 ```csharp
-return Routes.Controllers.Products.Search("chair").Redirect(this);
+return Routes.Controllers.Product.Search("chair").Redirect(this);
 ```
 
 The controller name, action name, names of action method parameters, and names of bound properties on the controller are no longer referenced with strings, and are instead referenced with C# classes, methods, parameters, and properties that offer compile time safety.
@@ -52,7 +54,7 @@ public sealed class EditModel : PageModel
 The generated code enables you to access the URL for the `OnGetAsync` handler with the following code:
 
 ```csharp
-string myUrl = Routes.Pages.Edit.Get().Url(Url);
+string editUrl = Routes.Pages.Edit.Get().Url(Url);
 ```
 
 ## Installation
@@ -71,7 +73,7 @@ This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` 
 
 ```html
 @{
-  var controllerRoute = Routes.Controllers.Products.Search("chair");
+  var controllerRoute = Routes.Controllers.Product.Search("chair");
   var pageRoute = Routes.Pages.Edit.Post();
 }
 
@@ -87,38 +89,40 @@ This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` 
 
 ### Extension Methods
 
-Add `using SafeRouting.Extensions;` to your source code to access the extension methods `.Redirect()` and `.Url()`. The Redirect extension methods return `RedirectToActionResult` or `RedirectToPageResult` values as appropriate for the particular route, and accept the active controller or page model as a parameter. The Url extension methods return a string with a URL for the route, accepting an `IUrlHelper` instance as a parameter.
+The `Redirect` extension methods return `RedirectToActionResult` or `RedirectToPageResult` values as appropriate for the particular route, and accept the active controller or page model as a parameter. The `Url` extension methods return a string with a URL for the route, accepting an `IUrlHelper` instance as a parameter.
+
+For projects using C# 8 or 9, add `using SafeRouting.Extensions;` to your source code to access the extension methods `Redirect()` and `Url()`. Projects using C# 10 or above will automatically have access to these extension methods via a generated `global using static` directive.
 
 ## Getting Started
 
-The following code snippet demonstrates accessing, modifying, and retrieving generated route information for the `ProductsController` class defined above.
+The following code snippet demonstrates accessing, modifying, and retrieving generated route information for the `ProductController` class defined above.
 
 ```csharp
-// Enable the .Redirect() and .Url() extension methods
+// Enable the Redirect() and Url() extension methods
 using SafeRouting.Extensions;
 
-// Get route information for the Search method on ProductsController with a name value of "chair"
-// Route: /Products/Search/chair
-var route = Routes.Controllers.Products.Search("chair");
+// Get route information for the Search method on ProductController with a name value of "chair"
+// Route: /Product/Search/chair
+var route = Routes.Controllers.Product.Search("chair");
 
 // Assign a value for the Limit property (defined on the controller class)
-// Route: /Products/Search/chair/5
+// Route: /Product/Search/chair/5
 route[route.Properties.Limit] = 5;
 
 // Set the value of a parameter
-// Route: /Products/Search/book/5
+// Route: /Product/Search/book/5
 route[route.Parameters.Name] = "book";
 
 // Set a value using the Set method
-// Route: /Products/Search/book/10
+// Route: /Product/Search/book/10
 route.Set(route.Properties.Limit, 10);
 
 // Remove a route value
-// Route: /Products/Search/book
+// Route: /Product/Search/book
 route.Remove(route.Properties.Limit);
 
 // Access the URL for the route using an IUrlHelper
-// Value: "/Products/Search/book"
+// Value: "/Product/Search/book"
 string routeUrl = route.Url(Url);
 
 // Redirect from within a controller action method or a page handler method
@@ -152,13 +156,48 @@ public static IndexRouteInfo Index(string standard, string fromQuery, string fro
 }
 ```
 
-### Helper Attributes
+### Bundled Attributes
 
-A couple of attributes exist which allow you to customise how the source generator interprets your code. `[ExcludeFromRouteGenerator]` can be applied to a class, property, method, or parameter to have it be ignored by the analyser. `[RouteGeneratorName]` allows you to rename any symbol (class, property, method, or parameter) in the generated code, which can help you avoid naming conflicts.
+A couple of included attributes allow you to customise how the source generator interprets your code. `[ExcludeFromRouteGenerator]` can be applied to a class, property, method, or parameter to have it be ignored by the analyser. `[RouteGeneratorName]` allows you to rename any symbol (class, property, method, or parameter) in the generated code, which can help you avoid naming conflicts.
 
 ### Areas
 
 By default, the generated helper classes for controller and page routes will be added to the namespaces `Routes.Controllers` and `Routes.Pages`, respectively. Controllers adorned with the `[Area]` attribute, and pages within an `/Areas/{area-name}/Pages/` directory structure have their helper classes added to `Routes.Areas.AreaName.Controllers` and `Routes.Areas.AreaName.Pages` respectively (replacing _AreaName_ with the name of the area).
+
+### Controller Methods with the Same Name
+
+There are a couple of situations to be mindful of involving controllers with multiple methods of the same name. Firstly, consider the following controller:
+
+```csharp
+public class ProductController : Controller
+{
+  public IActionResult Edit(int productId)
+  {
+    // ...
+  }
+
+  [HttpPost]
+  public IActionResult Edit(int productId, [FromForm] string name)
+  {
+    // ...
+  }
+}
+```
+
+Because of the way that the generated methods only include parameters which can be bound via the URL, the the above methods would both result in generated methods with the same signature. Because of this, the above code results in a compile error. To work around this, you could either rename one of the methods, or apply the `[RouteGeneratorName]` attribute to one of the methods to rename the generated method into something unique.
+
+The other situation to be aware of is when you have multiple overloads with different resulting signatures, the generated route values classes returned by the generated methods will be named with sequential numbers to ensure uniqueness. For example, if the above class was written without the `[FromForm]` attribute, the generated methods would be written with the following signatures:
+
+```csharp
+Support.Controllers_Product.EditRouteValues Edit(int productId);
+Support.Controllers_Product.Edit2RouteValues Edit(int productId, string name);
+```
+
+It is recommended that you don't directly reference the names of the classes returned by those methods, and instead use the `var` keyword if you need to capture the result into a variable. I.e.;
+
+```csharp
+var route = Routes.Controllers.Product.Edit(1, "Blanket");
+```
 
 ### Using Razor Class Libraries
 

@@ -7,9 +7,9 @@ public sealed class ControllerIntegrationTests
   [Fact]
   public void AccountBlogAccountHasCorrectArea()
   {
-    var route = Routes.Controllers.Accounts.BlogAccount();
+    var route = Routes.Controllers.Account.BlogAccount();
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("BlogAccount", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -23,10 +23,10 @@ public sealed class ControllerIntegrationTests
   [InlineData("foo")]
   public void AccountIndexRouteAcceptsProperty(string headerValue)
   {
-    var route = Routes.Controllers.Accounts.Index();
+    var route = Routes.Controllers.Account.Index();
     route[route.Properties.CustomHeader] = headerValue;
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("Index", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -42,9 +42,9 @@ public sealed class ControllerIntegrationTests
   [Fact]
   public void AccountIndexRouteHasExpectedValues()
   {
-    var route = Routes.Controllers.Accounts.Index();
+    var route = Routes.Controllers.Account.Index();
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("Index", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -59,9 +59,9 @@ public sealed class ControllerIntegrationTests
   [InlineData(int.MaxValue)]
   public void AccountListRouteHasExpectedValues(int page)
   {
-    var route = Routes.Controllers.Accounts.List(page);
+    var route = Routes.Controllers.Account.List(page);
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("List", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -77,9 +77,9 @@ public sealed class ControllerIntegrationTests
   [Fact]
   public void AreasAreIncludedInRoute()
   {
-    var route = Routes.Areas.Blog.Controllers.Settings.Index();
+    var route = Routes.Areas.Blog.Controllers.Post.Index();
 
-    Assert.Equal("Settings", route.ControllerName);
+    Assert.Equal("Post", route.ControllerName);
     Assert.Equal("Index", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -92,9 +92,9 @@ public sealed class ControllerIntegrationTests
   public void ParameterValuesCanBeChanged()
   {
     var page = 5;
-    var route = Routes.Controllers.Accounts.List(page);
+    var route = Routes.Controllers.Account.List(page);
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("List", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -109,7 +109,7 @@ public sealed class ControllerIntegrationTests
     page = 10;
     route[route.Parameters.Page] = page;
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("List", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -126,9 +126,9 @@ public sealed class ControllerIntegrationTests
   public void ParameterValuesCanBeRemoved()
   {
     var page = 5;
-    var route = Routes.Controllers.Accounts.List(page);
+    var route = Routes.Controllers.Account.List(page);
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("List", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {
@@ -142,7 +142,7 @@ public sealed class ControllerIntegrationTests
 
     route.Remove(route.Parameters.Page);
 
-    Assert.Equal("Accounts", route.ControllerName);
+    Assert.Equal("Account", route.ControllerName);
     Assert.Equal("List", route.ActionName);
     Assert.Collection(route.RouteValues, x =>
     {

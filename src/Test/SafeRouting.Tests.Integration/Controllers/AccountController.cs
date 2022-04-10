@@ -2,7 +2,7 @@
 
 namespace SafeRouting.Tests.Integration.Controllers;
 
-public sealed class AccountsController : Controller
+public sealed class AccountController : Controller
 {
   [FromHeader]
   public string? CustomHeader { get; set; }
