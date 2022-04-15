@@ -48,13 +48,13 @@ Redirecting to the `Search` action could be rewritten as follows:
 **BEFORE:**
 
 ```csharp
-return RedirectToAction("Search", "Product", new { Name = "chair" });
+return RedirectToAction("Search", "Product", new { Name = "chair", Limit = 10 });
 ```
 
 **AFTER:**
 
 ```csharp
-return Routes.Controllers.Product.Search("chair").Redirect(this);
+return Routes.Controllers.Product.Search("chair", 10).Redirect(this);
 ```
 
 The controller name, action name, names of action method parameters, and names of bound properties on the controller are no longer referenced with strings, and are instead referenced with C# classes, methods, parameters, and properties that offer compile time safety.
@@ -174,6 +174,33 @@ public static IndexRouteInfo Index(string standard, string fromQuery, string fro
 {
   // ...
 }
+```
+
+Properties on the controller or page model class which are annotated with `[FromRoute]` attributes are automatically included in the signatures of all generated methods for that class. This ensures that all route values necessary for constructing a URL are provided when calling the methods. E.g; consider the following razor page model:
+
+```csharp
+public sealed class EditModel : PageModel
+{
+  [FromRoute]
+  public int ProductId { get; set; }
+
+  public void OnGet()
+  {
+    // ...
+  }
+
+  public void OnPost(string name)
+  {
+    // ...
+  }
+}
+```
+
+The route-bound `ProductId` property is added to each of the generated methods, resulting in the following method signatures:
+
+```csharp
+Support.Pages_Edit.GetRouteValues Get(int productId);
+Support.Pages_Edit.PostRouteValues Post(string name, int productId);
 ```
 
 ### Bundled Attributes
