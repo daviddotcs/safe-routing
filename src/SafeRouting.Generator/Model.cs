@@ -118,7 +118,7 @@ namespace SafeRouting.Generator
   internal sealed record MvcMethodParameterInfo(
     string OriginalName,
     string EscapedName,
-    string PropertyName,
+    string? PropertyName,
     string RouteKey,
     TypeInfo Type,
     ExpressionSyntax? DefaultValueExpression,

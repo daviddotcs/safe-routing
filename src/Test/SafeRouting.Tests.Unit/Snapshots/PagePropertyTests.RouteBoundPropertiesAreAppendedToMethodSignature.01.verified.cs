@@ -16,14 +16,15 @@ namespace Routes
     public static class Products_Edit
     {
       /// <summary>
-      /// Generates route values for <see cref="global::EditModel.OnGet()"/>.
+      /// Generates route values for <see cref="global::EditModel.OnGet(int)"/>.
       /// </summary>
-      public static Support.Pages_Products_Edit.GetRouteValues Get(string? fromRoute)
+      public static Support.Pages_Products_Edit.GetRouteValues Get(int x, string? value)
       {
         return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
-          ["RenamedFromRoute"] = fromRoute
+          ["x"] = x,
+          ["Value"] = value
         });
       }
     }
@@ -39,33 +40,13 @@ namespace Routes
     public sealed class PropertyData
     {
       /// <summary>
-      /// Route key for the property <see cref="global::EditModel.BindProperty"/>.
+      /// Route key for the property <see cref="global::EditModel.Value"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string?> BindProperty { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RenamedBindProperty");
-      
-      /// <summary>
-      /// Route key for the property <see cref="global::EditModel.FromForm"/>.
-      /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string?> FromForm { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RenamedFromForm");
-      
-      /// <summary>
-      /// Route key for the property <see cref="global::EditModel.FromHeader"/>.
-      /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string?> FromHeader { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RenamedFromHeader");
-      
-      /// <summary>
-      /// Route key for the property <see cref="global::EditModel.FromQuery"/>.
-      /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string?> FromQuery { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RenamedFromQuery");
-      
-      /// <summary>
-      /// Route key for the property <see cref="global::EditModel.FromRoute"/>.
-      /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string?> FromRoute { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RenamedFromRoute");
+      public global::SafeRouting.RouteKey<PropertyData, string?> Value { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("Value");
     }
     
     /// <summary>
-    /// Represents route values for routes to <see cref="global::EditModel.OnGet()"/>.
+    /// Represents route values for routes to <see cref="global::EditModel.OnGet(int)"/>.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -116,6 +97,46 @@ namespace Routes
       /// </summary>
       /// <param name="key">The key for the route.</param>
       public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
+      
+      /// <summary>
+      /// Parameters of <see cref="global::EditModel.OnGet(int)"/> which can be used in the route.
+      /// </summary>
+      public Get.ParameterData Parameters { get; } = new Get.ParameterData();
+      /// <summary>
+      /// Removes a parameter value from the route.
+      /// </summary>
+      /// <typeparam name="T">The type of values applicable to the key.</typeparam>
+      /// <param name="key">The key for the route.</param>
+      /// <returns><see langword="true"/> if the element is successfully found and removed; otherwise <see langword="false"/>.</returns>
+      public bool Remove<T>(global::SafeRouting.RouteKey<Get.ParameterData, T> key) => RouteValues.Remove(key.Name);
+      /// <summary>
+      /// Sets a parameter value for the route.
+      /// </summary>
+      /// <typeparam name="T">The type of values applicable to the key.</typeparam>
+      /// <param name="key">The key for the route.</param>
+      /// <param name="value">The value for the route.</param>
+      public void Set<T>(global::SafeRouting.RouteKey<Get.ParameterData, T> key, T value) => RouteValues[key.Name] = value;
+      /// <summary>
+      /// Sets a parameter value for the route.
+      /// </summary>
+      /// <param name="key">The key for the route.</param>
+      public int this[global::SafeRouting.RouteKey<Get.ParameterData, int> key] { set => RouteValues[key.Name] = value; }
+    }
+    
+    namespace Get
+    {
+      /// <summary>
+      /// Represents route keys for parameters to <see cref="global::EditModel.OnGet(int)"/>.
+      /// </summary>
+      [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
+      [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+      public sealed class ParameterData
+      {
+        /// <summary>
+        /// Route key for the <c>x</c> parameter in <see cref="global::EditModel.OnGet(int)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, int> X { get; } = new global::SafeRouting.RouteKey<ParameterData, int>("x");
+      }
     }
   }
 }

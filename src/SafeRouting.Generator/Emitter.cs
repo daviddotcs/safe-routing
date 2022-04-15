@@ -206,6 +206,11 @@ namespace SafeRouting.Generator
       var parameterIndex = 0;
       foreach (var parameter in method.Parameters)
       {
+        if (parameter.PropertyName is null)
+        {
+          continue;
+        }
+
         if (parameterIndex++ != 0)
         {
           writer.WriteLine();
@@ -356,15 +361,17 @@ namespace SafeRouting.Generator
         WriteRouteValuesClassMembers(writer, "PropertyData", item.Properties.Select(x => x.Type), item.FullyQualifiedTypeName, MemberType.Property);
       }
 
-      if (method.Parameters.Count > 0)
+      var consideredParameters = method.Parameters.Where(x => x.PropertyName is not null).ToArray();
+
+      if (consideredParameters.Length > 0)
       {
-        WriteRouteValuesClassMembers(writer, $"{method.UniqueName}.ParameterData", method.Parameters.Select(x => x.Type), $"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}", MemberType.Parameter);
+        WriteRouteValuesClassMembers(writer, $"{method.UniqueName}.ParameterData", consideredParameters.Select(x => x.Type), $"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}", MemberType.Parameter);
       }
 
       writer.Indent--;
       writer.WriteLine("}");
 
-      if (method.Parameters.Count > 0)
+      if (consideredParameters.Length > 0)
       {
         writer.WriteLine();
         writer.WriteLine($"namespace {method.UniqueName}");

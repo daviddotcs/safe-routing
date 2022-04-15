@@ -195,6 +195,55 @@ public sealed class PagePropertyTests
   }
 
   [Fact]
+  public Task RouteBoundPropertiesAreAppendedToMethodSignature()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class EditModel : PageModel
+      {
+        [FromRoute]
+        public string? Value { get; set; }
+
+        public void OnGet(int x)
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+  }
+
+  [Fact]
+  public Task RouteBoundPropertiesArentAppendedWhenConflictingWithExistingParameters()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+      using SafeRouting;
+
+      public sealed class EditModel : PageModel
+      {
+        [FromRoute]
+        public string? A { get; set; }
+
+        [FromRoute]
+        public string? B { get; set; }
+
+        [FromRoute(Name = ""C"")]
+        public string? SomeProperty { get; set; }
+
+        [RouteGeneratorName(""D"")]
+        [FromRoute]
+        public string? OtherProperty { get; set; }
+
+        public void OnGet(string? a, [FromRoute(Name = ""B"")] string? x, string? c, string? d, int y)
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+  }
+
+  [Fact]
   public Task StaticPropertiesAreExcluded()
   {
     return TestHelper.Verify(@"

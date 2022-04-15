@@ -272,6 +272,7 @@ namespace SafeRouting.Generator
     private static void GetControllerMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, List<Diagnostic> diagnostics, out List<MvcPropertyInfo> properties, out IReadOnlyCollection<ControllerMethodInfo> methods, CancellationToken cancellationToken)
     {
       properties = new List<MvcPropertyInfo>();
+      var methodSymbols = new List<IMethodSymbol>();
       var methodIdentifierDictionary = new Dictionary<string, ControllerMethodInfo>(StringComparer.Ordinal);
       // Track all unique member names to avoid including the same member from base classes
       var accessedMembers = new HashSet<string>(StringComparer.Ordinal);
@@ -305,10 +306,7 @@ namespace SafeRouting.Generator
           }
           else if (member is IMethodSymbol methodSymbol)
           {
-            if (GetControllerMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is ControllerMethodInfo method)
-            {
-              AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifierDictionary, urlAffectedIdentifiers, methodNames, diagnostics, cancellationToken);
-            }
+            methodSymbols.Add(methodSymbol);
           }
         }
 
@@ -316,6 +314,20 @@ namespace SafeRouting.Generator
         {
           // Inherited members don't receive default binding
           defaultBindingSource = null;
+        }
+      }
+
+      foreach (var methodSymbol in methodSymbols)
+      {
+        if (GetControllerMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is ControllerMethodInfo method)
+        {
+          var (isModified, parameters) = CombineBoundProperties(method.Parameters, properties);
+          if (isModified)
+          {
+            method = method with { Parameters = parameters };
+          }
+
+          AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifierDictionary, urlAffectedIdentifiers, methodNames, diagnostics, cancellationToken);
         }
       }
 
@@ -633,6 +645,7 @@ namespace SafeRouting.Generator
     {
       properties = new List<MvcPropertyInfo>();
       methods = new List<PageMethodInfo>();
+      var methodSymbols = new List<IMethodSymbol>();
       var accessedMembers = new HashSet<string>(StringComparer.Ordinal);
       var methodNames = new HashSet<string>(StringComparer.Ordinal);
 
@@ -669,23 +682,34 @@ namespace SafeRouting.Generator
           }
           else if (member is IMethodSymbol methodSymbol)
           {
-            if (GetPageMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is not PageMethodInfo method)
-            {
-              continue;
-            }
-
-            if (!methodNames.Add(method.Name))
-            {
-              diagnostics.Add(Diagnostics.CreateConflictingMethodsDiagnostic(typeSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
-              continue;
-            }
-
-            methods.Add(method);
+            methodSymbols.Add(methodSymbol);
           }
         }
 
         // Inherited members don't receive default binding
         defaultBindingSource = null;
+      }
+
+      foreach (var methodSymbol in methodSymbols)
+      {
+        if (GetPageMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is not PageMethodInfo method)
+        {
+          continue;
+        }
+
+        var (isModified, parameters) = CombineBoundProperties(method.Parameters, properties);
+        if (isModified)
+        {
+          method = method with { Parameters = parameters };
+        }
+
+        if (!methodNames.Add(method.Name))
+        {
+          diagnostics.Add(Diagnostics.CreateConflictingMethodsDiagnostic(typeSymbol.Name, method.Name, classInfo.TypeDeclarationSyntax.GetLocation()));
+          continue;
+        }
+
+        methods.Add(method);
       }
     }
     private static PageMethodInfo? GetPageMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
@@ -735,7 +759,7 @@ namespace SafeRouting.Generator
         }
       }
 
-      var escapedName= CSharpSupport.EscapeIdentifier(name);
+      var escapedName = CSharpSupport.EscapeIdentifier(name);
 
       return new PageMethodInfo(name, escapedName, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
     }
@@ -843,6 +867,53 @@ namespace SafeRouting.Generator
       name = methodNameMatch.Groups["name"].Value;
 
       return true;
+    }
+    private static (bool IsModified, IReadOnlyCollection<MvcMethodParameterInfo> Parameters) CombineBoundProperties(IReadOnlyCollection<MvcMethodParameterInfo> parameters, IEnumerable<MvcPropertyInfo> properties)
+    {
+      var resultParameters = new Lazy<List<MvcMethodParameterInfo>>(() => new List<MvcMethodParameterInfo>(parameters));
+
+      foreach (var property in properties)
+      {
+        if (property.BindingSource?.SourceType != MvcBindingSourceType.Route)
+        {
+          continue;
+        }
+        
+        var propertyBoundName = property.BindingSource?.Name ?? property.EscapedName;
+        var hasConflictingBoundParameter = false;
+        var hasConflictingParameterName = false;
+
+        foreach (var parameter in parameters)
+        {
+          if (string.Equals(property.EscapedName, parameter.EscapedName, StringComparison.OrdinalIgnoreCase))
+          {
+            hasConflictingParameterName = true;
+            break;
+          }
+
+          if (parameter.BindingSource is not null && parameter.BindingSource.SourceType != MvcBindingSourceType.Route)
+          {
+            continue;
+          }
+
+          var parameterBoundName = parameter.BindingSource?.Name ?? parameter.EscapedName;
+
+          if (string.Equals(propertyBoundName, parameterBoundName, StringComparison.OrdinalIgnoreCase))
+          {
+            hasConflictingBoundParameter = true;
+            break;
+          }
+        }
+
+        if (hasConflictingBoundParameter || hasConflictingParameterName)
+        {
+          continue;
+        }
+
+        resultParameters.Value.Add(new MvcMethodParameterInfo(property.OriginalName, CSharpSupport.PascalToCamelCase(property.EscapedName), null, property.RouteKey, property.Type, null, property.BindingSource));
+      }
+
+      return (resultParameters.IsValueCreated, resultParameters.IsValueCreated ? resultParameters.Value : parameters);
     }
 
     private static readonly SymbolDisplayFormat UniqueClassMemberSymbolDisplayFormat = new(
