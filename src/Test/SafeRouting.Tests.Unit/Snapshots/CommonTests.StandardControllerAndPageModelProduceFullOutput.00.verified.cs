@@ -18,13 +18,15 @@ namespace Routes
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.Index(int, global::System.Collections.Generic.Dictionary{string, object})"/>.
       /// </summary>
-      public static Support.Controllers_Products.IndexRouteValues Index(int id, global::System.Collections.Generic.Dictionary<string, object> bar)
+      public static Support.Controllers_Products.IndexRouteValues Index(int id, global::System.Collections.Generic.Dictionary<string, object> bar, string? name, global::System.Collections.Generic.Dictionary<string, object>? foo)
       {
         return new Support.Controllers_Products.IndexRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
           ["id"] = id,
-          ["bar"] = bar
+          ["bar"] = bar,
+          ["Name"] = name,
+          ["Foo"] = foo
         });
       }
     }

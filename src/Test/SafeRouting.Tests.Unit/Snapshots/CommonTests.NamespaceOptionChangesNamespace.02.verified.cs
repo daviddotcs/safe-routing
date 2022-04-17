@@ -18,12 +18,13 @@ namespace Test.Namespace
       /// <summary>
       /// Generates route values for <see cref="global::EditModel.OnGet(string)"/>.
       /// </summary>
-      public static Support.Pages_Products_Edit.GetRouteValues Get(string name)
+      public static Support.Pages_Products_Edit.GetRouteValues Get(string name, string? title)
       {
         return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
-          ["name"] = name
+          ["name"] = name,
+          ["Title"] = title
         });
       }
     }

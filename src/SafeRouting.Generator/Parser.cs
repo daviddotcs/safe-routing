@@ -874,7 +874,7 @@ namespace SafeRouting.Generator
 
       foreach (var property in properties)
       {
-        if (property.BindingSource?.SourceType != MvcBindingSourceType.Route)
+        if (!property.AffectsUrl())
         {
           continue;
         }
@@ -891,7 +891,7 @@ namespace SafeRouting.Generator
             break;
           }
 
-          if (parameter.BindingSource is not null && parameter.BindingSource.SourceType != MvcBindingSourceType.Route)
+          if (!parameter.AffectsUrl())
           {
             continue;
           }

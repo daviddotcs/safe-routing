@@ -71,7 +71,11 @@ namespace SafeRouting.Generator
     string EscapedName,
     string RouteKey,
     TypeInfo Type,
-    MvcBindingSourceInfo BindingSource);
+    MvcBindingSourceInfo BindingSource)
+  {
+    public bool AffectsUrl()
+      => BindingSource?.AffectsUrl() ?? false;
+  }
 
   internal interface IMvcMethodInfo
   {
