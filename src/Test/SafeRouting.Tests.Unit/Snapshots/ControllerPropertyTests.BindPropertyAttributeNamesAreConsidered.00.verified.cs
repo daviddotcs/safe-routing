@@ -18,12 +18,11 @@ namespace Routes
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.Index()"/>.
       /// </summary>
-      public static Support.Controllers_Products.IndexRouteValues Index(string? bindProperty, string? fromQuery, string? fromRoute)
+      public static Support.Controllers_Products.IndexRouteValues Index(string? fromQuery, string? fromRoute)
       {
         return new Support.Controllers_Products.IndexRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
-          ["RenamedBindProperty"] = bindProperty,
           ["RenamedFromQuery"] = fromQuery,
           ["RenamedFromRoute"] = fromRoute
         });

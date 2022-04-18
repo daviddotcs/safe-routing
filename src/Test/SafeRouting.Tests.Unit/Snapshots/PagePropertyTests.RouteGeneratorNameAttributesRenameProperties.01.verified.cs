@@ -18,12 +18,11 @@ namespace Routes
       /// <summary>
       /// Generates route values for <see cref="global::EditModel.OnGet()"/>.
       /// </summary>
-      public static Support.Pages_Products_Edit.GetRouteValues Get(string? renamed)
+      public static Support.Pages_Products_Edit.GetRouteValues Get()
       {
         return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
-          ["area"] = "",
-          ["BindProperty"] = renamed
+          ["area"] = ""
         });
       }
     }

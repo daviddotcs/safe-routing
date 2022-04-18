@@ -24,6 +24,7 @@ namespace SafeRouting.Generator
     public static MvcBindingSourceInfo ParseBindingSourceAttribute(this AttributeData attribute, MvcBindingSourceType sourceType)
     {
       var name = default(string?);
+      var supportsGet = false;
 
       foreach (var namedArgument in attribute.NamedArguments)
       {
@@ -35,10 +36,17 @@ namespace SafeRouting.Generator
               name = nameValue;
             }
             break;
+
+          case "SupportsGet":
+            if (namedArgument.Value.Value is bool supportsGetValue)
+            {
+              supportsGet = supportsGetValue;
+            }
+            break;
         }
       }
 
-      return new MvcBindingSourceInfo(sourceType, name);
+      return new MvcBindingSourceInfo(sourceType, name, supportsGet);
     }
   }
 }

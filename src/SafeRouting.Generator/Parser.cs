@@ -245,7 +245,7 @@ namespace SafeRouting.Generator
             case AspNetClassNames.BindPropertiesAttribute:
               if (defaultBindingSource is null)
               {
-                defaultBindingSource = new MvcBindingSourceInfo(MvcBindingSourceType.Custom);
+                defaultBindingSource = attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Custom);
                 defaultBindingLevel = symbol;
               }
               break;
@@ -622,7 +622,7 @@ namespace SafeRouting.Generator
         switch (attribute.AttributeClass?.ToDisplayString())
         {
           case AspNetClassNames.BindPropertiesAttribute:
-            defaultBindingSource ??= new MvcBindingSourceInfo(MvcBindingSourceType.Custom);
+            defaultBindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Custom);
             break;
 
           case GeneratorClassNames.RouteGeneratorNameAttribute:

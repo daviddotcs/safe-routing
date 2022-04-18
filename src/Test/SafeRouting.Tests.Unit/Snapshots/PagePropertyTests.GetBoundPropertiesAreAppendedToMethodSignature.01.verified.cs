@@ -18,13 +18,15 @@ namespace Routes
       /// <summary>
       /// Generates route values for <see cref="global::EditModel.OnGet(int)"/>.
       /// </summary>
-      public static Support.Pages_Products_Edit.GetRouteValues Get(int x, string? value)
+      public static Support.Pages_Products_Edit.GetRouteValues Get(int x, string? bindValue, string? queryValue, string? routeValue)
       {
         return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
           ["x"] = x,
-          ["Value"] = value
+          ["BindValue"] = bindValue,
+          ["QueryValue"] = queryValue,
+          ["RouteValue"] = routeValue
         });
       }
     }
@@ -40,9 +42,19 @@ namespace Routes
     public sealed class PropertyData
     {
       /// <summary>
-      /// Route key for the property <see cref="global::EditModel.Value"/>.
+      /// Route key for the property <see cref="global::EditModel.BindValue"/>.
       /// </summary>
-      public global::SafeRouting.RouteKey<PropertyData, string?> Value { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("Value");
+      public global::SafeRouting.RouteKey<PropertyData, string?> BindValue { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("BindValue");
+      
+      /// <summary>
+      /// Route key for the property <see cref="global::EditModel.QueryValue"/>.
+      /// </summary>
+      public global::SafeRouting.RouteKey<PropertyData, string?> QueryValue { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("QueryValue");
+      
+      /// <summary>
+      /// Route key for the property <see cref="global::EditModel.RouteValue"/>.
+      /// </summary>
+      public global::SafeRouting.RouteKey<PropertyData, string?> RouteValue { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RouteValue");
     }
     
     /// <summary>

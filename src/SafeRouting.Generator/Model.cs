@@ -74,7 +74,7 @@ namespace SafeRouting.Generator
     MvcBindingSourceInfo BindingSource)
   {
     public bool AffectsUrl()
-      => BindingSource?.AffectsUrl() ?? false;
+      => BindingSource?.AffectsUrl(forParameter: false) ?? false;
   }
 
   internal interface IMvcMethodInfo
@@ -129,18 +129,19 @@ namespace SafeRouting.Generator
     MvcBindingSourceInfo? BindingSource)
   {
     public bool AffectsUrl()
-      => BindingSource?.AffectsUrl() ?? true;
+      => BindingSource?.AffectsUrl(forParameter: true) ?? true;
   }
 
   internal sealed record MvcBindingSourceInfo(
     MvcBindingSourceType SourceType,
-    string? Name = null)
+    string? Name = null,
+    bool SupportsGet = false)
   {
-    public bool AffectsUrl() => SourceType switch
+    public bool AffectsUrl(bool forParameter) => SourceType switch
     {
       MvcBindingSourceType.Query => true,
       MvcBindingSourceType.Route => true,
-      MvcBindingSourceType.Custom => true,
+      MvcBindingSourceType.Custom => forParameter || SupportsGet,
       _ => false
     };
   }

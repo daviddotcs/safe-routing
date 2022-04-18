@@ -23,6 +23,25 @@ public sealed class PagePropertyTests
   }
 
   [Fact]
+  public Task BindPropertiesAttributesSupportingGetAreIncludedInMethodSignature()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      [BindProperties(SupportsGet = true)]
+      public sealed class EditModel : PageModel
+      {
+        public string? SomeProperty { get; set; }
+
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+  }
+
+  [Fact]
   public Task BindPropertyAttributeNamesAreConsidered()
   {
     return TestHelper.Verify(@"
@@ -195,7 +214,7 @@ public sealed class PagePropertyTests
   }
 
   [Fact]
-  public Task RouteBoundPropertiesAreAppendedToMethodSignature()
+  public Task GetBoundPropertiesAreAppendedToMethodSignature()
   {
     return TestHelper.Verify(@"
       using Microsoft.AspNetCore.Mvc;
@@ -203,8 +222,14 @@ public sealed class PagePropertyTests
 
       public sealed class EditModel : PageModel
       {
+        [BindProperty(SupportsGet = true)]
+        public string? BindValue { get; set; }
+
+        [FromQuery]
+        public string? QueryValue { get; set; }
+
         [FromRoute]
-        public string? Value { get; set; }
+        public string? RouteValue { get; set; }
 
         public void OnGet(int x)
         {

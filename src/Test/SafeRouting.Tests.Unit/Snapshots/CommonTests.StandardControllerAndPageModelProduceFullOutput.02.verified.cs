@@ -18,15 +18,13 @@ namespace Routes
       /// <summary>
       /// Generates route values for <see cref="global::EditModel.OnGet(string, global::System.Collections.Generic.Dictionary{string, object})"/>.
       /// </summary>
-      public static Support.Pages_Products_Edit.GetRouteValues Get(string name, global::System.Collections.Generic.Dictionary<string, object> bar, string? title, global::System.Collections.Generic.Dictionary<string, object>? foo)
+      public static Support.Pages_Products_Edit.GetRouteValues Get(string name, global::System.Collections.Generic.Dictionary<string, object> bar)
       {
         return new Support.Pages_Products_Edit.GetRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
           ["name"] = name,
-          ["bar"] = bar,
-          ["Title"] = title,
-          ["Foo"] = foo
+          ["bar"] = bar
         });
       }
     }

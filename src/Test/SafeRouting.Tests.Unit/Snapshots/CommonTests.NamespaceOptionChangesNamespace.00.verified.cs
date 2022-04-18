@@ -18,13 +18,12 @@ namespace Test.Namespace
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.Index(int)"/>.
       /// </summary>
-      public static Support.Controllers_Products.IndexRouteValues Index(int id, string? name)
+      public static Support.Controllers_Products.IndexRouteValues Index(int id)
       {
         return new Support.Controllers_Products.IndexRouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
         {
           ["area"] = "",
-          ["id"] = id,
-          ["Name"] = name
+          ["id"] = id
         });
       }
     }
