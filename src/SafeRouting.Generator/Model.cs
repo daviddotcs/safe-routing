@@ -74,7 +74,7 @@ namespace SafeRouting.Generator
     MvcBindingSourceInfo BindingSource)
   {
     public bool AffectsUrl()
-      => BindingSource?.AffectsUrl(forParameter: false) ?? false;
+      => BindingSource.AffectsUrl(forParameter: false);
   }
 
   internal interface IMvcMethodInfo
