@@ -156,7 +156,7 @@ public static IndexRouteInfo Index(string standard, string fromQuery, string fro
 }
 ```
 
-Properties on the controller or page model class which are annotated with `[FromRoute]` attributes are automatically included in the signatures of all generated methods for that class. This ensures that all route values necessary for constructing a URL are provided when calling the methods. E.g; consider the following razor page model:
+Properties on the controller or page model class which are annotated with `[FromRoute]`, `[FromQuery]`, or `[BindProperty(SupportsGet = true)]` attributes, and properties within a class annotated with `[BindProperties(SupportsGet = true)]` are automatically included in the signatures of all generated methods for that class. This ensures that all route values necessary for constructing a URL are provided when calling the methods. E.g; consider the following razor page model:
 
 ```csharp
 public sealed class EditModel : PageModel
@@ -245,10 +245,10 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 
 ### Available Configuration Options
 
-| Option                                   | Description                                                                                              |
-|------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| Option | Description |
+|--------|-------------|
 | `safe_routing.generated_access_modifier` | The access modifier used for all generated classes. Can be _public_ or _internal_. Defaults to _public_. |
-| `safe_routing.generated_namespace`       | The namespace under which all generated route classes are created. Defaults to _Routes_.                 |
+| `safe_routing.generated_namespace` | The namespace under which all generated route classes are created. Defaults to _Routes_. |
 
 ## Limitations
 
