@@ -260,6 +260,64 @@ public sealed class PageTests
   }
 
   [Fact]
+  public Task PagesDeclaredAsPartialAreExcludedIfCshtmlDotCsFileClassDoesntInheritPageModel()
+  {
+    var additionalSources = new[]
+    {
+      new AdditionalSource(@"
+        using Microsoft.AspNetCore.Mvc.RazorPages;
+
+        public partial class IndexModel : PageModel
+        {
+          public void OnPost()
+          {
+          }
+        }
+      ")
+    };
+
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public partial class IndexModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
+  }
+
+  [Fact]
+  public Task PagesDeclaredAsPartialAreFullyIncluded()
+  {
+    var additionalSources = new[]
+    {
+      new AdditionalSource(@"
+        using Microsoft.AspNetCore.Mvc.RazorPages;
+
+        public partial class IndexModel
+        {
+          public void OnPost()
+          {
+          }
+        }
+      ")
+    };
+
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public partial class IndexModel : PageModel
+      {
+        public void OnGet()
+        {
+        }
+      }
+    ", path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
+  }
+
+  [Fact]
   public Task PagesInNonCshtmlDotCsFilesAreExcluded()
   {
     return TestHelper.Verify(@"

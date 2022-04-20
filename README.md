@@ -273,7 +273,7 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 ## Limitations
 
 * The including project must use C# 8 or later.
-* Pages must have a `PageModel` inheriting class within a `.cshtml.cs` file in either a `Pages` or `Areas/{area name}/Pages` directory at any depth to be discovered.
+* Pages must have a `PageModel` inheriting class within a `.cshtml.cs` file in either a `Pages` or `Areas/{area name}/Pages` directory at any depth to be discovered. They may also only be declared as partial classes as long as the declaration within the `.cshtml.cs` file explicitly inherits from `PageModel`.
 * Multiple classes which inherit from `PageModel` cannot be declared in the same `.cshtml.cs` file.
 * Custom attributes which affect routing are unsupported and will be ignored by the source generator.
 * Nullable annotations on parameter and property types are respected, but attributes affecting nullability are not copied across to the generated code.

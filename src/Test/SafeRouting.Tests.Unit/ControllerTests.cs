@@ -121,6 +121,44 @@ public sealed class ControllerTests
   }
 
   [Fact]
+  public Task ControllersDeclaredAsPartialAreFullyIncluded()
+  {
+    var additionalSources = new[]
+    {
+      new AdditionalSource(@"
+        using Microsoft.AspNetCore.Mvc;
+
+        public partial class ProductsController : Controller
+        {
+          public IActionResult X() => View();
+        }
+      ")
+    };
+
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public partial class ProductsController
+      {
+        public IActionResult Y() => View();
+      }
+    ", additionalSources: additionalSources);
+  }
+
+  [Fact]
+  public Task ControllersInCshtmlDotCsFilesAreConsideredAsControllers()
+  {
+    return TestHelper.Verify(@"
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class ProductsController : Controller
+      {
+        public IActionResult Index() => View();
+      }
+    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+  }
+
+  [Fact]
   public Task ControllersNamedControllerAreExcluded()
   {
     return TestHelper.Verify(@"
