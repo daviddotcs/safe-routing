@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using SafeRouting.Extensions;
 
 namespace SafeRouting.TagHelpers;
 
@@ -47,22 +48,14 @@ public sealed class RouteValuesTagHelper : TagHelper
       _ => null
     };
 
-    if (urlAttributeName is null)
+    if (urlAttributeName is null
+      || ForRoute is null
+      || ForRoute.Url(Url) is not string url)
     {
       return;
     }
 
-    var url = ForRoute switch
-    {
-      IControllerRouteValues controllerRoute => Extensions.RouteValueExtensions.Url(controllerRoute, Url),
-      IPageRouteValues pageRoute => Extensions.RouteValueExtensions.Url(pageRoute, Url),
-      _ => null
-    };
-
-    if (url is not null)
-    {
-      output.Attributes.SetAttribute(urlAttributeName, url);
-    }
+    output.Attributes.SetAttribute(urlAttributeName, url);
   }
 
   private IUrlHelper Url => urlHelperFactory.GetUrlHelper(ViewContext);
