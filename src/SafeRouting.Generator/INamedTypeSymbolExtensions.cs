@@ -1,15 +1,14 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace SafeRouting.Generator
+namespace SafeRouting.Generator;
+
+internal static class INamedTypeSymbolExtensions
 {
-  internal static class INamedTypeSymbolExtensions
+  public static IEnumerable<INamedTypeSymbol> EnumerateSelfAndBaseTypes(this INamedTypeSymbol symbol)
   {
-    public static IEnumerable<INamedTypeSymbol> EnumerateSelfAndBaseTypes(this INamedTypeSymbol symbol)
+    for (; symbol != null; symbol = symbol.BaseType!)
     {
-      for (; symbol != null; symbol = symbol.BaseType!)
-      {
-        yield return symbol;
-      }
+      yield return symbol;
     }
   }
 }
