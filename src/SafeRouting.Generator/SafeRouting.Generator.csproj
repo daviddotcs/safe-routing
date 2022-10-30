@@ -23,8 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Microsoft.CodeAnalysis.CSharp 4.1.0 doesn't seem to work, so we're keeping this on 4.0.1 for now. -->
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
     <PackageReference Include="PolySharp" Version="1.7.1" />
   </ItemGroup>

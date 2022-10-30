@@ -10,8 +10,7 @@
       HelpLink: ,
       MessageFormat: The controller '{0}' conflicts with another controller of the same name.,
       Message: The controller 'Products' conflicts with another controller of the same name.,
-      Category: SafeRouting.Generator.RouteGenerator,
-      CustomTags: []
+      Category: SafeRouting.Generator.RouteGenerator
     }
   ]
 }

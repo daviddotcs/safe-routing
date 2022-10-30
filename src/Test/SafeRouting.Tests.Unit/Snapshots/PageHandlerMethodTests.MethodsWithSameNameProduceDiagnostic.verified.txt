@@ -10,8 +10,7 @@
       HelpLink: ,
       MessageFormat: The class '{0}' contains multiple methods which map to the route method '{1}'.,
       Message: The class 'EditModel' contains multiple methods which map to the route method 'Get'.,
-      Category: SafeRouting.Generator.RouteGenerator,
-      CustomTags: []
+      Category: SafeRouting.Generator.RouteGenerator
     }
   ]
 }
