@@ -6,7 +6,7 @@ public sealed class ControllerPropertyTests
   [Fact]
   public Task BindPropertiesAttributesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       [BindProperties]
@@ -16,13 +16,13 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task BindPropertiesAttributesAreInherited()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public abstract class ProductsControllerBaseBase : Controller
@@ -42,41 +42,41 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task BindPropertyAttributeNamesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
-        [BindProperty(Name = ""RenamedBindProperty"")]
+        [BindProperty(Name = "RenamedBindProperty")]
         public string? BindProperty { get; set; }
 
-        [FromForm(Name = ""RenamedFromForm"")]
+        [FromForm(Name = "RenamedFromForm")]
         public string? FromForm { get; set; }
 
-        [FromHeader(Name = ""RenamedFromHeader"")]
+        [FromHeader(Name = "RenamedFromHeader")]
         public string? FromHeader { get; set; }
 
-        [FromQuery(Name = ""RenamedFromQuery"")]
+        [FromQuery(Name = "RenamedFromQuery")]
         public string? FromQuery { get; set; }
 
-        [FromRoute(Name = ""RenamedFromRoute"")]
+        [FromRoute(Name = "RenamedFromRoute")]
         public string? FromRoute { get; set; }
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task EscapedPropertyNamesAreHandled()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       [BindProperties]
@@ -86,13 +86,13 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task ExcludedPropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using SafeRouting;
 
@@ -104,31 +104,31 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task InvalidPropertyNamesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using SafeRouting;
 
       public sealed class ProductsController : Controller
       {
-        [RouteGeneratorName(""%&*$#(."")]
+        [RouteGeneratorName("%&*$#(.")]
         [FromForm]
         public string? FromForm { get; set; }
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task PrivatePropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -138,13 +138,13 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task PropertyBindingAttributesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -169,13 +169,13 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task PropertiesWithoutPublicGettersAndSettersAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -191,31 +191,31 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task RouteGeneratorNameAttributesRenameProperties()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using SafeRouting;
 
       [BindProperties]
       public sealed class ProductsController : Controller
       {
-        [RouteGeneratorName(""Renamed"")]
+        [RouteGeneratorName("Renamed")]
         public string? MyProperty { get; set; }
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task StaticPropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -225,13 +225,13 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task UnboundPropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -240,6 +240,6 @@ public sealed class ControllerPropertyTests
 
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 }

@@ -5,7 +5,7 @@
       Title: Conflicting methods,
       Severity: Error,
       WarningLevel: 0,
-      Location: : (8,8)-(9,74),
+      Location: : (7,2)-(8,68),
       Description: ,
       HelpLink: ,
       MessageFormat: The class '{0}' contains multiple methods which map to the route method '{1}'.,

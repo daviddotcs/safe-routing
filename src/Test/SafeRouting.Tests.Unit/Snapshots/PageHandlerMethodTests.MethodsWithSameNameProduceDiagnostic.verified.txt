@@ -5,7 +5,7 @@
       Title: Conflicting methods,
       Severity: Error,
       WarningLevel: 0,
-      Location: C:\Project\Pages\Products\Edit.cshtml.cs: (3,6)-(7,7),
+      Location: C:\Project\Pages\Products\Edit.cshtml.cs: (2,0)-(6,1),
       Description: ,
       HelpLink: ,
       MessageFormat: The class '{0}' contains multiple methods which map to the route method '{1}'.,

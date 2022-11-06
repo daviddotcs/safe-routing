@@ -6,7 +6,7 @@ public sealed class PagePropertyTests
   [Fact]
   public Task BindPropertiesAttributesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,13 +19,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task BindPropertiesAttributesSupportingGetAreIncludedInMethodSignature()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -38,44 +38,44 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task BindPropertyAttributeNamesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
       {
-        [BindProperty(Name = ""RenamedBindProperty"")]
+        [BindProperty(Name = "RenamedBindProperty")]
         public string? BindProperty { get; set; }
 
-        [FromForm(Name = ""RenamedFromForm"")]
+        [FromForm(Name = "RenamedFromForm")]
         public string? FromForm { get; set; }
 
-        [FromHeader(Name = ""RenamedFromHeader"")]
+        [FromHeader(Name = "RenamedFromHeader")]
         public string? FromHeader { get; set; }
 
-        [FromQuery(Name = ""RenamedFromQuery"")]
+        [FromQuery(Name = "RenamedFromQuery")]
         public string? FromQuery { get; set; }
 
-        [FromRoute(Name = ""RenamedFromRoute"")]
+        [FromRoute(Name = "RenamedFromRoute")]
         public string? FromRoute { get; set; }
 
         public void OnGet()
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task ExcludedPropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
@@ -90,20 +90,20 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task InvalidPropertyNamesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
       public sealed class EditModel : PageModel
       {
-        [RouteGeneratorName(""%&*$#(."")]
+        [RouteGeneratorName("%&*$#(.")]
         [FromForm]
         public string? FromForm { get; set; }
 
@@ -111,13 +111,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task PrivatePropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -130,13 +130,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task PropertyBindingAttributesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -164,13 +164,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task PropertiesWithoutPublicGettersAndSettersAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -189,13 +189,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task RouteGeneratorNameAttributesRenameProperties()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
@@ -203,20 +203,20 @@ public sealed class PagePropertyTests
       [BindProperties]
       public sealed class EditModel : PageModel
       {
-        [RouteGeneratorName(""Renamed"")]
+        [RouteGeneratorName("Renamed")]
         public string? BindProperty { get; set; }
 
         public void OnGet()
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task GetBoundPropertiesAreAppendedToMethodSignature()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -235,13 +235,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task RouteBoundPropertiesArentAppendedWhenConflictingWithExistingParameters()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
@@ -254,24 +254,24 @@ public sealed class PagePropertyTests
         [FromRoute]
         public string? B { get; set; }
 
-        [FromRoute(Name = ""C"")]
+        [FromRoute(Name = "C")]
         public string? SomeProperty { get; set; }
 
-        [RouteGeneratorName(""D"")]
+        [RouteGeneratorName("D")]
         [FromRoute]
         public string? OtherProperty { get; set; }
 
-        public void OnGet(string? a, [FromRoute(Name = ""B"")] string? x, string? c, string? d, int y)
+        public void OnGet(string? a, [FromRoute(Name = "B")] string? x, string? c, string? d, int y)
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task StaticPropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -284,13 +284,13 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task UnboundPropertiesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -301,6 +301,6 @@ public sealed class PagePropertyTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 }

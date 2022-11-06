@@ -6,7 +6,7 @@ public sealed class PageTests
   [Fact]
   public Task AbstractPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public abstract class EditModel : PageModel
@@ -15,13 +15,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task ConflictingPageNamesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       namespace A
@@ -43,13 +43,13 @@ public sealed class PageTests
           }
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task DeeplyNestedPagesHaveFolderNamesSeparatedWithUnderscores()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -58,25 +58,25 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Foo\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Foo\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task EmptyPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
       {
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task EscapedPageNamesAreHandled()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class @class : PageModel
@@ -85,13 +85,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task ExcludedPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -102,7 +102,7 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   /// <remarks>
@@ -111,7 +111,7 @@ public sealed class PageTests
   [Fact]
   public Task GenericPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel<T> : PageModel
@@ -120,13 +120,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task InheritedMembersAreIncluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -143,7 +143,7 @@ public sealed class PageTests
       public sealed class EditModel : EditModelBase
       {
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   /// <remarks>
@@ -152,7 +152,7 @@ public sealed class PageTests
   [Fact]
   public Task InternalPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       internal sealed class EditModel : PageModel
@@ -161,24 +161,24 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task InvalidPageNamesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
-      [RouteGeneratorName(""%&*$#(."")]
+      [RouteGeneratorName("%&*$#(.")]
       public sealed class EditModel : PageModel
       {
         public void OnGet()
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
@@ -186,7 +186,7 @@ public sealed class PageTests
   {
     var additionalSources = new[]
     {
-      new AdditionalSource(@"
+      new AdditionalSource("""
         using Microsoft.AspNetCore.Mvc.RazorPages;
 
         public sealed class ViewModel : PageModel
@@ -195,10 +195,10 @@ public sealed class PageTests
           {
           }
         }
-      ", Path: @"C:\Project\Pages\Products\View.cshtml.cs")
+        """, Path: @"C:\Project\Pages\Products\View.cshtml.cs")
     };
 
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -207,7 +207,7 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs", additionalSources: additionalSources);
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs", additionalSources: additionalSources);
   }
 
   /// <remarks>
@@ -216,7 +216,7 @@ public sealed class PageTests
   [Fact]
   public Task NestedPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class Foo
@@ -228,26 +228,26 @@ public sealed class PageTests
           }
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task NonPageModelClassesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       public sealed class EditModel
       {
         public void OnGet()
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task NonPublicPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       internal sealed class EditModel : PageModel
@@ -256,7 +256,7 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
@@ -264,7 +264,7 @@ public sealed class PageTests
   {
     var additionalSources = new[]
     {
-      new AdditionalSource(@"
+      new AdditionalSource("""
         using Microsoft.AspNetCore.Mvc.RazorPages;
 
         public partial class IndexModel : PageModel
@@ -273,10 +273,10 @@ public sealed class PageTests
           {
           }
         }
-      ")
+        """)
     };
 
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public partial class IndexModel
@@ -285,7 +285,7 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
+      """, path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
   }
 
   [Fact]
@@ -293,7 +293,7 @@ public sealed class PageTests
   {
     var additionalSources = new[]
     {
-      new AdditionalSource(@"
+      new AdditionalSource("""
         using Microsoft.AspNetCore.Mvc.RazorPages;
 
         public partial class IndexModel
@@ -302,10 +302,10 @@ public sealed class PageTests
           {
           }
         }
-      ")
+        """)
     };
 
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public partial class IndexModel : PageModel
@@ -314,13 +314,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
+      """, path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
   }
 
   [Fact]
   public Task PagesInNonCshtmlDotCsFilesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class IndexModel : PageModel
@@ -329,13 +329,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Index.cs");
+      """, path: @"C:\Project\Pages\Index.cs");
   }
 
   [Fact]
   public Task PagesInPagesDirectoryHaveNothingAddedToClassName()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class IndexModel : PageModel
@@ -344,13 +344,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Index.cshtml.cs");
+      """, path: @"C:\Project\Pages\Index.cshtml.cs");
   }
 
   [Fact]
   public Task PagesInPagesDirectoryOnRootAreIncluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class IndexModel : PageModel
@@ -359,13 +359,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Pages\Index.cshtml.cs");
+      """, path: @"C:\Pages\Index.cshtml.cs");
   }
 
   [Fact]
   public Task PagesOutsideOfAPagesDirectoryAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class IndexModel : PageModel
@@ -374,13 +374,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Index.cshtml.cs");
+      """, path: @"C:\Project\Index.cshtml.cs");
   }
 
   [Fact]
   public Task PagesWithAGetHandlerAndFilePathAreIncluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -389,13 +389,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task PagesWithAreaFilePathsAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -404,13 +404,13 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Areas\AreaName\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Areas\AreaName\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task PagesWithoutFilePathAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -419,13 +419,13 @@ public sealed class PageTests
         {
         }
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task PagesWithoutHandlerMethodsAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class IndexModel : PageModel
@@ -434,36 +434,36 @@ public sealed class PageTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Index.cshtml.cs");
+      """, path: @"C:\Project\Pages\Index.cshtml.cs");
   }
 
   [Fact]
   public Task RouteGeneratorNameAttributesRenameClasses()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
-      [RouteGeneratorName(""Renamed"")]
+      [RouteGeneratorName("Renamed")]
       public sealed class EditModel : PageModel
       {
         public void OnGet()
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task StaticPagesAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       public static class EditModel
       {
         public static void OnGet()
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 }

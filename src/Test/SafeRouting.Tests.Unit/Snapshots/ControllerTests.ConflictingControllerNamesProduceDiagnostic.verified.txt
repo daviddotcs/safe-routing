@@ -5,7 +5,7 @@
       Title: Conflicting Controller,
       Severity: Error,
       WarningLevel: 0,
-      Location: : (13,8)-(16,9),
+      Location: : (12,2)-(15,3),
       Description: ,
       HelpLink: ,
       MessageFormat: The controller '{0}' conflicts with another controller of the same name.,

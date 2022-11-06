@@ -34,7 +34,7 @@ internal static class CSharpSupport
     => value.Replace('<', '{').Replace('>', '}');
 
   public static string GetGeneratedCodeAttribute()
-    => $"[global::System.CodeDom.Compiler.GeneratedCode(\"{AssemblyName.Name}\", \"{AssemblyName.Version}\")]";
+    => $"""[global::System.CodeDom.Compiler.GeneratedCode("{AssemblyName.Name}", "{AssemblyName.Version}")]""";
 
   public static string GetExcludeFromCodeCoverageAttribute()
     => "[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]";

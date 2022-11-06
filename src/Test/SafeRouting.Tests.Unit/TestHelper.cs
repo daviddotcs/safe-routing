@@ -94,7 +94,7 @@ internal sealed class TestConfigOptions : AnalyzerConfigOptions, IDictionary<str
 {
   public string this[string key] { get => InternalDictionary[key]; set => InternalDictionary[key] = value; }
 
-  public ICollection<string> Keys => InternalDictionary.Keys;
+  public override ICollection<string> Keys => InternalDictionary.Keys;
   public ICollection<string> Values => InternalDictionary.Values;
   public int Count => InternalDictionary.Count;
   public bool IsReadOnly => false;

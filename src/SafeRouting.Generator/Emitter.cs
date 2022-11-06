@@ -82,7 +82,7 @@ internal static class Emitter
     var returnType = $"{uniqueName}RouteValues";
 
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// Generates route values for <see cref=\"{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}\"/>.");
+    writer.WriteLine($"""/// Generates route values for <see cref="{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}"/>.""");
     writer.WriteLine("/// </summary>");
     writer.Write($"public static {returnType} {method.EscapedName}(");
 
@@ -100,7 +100,7 @@ internal static class Emitter
     writer.WriteLine("{");
     writer.Indent++;
 
-    writer.Write("[\"area\"] = ");
+    writer.Write("""["area"] = """);
     if ((method.Area ?? item.Area) is string area)
     {
       CSharpSupport.ToStringLiteralExpression(area).WriteTo(writer);
@@ -129,7 +129,7 @@ internal static class Emitter
   private static void WriteMethodClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, string supportNamespace)
   {
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// Generates route values for <see cref=\"{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}\"/>.");
+    writer.WriteLine($"""/// Generates route values for <see cref="{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}"/>.""");
     writer.WriteLine("/// </summary>");
     writer.WriteLine(CSharpSupport.GetGeneratedCodeAttribute());
     writer.WriteLine(CSharpSupport.GetExcludeFromCodeCoverageAttribute());
@@ -195,7 +195,7 @@ internal static class Emitter
   private static void WriteParameterDataClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, IMvcMethodInfo method)
   {
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// Represents route keys for parameters to <see cref=\"{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}\"/>.");
+    writer.WriteLine($"""/// Represents route keys for parameters to <see cref="{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}"/>.""");
     writer.WriteLine("/// </summary>");
     writer.WriteLine(CSharpSupport.GetGeneratedCodeAttribute());
     writer.WriteLine(CSharpSupport.GetExcludeFromCodeCoverageAttribute());
@@ -217,7 +217,7 @@ internal static class Emitter
       }
 
       writer.WriteLine("/// <summary>");
-      writer.WriteLine($"/// Route key for the <c>{parameter.OriginalName}</c> parameter in <see cref=\"{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}\"/>.");
+      writer.WriteLine($"""/// Route key for the <c>{parameter.OriginalName}</c> parameter in <see cref="{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}"/>.""");
       writer.WriteLine("/// </summary>");
       WriteRouteKeyProperty(writer,
         scopeType: "ParameterData",
@@ -232,7 +232,7 @@ internal static class Emitter
   private static void WritePropertyDataClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item)
   {
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// Represents route keys for the properties of <see cref=\"{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}\"/>.");
+    writer.WriteLine($"""/// Represents route keys for the properties of <see cref="{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}"/>.""");
     writer.WriteLine("/// </summary>");
     writer.WriteLine(CSharpSupport.GetGeneratedCodeAttribute());
     writer.WriteLine(CSharpSupport.GetExcludeFromCodeCoverageAttribute());
@@ -249,7 +249,7 @@ internal static class Emitter
       }
 
       writer.WriteLine("/// <summary>");
-      writer.WriteLine($"/// Route key for the property <see cref=\"{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}.{property.EscapedOriginalName}\"/>.");
+      writer.WriteLine($"""/// Route key for the property <see cref="{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}.{property.EscapedOriginalName}"/>.""");
       writer.WriteLine("/// </summary>");
       WriteRouteKeyProperty(writer,
         scopeType: "PropertyData",
@@ -272,9 +272,9 @@ internal static class Emitter
       writer.Indent = indentLevel;
     }
 
-    writer.Write($"public global::{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}> {propertyName}");
-    writer.Write(" { get; } = new global::");
-    writer.Write($"{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}>(");
+    var propertyType = $"global::{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}>";
+
+    writer.Write($$"""public {{propertyType}} {{propertyName}} { get; } = new {{propertyType}}(""");
     CSharpSupport.ToStringLiteralExpression(routeKeyName).WriteTo(writer);
     writer.WriteLine(");");
 
@@ -296,8 +296,7 @@ internal static class Emitter
       writer.Indent = indentLevel;
     }
 
-    writer.Write($"public {valueType.FullyQualifiedName} this[global::{GeneratorSupport.RootNamespace}.RouteKey<{scopeType}, {valueType.FullyQualifiedName}> key] ");
-    writer.WriteLine("{ set => RouteValues[key.Name] = value; }");
+    writer.WriteLine($$"""public {{valueType.FullyQualifiedName}} this[global::{{GeneratorSupport.RootNamespace}}.RouteKey<{{scopeType}}, {{valueType.FullyQualifiedName}}> key] { set => RouteValues[key.Name] = value; }""");
 
     if (!valueType.AnnotationsEnabled)
     {
@@ -312,7 +311,7 @@ internal static class Emitter
     var methodClassName = $"{method.UniqueName}RouteValues";
 
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// Represents route values for routes to <see cref=\"{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}\"/>.");
+    writer.WriteLine($"""/// Represents route values for routes to <see cref="{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}"/>.""");
     writer.WriteLine("/// </summary>");
     writer.WriteLine(CSharpSupport.GetGeneratedCodeAttribute());
     writer.WriteLine(CSharpSupport.GetExcludeFromCodeCoverageAttribute());
@@ -321,9 +320,9 @@ internal static class Emitter
     writer.Indent++;
 
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// Initialises a new instance of the <see cref=\"{methodClassName}\"/> class.");
+    writer.WriteLine($"""/// Initialises a new instance of the <see cref="{methodClassName}"/> class.""");
     writer.WriteLine("/// </summary>");
-    writer.WriteLine($"/// <param name=\"routeValues\">The initial values for the route.</param>");
+    writer.WriteLine("""/// <param name="routeValues">The initial values for the route.</param>""");
     writer.WriteLine($"public {methodClassName}(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)");
     writer.WriteLine("{");
     writer.Indent++;
@@ -335,7 +334,7 @@ internal static class Emitter
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"/// The name of the {item.Noun.ToLowerInvariant()} for the route.");
     writer.WriteLine("/// </summary>");
-    writer.WriteLine($"public string {item.Noun}Name => \"{item.RouteValue}\";");
+    writer.WriteLine($"""public string {item.Noun}Name => "{item.RouteValue}";""");
 
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"/// The name of the {item.DivisionName.ToLowerInvariant()} for the route.");
@@ -388,26 +387,24 @@ internal static class Emitter
   {
     writer.WriteLine();
     writer.WriteLine("/// <summary>");
-    writer.WriteLine($"/// {memberType.TitleCasePluralNoun} of <see cref=\"{CSharpSupport.EscapeXmlDocType(fullyQualifiedSourceIdentifier)}\"/> which can be used in the route.");
+    writer.WriteLine($"""/// {memberType.TitleCasePluralNoun} of <see cref="{CSharpSupport.EscapeXmlDocType(fullyQualifiedSourceIdentifier)}"/> which can be used in the route.""");
     writer.WriteLine("/// </summary>");
-    writer.Write($"public {memberDataClassName} {memberType.TitleCasePluralNoun}");
-    writer.Write(" { get; } = new ");
-    writer.WriteLine($"{memberDataClassName}();");
+    writer.WriteLine($$"""public {{memberDataClassName}} {{memberType.TitleCasePluralNoun}} { get; } = new {{memberDataClassName}}();""");
 
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"/// Removes a {memberType.TitleCaseNoun.ToLowerInvariant()} value from the route.");
     writer.WriteLine("/// </summary>");
-    writer.WriteLine("/// <typeparam name=\"T\">The type of values applicable to the key.</typeparam>");
-    writer.WriteLine("/// <param name=\"key\">The key for the route.</param>");
-    writer.WriteLine("/// <returns><see langword=\"true\"/> if the element is successfully found and removed; otherwise <see langword=\"false\"/>.</returns>");
+    writer.WriteLine("""/// <typeparam name="T">The type of values applicable to the key.</typeparam>""");
+    writer.WriteLine("""/// <param name="key">The key for the route.</param>""");
+    writer.WriteLine("""/// <returns><see langword="true"/> if the element is successfully found and removed; otherwise <see langword="false"/>.</returns>""");
     writer.WriteLine($"public bool Remove<T>(global::{GeneratorSupport.RootNamespace}.RouteKey<{memberDataClassName}, T> key) => RouteValues.Remove(key.Name);");
 
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"/// Sets a {memberType.TitleCaseNoun.ToLowerInvariant()} value for the route.");
     writer.WriteLine("/// </summary>");
-    writer.WriteLine("/// <typeparam name=\"T\">The type of values applicable to the key.</typeparam>");
-    writer.WriteLine("/// <param name=\"key\">The key for the route.</param>");
-    writer.WriteLine("/// <param name=\"value\">The value for the route.</param>");
+    writer.WriteLine("""/// <typeparam name="T">The type of values applicable to the key.</typeparam>""");
+    writer.WriteLine("""/// <param name="key">The key for the route.</param>""");
+    writer.WriteLine("""/// <param name="value">The value for the route.</param>""");
     writer.WriteLine($"public void Set<T>(global::{GeneratorSupport.RootNamespace}.RouteKey<{memberDataClassName}, T> key, T value) => RouteValues[key.Name] = value;");
 
     var parameterTypes = ConsolidateTypes(memberTypes);
@@ -417,7 +414,7 @@ internal static class Emitter
       writer.WriteLine("/// <summary>");
       writer.WriteLine($"/// Sets a {memberType.TitleCaseNoun.ToLowerInvariant()} value for the route.");
       writer.WriteLine("/// </summary>");
-      writer.WriteLine("/// <param name=\"key\">The key for the route.</param>");
+      writer.WriteLine("""/// <param name="key">The key for the route.</param>""");
       WriteRouteKeyIndexer(writer, scopeType: memberDataClassName, valueType: parameterType);
     }
   }

@@ -5,7 +5,7 @@
       Title: Invalid identifier,
       Severity: Error,
       WarningLevel: 0,
-      Location: C:\Project\Pages\Products\Edit.cshtml.cs: (7,9)-(7,38),
+      Location: C:\Project\Pages\Products\Edit.cshtml.cs: (6,3)-(6,32),
       Description: ,
       HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier.,

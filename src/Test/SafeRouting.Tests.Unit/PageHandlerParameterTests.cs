@@ -6,7 +6,7 @@ public sealed class PageHandlerParameterTests
   [Fact]
   public Task CancellationTokenParametersAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using System.Threading;
 
@@ -16,13 +16,13 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task ExcludedParametersAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
@@ -32,29 +32,29 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task InvalidParameterNamesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
       public sealed class EditModel : PageModel
       {
-        public void OnGet([RouteGeneratorName(""%&*$#(."")] string myValue)
+        public void OnGet([RouteGeneratorName("%&*$#(.")] string myValue)
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task NonUrlBoundParametersAreExcludedFromSignature()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -64,13 +64,13 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task RegularParametersAreIncluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
       public sealed class EditModel : PageModel
@@ -79,29 +79,29 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task RouteGeneratorNameAttributesRenameParameters()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using SafeRouting;
 
       public sealed class EditModel : PageModel
       {
-        public void OnGet([RouteGeneratorName(""Foo"")] string myValue)
+        public void OnGet([RouteGeneratorName("Foo")] string myValue)
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Fact]
   public Task ServiceBoundParametersAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -111,6 +111,6 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 }

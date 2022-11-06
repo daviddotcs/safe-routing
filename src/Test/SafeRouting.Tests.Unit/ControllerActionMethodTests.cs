@@ -6,50 +6,50 @@ public sealed class ControllerActionMethodTests
   [Fact]
   public Task ActionAreaAttributesOverrideController()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
-      [Area(""Foo"")]
+      [Area("Foo")]
       public sealed class ProductsController : Controller
       {
-        [Area(""Bar"")]
+        [Area("Bar")]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task ActionNameAttributesRenameActions()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
-        [ActionName(""Renamed"")]
+        [ActionName("Renamed")]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task AreaAttributesAreConsidered()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
-        [Area(""Foo"")]
+        [Area("Foo")]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task AsyncMethodNameSuffixesAreTrimmed()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using System.Threading.Tasks;
 
@@ -57,13 +57,13 @@ public sealed class ControllerActionMethodTests
       {
         public Task<IActionResult> IndexAsync() => Task.FromResult((IActionResult)View());
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task AsyncMethodsNamedAsyncAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using System.Threading.Tasks;
 
@@ -71,13 +71,13 @@ public sealed class ControllerActionMethodTests
       {
         public Task<IActionResult> Async() => Task.FromResult((IActionResult)View());
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task ExcludedMethodsAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using SafeRouting;
 
@@ -86,41 +86,41 @@ public sealed class ControllerActionMethodTests
         [ExcludeFromRouteGenerator]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task GenericMethodsAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
         public IActionResult Index<T>() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task InvalidMethodNamesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using SafeRouting;
 
       public sealed class ProductsController : Controller
       {
-        [RouteGeneratorName(""%&*$#(."")]
+        [RouteGeneratorName("%&*$#(.")]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task MethodsWithByRefParametersAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -129,13 +129,13 @@ public sealed class ControllerActionMethodTests
         public IActionResult Out(out int foo) { foo = 2; return View(); }
         public IActionResult Ref(ref int foo) => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task MethodsWithDifferentNamesAreIncluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -143,13 +143,13 @@ public sealed class ControllerActionMethodTests
         public IActionResult Index() => View();
         public IActionResult Product(int id) => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task MethodsWithSameNameButDifferentParametersAreIncluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -157,13 +157,13 @@ public sealed class ControllerActionMethodTests
         public IActionResult Index() => View();
         public IActionResult Index(string someValue) => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task MethodsWithSameResultingSignatureAreCollapsed()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -174,13 +174,13 @@ public sealed class ControllerActionMethodTests
         [HttpPost]
         public IActionResult Index([FromServices] string someValue) => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task MethodsWithSameResultingSignatureButDifferentParameterPropertiesProduceDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -191,13 +191,13 @@ public sealed class ControllerActionMethodTests
         [HttpPost]
         public IActionResult Index([FromForm] string someValue) => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task NonActionAttributeMethodsAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
@@ -205,60 +205,60 @@ public sealed class ControllerActionMethodTests
         [NonAction]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task PrivateMethodsAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
         private IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task ReservedMethodNamesAreEscaped()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
         public IActionResult @class() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task RouteGeneratorNameAttributesRenameMethods()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using SafeRouting;
 
       public sealed class ProductsController : Controller
       {
-        [RouteGeneratorName(""Renamed"")]
+        [RouteGeneratorName("Renamed")]
         public IActionResult Index() => View();
       }
-    ");
+      """);
   }
 
   [Fact]
   public Task StaticMethodsAreExcluded()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
 
       public sealed class ProductsController : Controller
       {
         public static void Index() { }
       }
-    ");
+      """);
   }
 }

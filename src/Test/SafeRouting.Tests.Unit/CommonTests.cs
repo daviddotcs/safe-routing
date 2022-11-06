@@ -8,14 +8,15 @@ public sealed class CommonTests
   [Fact]
   public Task EmptySourceProducesCommonOutput()
   {
-    return TestHelper.Verify(@"");
+    return TestHelper.Verify("");
   }
 
   [Theory]
   [InlineData(LanguageVersion.CSharp10)]
+  [InlineData(LanguageVersion.CSharp11)]
   public Task GlobalUsingsGeneratedForSupportedLanguageVersions(LanguageVersion version)
   {
-    return TestHelper.Verify(@"", languageVersion: version, parameters: new object[] { version });
+    return TestHelper.Verify("", languageVersion: version, parameters: new object[] { version });
   }
 
   [Theory]
@@ -23,13 +24,13 @@ public sealed class CommonTests
   [InlineData(LanguageVersion.CSharp9)]
   public Task GlobalUsingsNotGeneratedForUnsupportedLanguageVersions(LanguageVersion version)
   {
-    return TestHelper.Verify(@"", languageVersion: version, parameters: new object[] { version });
+    return TestHelper.Verify("", languageVersion: version, parameters: new object[] { version });
   }
 
   [Fact]
   public Task InternalAccessModifierOptionProducesInternalClasses()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -53,7 +54,7 @@ public sealed class CommonTests
         {
         }
       }
-    ",
+      """,
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
     options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "internal" });
   }
@@ -61,7 +62,7 @@ public sealed class CommonTests
   [Fact]
   public Task InvalidAccessModifierOptionProducesDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -85,7 +86,7 @@ public sealed class CommonTests
         {
         }
       }
-    ",
+      """,
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
     options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "invalid access modifier" });
   }
@@ -93,7 +94,7 @@ public sealed class CommonTests
   [Fact]
   public Task InvalidNamespaceOptionProducesDiagnostic()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -117,7 +118,7 @@ public sealed class CommonTests
         {
         }
       }
-    ",
+      """,
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
     options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "x.1nvalid Namespace,[]!" });
   }
@@ -125,7 +126,7 @@ public sealed class CommonTests
   [Fact]
   public Task NamespaceOptionChangesNamespace()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -149,7 +150,7 @@ public sealed class CommonTests
         {
         }
       }
-    ",
+      """,
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
     options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "Test.Namespace" });
   }
@@ -157,7 +158,7 @@ public sealed class CommonTests
   [Fact]
   public Task PublicAccessModifierOptionProducesPublicClasses()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -181,7 +182,7 @@ public sealed class CommonTests
         {
         }
       }
-    ",
+      """,
     path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
     options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "public" });
   }
@@ -189,7 +190,7 @@ public sealed class CommonTests
   [Fact]
   public Task StandardControllerAndPageModelProduceFullOutput()
   {
-    return TestHelper.Verify(@"
+    return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using System.Collections.Generic;
@@ -216,16 +217,17 @@ public sealed class CommonTests
         {
         }
       }
-    ", path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
   }
 
   [Theory]
   [InlineData(LanguageVersion.CSharp8)]
   [InlineData(LanguageVersion.CSharp9)]
   [InlineData(LanguageVersion.CSharp10)]
+  [InlineData(LanguageVersion.CSharp11)]
   public Task SupportedLanguageVersionsBuild(LanguageVersion version)
   {
-    return TestHelper.Verify(@"", languageVersion: version, parameters: new object[] { version });
+    return TestHelper.Verify("", languageVersion: version, parameters: new object[] { version });
   }
 
   [Theory]
@@ -241,7 +243,7 @@ public sealed class CommonTests
   [InlineData(LanguageVersion.CSharp7_3)]
   public Task UnsupportedLanguageVersionsProduceDiagnostic(LanguageVersion version)
   {
-    var source = @"
+    var source = """
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
       using System.Collections.Generic;
@@ -268,7 +270,7 @@ public sealed class CommonTests
         {
         }
       }
-    ";
+      """;
 
     return TestHelper.Verify(source,
       path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
