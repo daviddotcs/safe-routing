@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsRoslynComponent>true</IsRoslynComponent>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    
+
     <PackageId>SafeRouting</PackageId>
     <Product>$(PackageId)</Product>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -12,7 +12,7 @@
     <Description>Generates strongly-typed route information for ASP.NET Core razor pages and MVC controllers.</Description>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\SafeRouting.Common.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
