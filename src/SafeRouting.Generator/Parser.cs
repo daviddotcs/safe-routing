@@ -878,7 +878,7 @@ internal static class Parser
       {
         continue;
       }
-      
+
       var propertyBoundName = property.BindingSource?.Name ?? property.EscapedName;
       var hasConflictingBoundParameter = false;
       var hasConflictingParameterName = false;
@@ -910,7 +910,7 @@ internal static class Parser
         continue;
       }
 
-      resultParameters.Value.Add(new MvcMethodParameterInfo(property.OriginalName, CSharpSupport.PascalToCamelCase(property.EscapedName), null, property.RouteKey, property.Type, null, property.BindingSource));
+      resultParameters.Value.Add(new MvcMethodParameterInfo(property.OriginalName, CSharpSupport.PascalToCamelCase(property.EscapedName), PropertyName: null, property.RouteKey, property.Type, DefaultValueExpression: null, property.BindingSource));
     }
 
     return (resultParameters.IsValueCreated, resultParameters.IsValueCreated ? resultParameters.Value : parameters);
