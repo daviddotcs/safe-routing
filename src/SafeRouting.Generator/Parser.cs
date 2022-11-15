@@ -59,7 +59,7 @@ internal static class Parser
 
     // https://github.com/dotnet/aspnetcore/blob/2862028573708e5684bf17526c43127e178525d4/src/Mvc/Mvc.Core/src/ApplicationModels/DefaultApplicationModelProvider.cs#L167
     var controllerName = typeSymbol.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase)
-      ? typeSymbol.Name.Substring(0, typeSymbol.Name.Length - "Controller".Length)
+      ? typeSymbol.Name[..^"Controller".Length]
       : typeSymbol.Name;
 
     if (controllerName.Length == 0)
@@ -145,7 +145,7 @@ internal static class Parser
       areaName = directory.Parent.Name;
     }
 
-    var pageName = fileInfo.Name.Substring(0, fileInfo.Name.Length - ".cshtml.cs".Length);
+    var pageName = fileInfo.Name[..^".cshtml.cs".Length];
     pathSegments.Add(pageName);
     var pagePath = "/" + string.Join("/", pathSegments);
 
@@ -385,7 +385,7 @@ internal static class Parser
     }
 
     var name = methodSymbol.Name.EndsWith("Async", StringComparison.Ordinal)
-      ? methodSymbol.Name.Substring(0, methodSymbol.Name.Length - "Async".Length)
+      ? methodSymbol.Name[..^"Async".Length]
       : methodSymbol.Name;
 
     var actionName = name;

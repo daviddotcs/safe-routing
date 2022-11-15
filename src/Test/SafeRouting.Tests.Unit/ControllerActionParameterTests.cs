@@ -53,7 +53,7 @@ public sealed class ControllerActionParameterTests
           char k = '\\',
           int l = sizeof(double),
           byte m = unchecked((byte)~0x1^2),
-          string n = 
+          string n =
 
             /* delimited comment 1 */
             // single-line comment 1

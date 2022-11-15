@@ -9,12 +9,12 @@ internal static class CSharpSupport
   public static string CamelToPascalCase(string value)
     => value.Length <= 1
       ? value.ToUpperInvariant()
-      : value.Substring(0, 1).ToUpperInvariant() + value.Substring(1);
+      : value[..1].ToUpperInvariant() + value[1..];
 
   public static bool IdentifierRequiresEscaping(string identifier)
   {
     var kind = SyntaxFacts.GetKeywordKind(identifier);
-    
+
     return kind == SyntaxKind.None
       ? SyntaxFacts.GetContextualKeywordKind(identifier) != SyntaxKind.None
       : SyntaxFacts.IsReservedKeyword(kind);
@@ -23,7 +23,7 @@ internal static class CSharpSupport
   public static string PascalToCamelCase(string value)
     => value.Length <= 1
       ? value.ToLowerInvariant()
-      : value.Substring(0, 1).ToLowerInvariant() + value.Substring(1);
+      : value[..1].ToLowerInvariant() + value[1..];
 
   public static string EscapeIdentifier(string identifier)
     => IdentifierRequiresEscaping(identifier)
