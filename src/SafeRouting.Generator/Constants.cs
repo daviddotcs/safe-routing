@@ -32,8 +32,10 @@ internal static class GeneratorSupport
 {
   public const string DefaultGeneratedAccessModifier = "public";
   public const string DefaultGeneratedRootNamespace = "Routes";
+  public const IdentifierCase DefaultGeneratedParameterCase = IdentifierCase.Standard;
   public const string GeneratedAccessModifierOption = $"{GlobalOptionsPrefix}.generated_access_modifier";
   public const string GeneratedNamespaceOption = $"{GlobalOptionsPrefix}.generated_namespace";
+  public const string GeneratedParameterCaseOption = $"{GlobalOptionsPrefix}.generated_parameter_case";
   public const string GlobalOptionsPrefix = "safe_routing";
   public const string RootNamespace = "SafeRouting";
 }

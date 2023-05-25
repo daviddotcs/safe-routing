@@ -16,8 +16,9 @@ internal static class Parser
 
     var generatedAccessModifier = GetGeneratedAccessModifierOption(optionsProvider.GlobalOptions, diagnostics);
     var generatedNamespace = GetGeneratedNamespaceOption(optionsProvider.GlobalOptions, diagnostics);
+    var generatedParameterCase = GetGeneratedParameterCaseOption(optionsProvider.GlobalOptions, diagnostics);
 
-    return new GeneratorOptions(generatedAccessModifier, generatedNamespace, diagnostics);
+    return new GeneratorOptions(generatedAccessModifier, generatedNamespace, generatedParameterCase, diagnostics);
   }
 
   public static bool IsCandidateNode(SyntaxNode node)
@@ -222,6 +223,30 @@ internal static class Parser
     }
 
     return generatedNamespace;
+  }
+  private static IdentifierCase GetGeneratedParameterCaseOption(AnalyzerConfigOptions options, List<Diagnostic> diagnostics)
+  {
+    var generatedParameterCase = GeneratorSupport.DefaultGeneratedParameterCase;
+
+    if (!options.TryGetValue(GeneratorSupport.GeneratedParameterCaseOption, out var generatedParameterCaseValue))
+    {
+      return generatedParameterCase;
+    }
+
+    if (string.Equals(generatedParameterCaseValue, "standard", StringComparison.Ordinal))
+    {
+      return IdentifierCase.Standard;
+    }
+    else if (string.Equals(generatedParameterCaseValue, "pascal", StringComparison.Ordinal))
+    {
+      return IdentifierCase.Pascal;
+    }
+    else
+    {
+      diagnostics.Add(Diagnostics.CreateInvalidOptionDiagnostic(GeneratorSupport.GeneratedParameterCaseOption, $"'{generatedParameterCaseValue}' is not a supported parameter case, must be standard or pascal."));
+    }
+
+    return generatedParameterCase;
   }
   private static void GetControllerAttributes(INamedTypeSymbol typeSymbol, List<Diagnostic> diagnostics, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName, CancellationToken cancellationToken)
   {

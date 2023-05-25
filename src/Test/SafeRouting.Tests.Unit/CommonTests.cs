@@ -156,6 +156,38 @@ public sealed class CommonTests
   }
 
   [Fact]
+  public Task ParameterCaseOptionProducesPascalCaseParameters()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class ProductsController : Controller
+      {
+        [FromRoute]
+        public string? Name { get; set; }
+
+        public IActionResult Index(int id)
+        {
+          return View();
+        }
+      }
+
+      public sealed class EditModel : PageModel
+      {
+        [FromRoute]
+        public string? Title { get; set; }
+
+        public void OnGet(string name)
+        {
+        }
+      }
+      """,
+    path: @"C:\Project\Pages\Products\Edit.cshtml.cs",
+    options: new TestConfigOptions { ["safe_routing.generated_parameter_case"] = "pascal" });
+  }
+
+  [Fact]
   public Task PublicAccessModifierOptionProducesPublicClasses()
   {
     return TestHelper.Verify("""

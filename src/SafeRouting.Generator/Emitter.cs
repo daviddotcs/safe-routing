@@ -76,7 +76,7 @@ internal static class Emitter
     return builder.ToString();
   }
 
-  private static void WriteMethod(IndentedTextWriter writer, IMvcObjectInfo item, IMvcMethodInfo method, string uniqueName)
+  private static void WriteMethod(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, IMvcMethodInfo method, string uniqueName)
   {
     var parameters = method.GetUrlParameters().ToArray();
     var returnType = $"{uniqueName}RouteValues";
@@ -88,7 +88,7 @@ internal static class Emitter
 
     if (parameters.Length > 0)
     {
-      WriteMethodParameters(writer, parameters);
+      WriteMethodParameters(writer, options, parameters);
     }
 
     // Start of method block
@@ -115,7 +115,7 @@ internal static class Emitter
       writer.WriteLine(",");
       writer.Write("[");
       CSharpSupport.ToStringLiteralExpression(parameter.RouteKey).WriteTo(writer);
-      writer.Write($"] = {parameter.EscapedName}");
+      writer.Write($"] = {FormatIdentifier(parameter.EscapedName, options.GeneratedParameterCase)}");
     }
 
     writer.WriteLine();
@@ -146,13 +146,13 @@ internal static class Emitter
         writer.WriteLine();
       }
 
-      WriteMethod(writer, item, method, $"{supportNamespace}.{method.UniqueName}");
+      WriteMethod(writer, options, item, method, $"{supportNamespace}.{method.UniqueName}");
     }
 
     writer.Indent--;
     writer.WriteLine("}");
   }
-  private static void WriteMethodParameters(IndentedTextWriter writer, MvcMethodParameterInfo[] parameters)
+  private static void WriteMethodParameters(IndentedTextWriter writer, GeneratorOptions options, MvcMethodParameterInfo[] parameters)
   {
     var indentLevel = writer.Indent;
     var annotationsEnabled = true;
@@ -174,7 +174,7 @@ internal static class Emitter
         writer.Indent = indentLevel + 1;
       }
 
-      writer.Write($"{parameter.Type.FullyQualifiedName} {parameter.EscapedName}");
+      writer.Write($"{parameter.Type.FullyQualifiedName} {FormatIdentifier(parameter.EscapedName, options.GeneratedParameterCase)}");
 
       if (parameter.DefaultValueExpression is not null)
       {
@@ -443,7 +443,7 @@ internal static class Emitter
           resultType = type;
           continue;
         }
-        
+
         if (!string.Equals(resultType.FullyQualifiedName, type.FullyQualifiedName, StringComparison.Ordinal))
         {
           resultType = type with { FullyQualifiedName = type.FullyQualifiedNameSansAnnotations, AnnotationsEnabled = false };
@@ -454,6 +454,15 @@ internal static class Emitter
     }
 
     return results;
+  }
+  private static string FormatIdentifier(string identifier, IdentifierCase forcedCase)
+  {
+    return forcedCase switch
+    {
+      IdentifierCase.Standard => identifier,
+      IdentifierCase.Pascal => CSharpSupport.CamelToPascalCase(identifier),
+      _ => throw new ArgumentOutOfRangeException(nameof(forcedCase))
+    };
   }
 
   private sealed class MemberType

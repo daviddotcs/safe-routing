@@ -249,6 +249,7 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 |--------|-------------|
 | `safe_routing.generated_access_modifier` | The access modifier used for all generated classes. Can be _public_ or _internal_. Defaults to _public_. |
 | `safe_routing.generated_namespace` | The namespace under which all generated route classes are created. Defaults to _Routes_. |
+| `safe_routing.generated_parameter_case` | The case used for parameters in generated methods. Can be _standard_ (camel case) or _pascal_. Defaults to _standard_. |
 
 ## Limitations
 

@@ -161,7 +161,14 @@ internal sealed record TypeInfo(
   string FullyQualifiedNameSansAnnotations,
   bool AnnotationsEnabled);
 
+internal enum IdentifierCase
+{
+  Standard,
+  Pascal
+}
+
 internal sealed record GeneratorOptions(
   string GeneratedAccessModifier,
   string GeneratedNamespace,
+  IdentifierCase GeneratedParameterCase,
   IReadOnlyCollection<Diagnostic> Diagnostics);
