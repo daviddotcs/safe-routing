@@ -23,7 +23,7 @@ internal static class Emitter
 
     var itemIndex = 0;
 
-    foreach (var item in items.OrderBy(x => x.OutputClassName))
+    foreach (var item in items.OrderBy(x => x.OutputClassName, StringComparer.Ordinal))
     {
       cancellationToken.ThrowIfCancellationRequested();
 
@@ -409,7 +409,7 @@ internal static class Emitter
 
     var parameterTypes = ConsolidateTypes(memberTypes);
 
-    foreach (var parameterType in parameterTypes.OrderBy(x => x.FullyQualifiedName))
+    foreach (var parameterType in parameterTypes.OrderBy(x => x.FullyQualifiedName, StringComparer.Ordinal))
     {
       writer.WriteLine("/// <summary>");
       writer.WriteLine($"/// Sets a {memberType.TitleCaseNoun.ToLowerInvariant()} value for the route.");
