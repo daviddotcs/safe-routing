@@ -8,8 +8,8 @@
       Location: : (0,0)-(0,0),
       Description: ,
       HelpLink: ,
-      MessageFormat: C# 8 or later is required for route generation.,
-      Message: C# 8 or later is required for route generation.,
+      MessageFormat: C# 8 or later is required for route generation,
+      Message: C# 8 or later is required for route generation,
       Category: SafeRouting.Generator.RouteGenerator
     }
   ]
