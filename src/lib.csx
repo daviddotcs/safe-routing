@@ -1,4 +1,4 @@
-#r "nuget: Markdig, 0.28.1"
+#r "nuget: Markdig, 0.31.0"
 
 using System;
 using System.Diagnostics;
