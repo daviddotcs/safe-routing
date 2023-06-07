@@ -28,7 +28,7 @@ namespace Test.Namespace
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
@@ -43,7 +43,7 @@ namespace Test.Namespace
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> Title { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("Title");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::EditModel.OnGet(string)"/>.
     /// </summary>
@@ -59,7 +59,7 @@ namespace Test.Namespace
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -72,7 +72,7 @@ namespace Test.Namespace
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::EditModel"/> which can be used in the route.
       /// </summary>
@@ -96,7 +96,7 @@ namespace Test.Namespace
       /// </summary>
       /// <param name="key">The key for the route.</param>
       public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::EditModel.OnGet(string)"/> which can be used in the route.
       /// </summary>
@@ -121,7 +121,7 @@ namespace Test.Namespace
       /// <param name="key">The key for the route.</param>
       public string this[global::SafeRouting.RouteKey<Get.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace Get
     {
       /// <summary>

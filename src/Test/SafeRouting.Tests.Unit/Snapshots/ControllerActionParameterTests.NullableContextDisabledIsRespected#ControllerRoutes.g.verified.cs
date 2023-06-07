@@ -33,7 +33,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -51,7 +51,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -64,7 +64,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, string)"/> which can be used in the route.
       /// </summary>
@@ -96,7 +96,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public string this[global::SafeRouting.RouteKey<A.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace A
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Routes
 #nullable disable
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> X { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("x");
 #nullable restore
-        
+
         /// <summary>
         /// Route key for the <c>y</c> parameter in <see cref="global::ProductsController.A(global::System.Collections.Generic.IEnumerable{string}, string)"/>.
         /// </summary>

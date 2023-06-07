@@ -27,7 +27,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Foo_Edit
   {
     /// <summary>
@@ -45,7 +45,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>

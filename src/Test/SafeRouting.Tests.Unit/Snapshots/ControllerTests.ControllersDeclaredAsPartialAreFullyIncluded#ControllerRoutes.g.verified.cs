@@ -25,7 +25,7 @@ namespace Routes
           ["area"] = ""
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.X()"/>.
       /// </summary>
@@ -38,7 +38,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -56,7 +56,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -70,7 +70,7 @@ namespace Routes
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.X()"/>.
     /// </summary>
@@ -86,7 +86,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>

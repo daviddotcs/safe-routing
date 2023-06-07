@@ -27,7 +27,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -41,13 +41,13 @@ namespace Routes
       /// Route key for the property <see cref="global::ProductsController.C"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> C { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("C");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.B"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> B { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("B");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.Index()"/>.
     /// </summary>
@@ -63,7 +63,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -76,7 +76,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::ProductsController"/> which can be used in the route.
       /// </summary>

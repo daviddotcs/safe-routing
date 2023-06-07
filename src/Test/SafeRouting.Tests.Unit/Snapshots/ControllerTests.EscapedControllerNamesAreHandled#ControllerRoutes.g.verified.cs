@@ -27,7 +27,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_class
   {
     /// <summary>
@@ -45,7 +45,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>

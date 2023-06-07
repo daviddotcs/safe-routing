@@ -32,7 +32,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
@@ -46,23 +46,23 @@ namespace Routes
       /// Route key for the property <see cref="global::EditModel.A"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> A { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("A");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.B"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> B { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("B");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.SomeProperty"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> SomeProperty { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("C");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.OtherProperty"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> D { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("OtherProperty");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/>.
     /// </summary>
@@ -78,7 +78,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -91,7 +91,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::EditModel"/> which can be used in the route.
       /// </summary>
@@ -115,7 +115,7 @@ namespace Routes
       /// </summary>
       /// <param name="key">The key for the route.</param>
       public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/> which can be used in the route.
       /// </summary>
@@ -145,7 +145,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public string? this[global::SafeRouting.RouteKey<Get.ParameterData, string?> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace Get
     {
       /// <summary>
@@ -159,22 +159,22 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, string?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>x</c> parameter in <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string?> X { get; } = new global::SafeRouting.RouteKey<ParameterData, string?>("B");
-        
+
         /// <summary>
         /// Route key for the <c>c</c> parameter in <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string?> C { get; } = new global::SafeRouting.RouteKey<ParameterData, string?>("c");
-        
+
         /// <summary>
         /// Route key for the <c>d</c> parameter in <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string?> D { get; } = new global::SafeRouting.RouteKey<ParameterData, string?>("d");
-        
+
         /// <summary>
         /// Route key for the <c>y</c> parameter in <see cref="global::EditModel.OnGet(string?, string?, string?, string?, int)"/>.
         /// </summary>

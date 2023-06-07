@@ -28,7 +28,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -46,7 +46,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -59,7 +59,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.Index(string)"/> which can be used in the route.
       /// </summary>
@@ -84,7 +84,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public string this[global::SafeRouting.RouteKey<Index.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace Index
     {
       /// <summary>

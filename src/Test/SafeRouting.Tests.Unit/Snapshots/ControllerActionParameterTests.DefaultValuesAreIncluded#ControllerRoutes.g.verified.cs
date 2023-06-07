@@ -41,7 +41,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -59,7 +59,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -72,7 +72,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/> which can be used in the route.
       /// </summary>
@@ -127,7 +127,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public string this[global::SafeRouting.RouteKey<Index.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace Index
     {
       /// <summary>
@@ -141,67 +141,67 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.DateTime> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.DateTime>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, int> B { get; } = new global::SafeRouting.RouteKey<ParameterData, int>("b");
-        
+
         /// <summary>
         /// Route key for the <c>c</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string> C { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("c");
-        
+
         /// <summary>
         /// Route key for the <c>d</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.DayOfWeek> D { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.DayOfWeek>("d");
-        
+
         /// <summary>
         /// Route key for the <c>e</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, bool> E { get; } = new global::SafeRouting.RouteKey<ParameterData, bool>("e");
-        
+
         /// <summary>
         /// Route key for the <c>f</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, bool> F { get; } = new global::SafeRouting.RouteKey<ParameterData, bool>("f");
-        
+
         /// <summary>
         /// Route key for the <c>g</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string> G { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("g");
-        
+
         /// <summary>
         /// Route key for the <c>h</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, char> H { get; } = new global::SafeRouting.RouteKey<ParameterData, char>("h");
-        
+
         /// <summary>
         /// Route key for the <c>i</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, char> I { get; } = new global::SafeRouting.RouteKey<ParameterData, char>("i");
-        
+
         /// <summary>
         /// Route key for the <c>j</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, char> J { get; } = new global::SafeRouting.RouteKey<ParameterData, char>("j");
-        
+
         /// <summary>
         /// Route key for the <c>k</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, char> K { get; } = new global::SafeRouting.RouteKey<ParameterData, char>("k");
-        
+
         /// <summary>
         /// Route key for the <c>l</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, int> L { get; } = new global::SafeRouting.RouteKey<ParameterData, int>("l");
-        
+
         /// <summary>
         /// Route key for the <c>m</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, byte> M { get; } = new global::SafeRouting.RouteKey<ParameterData, byte>("m");
-        
+
         /// <summary>
         /// Route key for the <c>n</c> parameter in <see cref="global::ProductsController.Index(global::System.DateTime, int, string, global::System.DayOfWeek, bool, bool, string, char, char, char, char, int, byte, string)"/>.
         /// </summary>

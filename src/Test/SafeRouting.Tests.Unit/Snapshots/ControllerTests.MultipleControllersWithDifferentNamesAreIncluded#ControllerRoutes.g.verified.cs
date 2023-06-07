@@ -27,7 +27,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_A
   {
     /// <summary>
@@ -45,7 +45,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -60,7 +60,7 @@ namespace Routes
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
   }
-  
+
   namespace Controllers
   {
     /// <summary>
@@ -82,7 +82,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_B
   {
     /// <summary>
@@ -100,7 +100,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>

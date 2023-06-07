@@ -29,7 +29,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
@@ -43,13 +43,13 @@ namespace Routes
       /// Route key for the property <see cref="global::EditModel.Title"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> Title { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("Title");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.Foo"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>?> Foo { get; } = new global::SafeRouting.RouteKey<PropertyData, global::System.Collections.Generic.Dictionary<string, object>?>("Foo");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::EditModel.OnGet(string, global::System.Collections.Generic.Dictionary{string, object})"/>.
     /// </summary>
@@ -65,7 +65,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -78,7 +78,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::EditModel"/> which can be used in the route.
       /// </summary>
@@ -107,7 +107,7 @@ namespace Routes
       /// </summary>
       /// <param name="key">The key for the route.</param>
       public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::EditModel.OnGet(string, global::System.Collections.Generic.Dictionary{string, object})"/> which can be used in the route.
       /// </summary>
@@ -137,7 +137,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public string this[global::SafeRouting.RouteKey<Get.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace Get
     {
       /// <summary>
@@ -151,7 +151,7 @@ namespace Routes
         /// Route key for the <c>name</c> parameter in <see cref="global::EditModel.OnGet(string, global::System.Collections.Generic.Dictionary{string, object})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string> Name { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("name");
-        
+
         /// <summary>
         /// Route key for the <c>bar</c> parameter in <see cref="global::EditModel.OnGet(string, global::System.Collections.Generic.Dictionary{string, object})"/>.
         /// </summary>

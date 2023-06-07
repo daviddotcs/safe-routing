@@ -29,7 +29,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -47,7 +47,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -60,7 +60,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.A(string, string?)"/> which can be used in the route.
       /// </summary>
@@ -87,7 +87,7 @@ namespace Routes
       public string this[global::SafeRouting.RouteKey<A.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace A
     {
       /// <summary>
@@ -101,7 +101,7 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.A(string, string?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string> A { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.A(string, string?)"/>.
         /// </summary>

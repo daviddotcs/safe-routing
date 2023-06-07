@@ -27,7 +27,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
@@ -45,7 +45,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -60,7 +60,7 @@ namespace Routes
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
     }
   }
-  
+
   namespace Pages
   {
     /// <summary>
@@ -82,7 +82,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_View
   {
     /// <summary>
@@ -100,7 +100,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>

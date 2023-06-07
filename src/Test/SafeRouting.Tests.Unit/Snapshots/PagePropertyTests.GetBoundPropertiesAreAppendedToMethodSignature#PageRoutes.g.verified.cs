@@ -31,7 +31,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
@@ -45,18 +45,18 @@ namespace Routes
       /// Route key for the property <see cref="global::EditModel.BindValue"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> BindValue { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("BindValue");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.QueryValue"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> QueryValue { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("QueryValue");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::EditModel.RouteValue"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> RouteValue { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("RouteValue");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::EditModel.OnGet(int)"/>.
     /// </summary>
@@ -72,7 +72,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -85,7 +85,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::EditModel"/> which can be used in the route.
       /// </summary>
@@ -109,7 +109,7 @@ namespace Routes
       /// </summary>
       /// <param name="key">The key for the route.</param>
       public string? this[global::SafeRouting.RouteKey<PropertyData, string?> key] { set => RouteValues[key.Name] = value; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::EditModel.OnGet(int)"/> which can be used in the route.
       /// </summary>
@@ -134,7 +134,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public int this[global::SafeRouting.RouteKey<Get.ParameterData, int> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace Get
     {
       /// <summary>

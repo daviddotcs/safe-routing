@@ -27,7 +27,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T02(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
       /// </summary>
@@ -40,7 +40,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T03(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
       /// </summary>
@@ -53,7 +53,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T04(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
       /// </summary>
@@ -66,7 +66,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T05(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -83,7 +83,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T06(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -96,7 +96,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T07(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
       /// </summary>
@@ -109,7 +109,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T08(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
       /// </summary>
@@ -122,7 +122,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T09(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
       /// </summary>
@@ -135,7 +135,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T10(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -152,7 +152,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T11(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -165,7 +165,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T12(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
       /// </summary>
@@ -178,7 +178,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T13(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?})"/>.
       /// </summary>
@@ -191,7 +191,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T14(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
       /// </summary>
@@ -204,7 +204,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T15(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -221,7 +221,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T16(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -234,7 +234,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T17(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
       /// </summary>
@@ -247,7 +247,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T18(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
       /// </summary>
@@ -260,7 +260,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T19(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
       /// </summary>
@@ -273,7 +273,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T20(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -290,7 +290,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T21(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -307,7 +307,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T22(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
       /// </summary>
@@ -324,7 +324,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T23(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
       /// </summary>
@@ -341,7 +341,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T24(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
       /// </summary>
@@ -358,7 +358,7 @@ namespace Routes
           ["b"] = b
         });
       }
-      
+
       /// <summary>
       /// Generates route values for <see cref="global::ProductsController.T25(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
       /// </summary>
@@ -377,7 +377,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -395,7 +395,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -408,7 +408,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T01(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -433,7 +433,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T01.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace T01
     {
       /// <summary>
@@ -447,14 +447,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T01(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T01(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T02(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
     /// </summary>
@@ -470,7 +470,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -483,7 +483,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T02(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
       /// </summary>
@@ -510,7 +510,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T02.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T02
     {
       /// <summary>
@@ -524,14 +524,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T02(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T02(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T03(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
     /// </summary>
@@ -547,7 +547,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -560,7 +560,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T03(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
       /// </summary>
@@ -587,7 +587,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T03.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T03
     {
       /// <summary>
@@ -601,14 +601,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T03(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T03(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T04(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
     /// </summary>
@@ -624,7 +624,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -637,7 +637,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T04(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
       /// </summary>
@@ -664,7 +664,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T04.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T04
     {
       /// <summary>
@@ -678,14 +678,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T04(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T04(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T05(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -701,7 +701,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -714,7 +714,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T05(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -741,7 +741,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T05.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T05
     {
       /// <summary>
@@ -755,7 +755,7 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T05(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T05(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
@@ -764,7 +764,7 @@ namespace Routes
 #nullable restore
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T06(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -780,7 +780,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -793,7 +793,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T06(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -820,7 +820,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T06.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T06
     {
       /// <summary>
@@ -834,14 +834,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T06(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T06(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T07(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
     /// </summary>
@@ -857,7 +857,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -870,7 +870,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T07(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
       /// </summary>
@@ -895,7 +895,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public global::System.Collections.Generic.IEnumerable<string>? this[global::SafeRouting.RouteKey<T07.ParameterData, global::System.Collections.Generic.IEnumerable<string>?> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace T07
     {
       /// <summary>
@@ -909,14 +909,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T07(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T07(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T08(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
     /// </summary>
@@ -932,7 +932,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -945,7 +945,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T08(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
       /// </summary>
@@ -972,7 +972,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T08.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T08
     {
       /// <summary>
@@ -986,14 +986,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T08(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T08(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T09(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
     /// </summary>
@@ -1009,7 +1009,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1022,7 +1022,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T09(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
       /// </summary>
@@ -1049,7 +1049,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T09.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T09
     {
       /// <summary>
@@ -1063,14 +1063,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T09(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T09(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T10(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -1086,7 +1086,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1099,7 +1099,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T10(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -1126,7 +1126,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T10.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T10
     {
       /// <summary>
@@ -1140,7 +1140,7 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T10(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T10(global::System.Collections.Generic.IEnumerable{string}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
@@ -1149,7 +1149,7 @@ namespace Routes
 #nullable restore
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T11(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -1165,7 +1165,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1178,7 +1178,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T11(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -1205,7 +1205,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T11.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T11
     {
       /// <summary>
@@ -1219,14 +1219,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T11(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T11(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T12(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
     /// </summary>
@@ -1242,7 +1242,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1255,7 +1255,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T12(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
       /// </summary>
@@ -1282,7 +1282,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T12.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T12
     {
       /// <summary>
@@ -1296,14 +1296,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T12(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T12(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T13(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?})"/>.
     /// </summary>
@@ -1319,7 +1319,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1332,7 +1332,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T13(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
       /// </summary>
@@ -1357,7 +1357,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public global::System.Collections.Generic.IEnumerable<string?> this[global::SafeRouting.RouteKey<T13.ParameterData, global::System.Collections.Generic.IEnumerable<string?>> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace T13
     {
       /// <summary>
@@ -1371,14 +1371,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T13(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T13(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T14(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
     /// </summary>
@@ -1394,7 +1394,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1407,7 +1407,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T14(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
       /// </summary>
@@ -1434,7 +1434,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T14.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T14
     {
       /// <summary>
@@ -1448,14 +1448,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T14(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T14(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T15(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -1471,7 +1471,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1484,7 +1484,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T15(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -1511,7 +1511,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T15.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T15
     {
       /// <summary>
@@ -1525,7 +1525,7 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T15(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T15(global::System.Collections.Generic.IEnumerable{string?}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
@@ -1534,7 +1534,7 @@ namespace Routes
 #nullable restore
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T16(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -1550,7 +1550,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1563,7 +1563,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T16(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -1590,7 +1590,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T16.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T16
     {
       /// <summary>
@@ -1604,14 +1604,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T16(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T16(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T17(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
     /// </summary>
@@ -1627,7 +1627,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1640,7 +1640,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T17(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
       /// </summary>
@@ -1667,7 +1667,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T17.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T17
     {
       /// <summary>
@@ -1681,14 +1681,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T17(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T17(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T18(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
     /// </summary>
@@ -1704,7 +1704,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1717,7 +1717,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T18(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
       /// </summary>
@@ -1744,7 +1744,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T18.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T18
     {
       /// <summary>
@@ -1758,14 +1758,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T18(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T18(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T19(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
     /// </summary>
@@ -1781,7 +1781,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1794,7 +1794,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T19(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
       /// </summary>
@@ -1819,7 +1819,7 @@ namespace Routes
       /// <param name="key">The key for the route.</param>
       public global::System.Collections.Generic.IEnumerable<string?>? this[global::SafeRouting.RouteKey<T19.ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> key] { set => RouteValues[key.Name] = value; }
     }
-    
+
     namespace T19
     {
       /// <summary>
@@ -1833,14 +1833,14 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T19(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T19(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T20(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -1856,7 +1856,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1869,7 +1869,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T20(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -1896,7 +1896,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T20.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T20
     {
       /// <summary>
@@ -1910,7 +1910,7 @@ namespace Routes
         /// Route key for the <c>a</c> parameter in <see cref="global::ProductsController.T20(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("a");
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T20(global::System.Collections.Generic.IEnumerable{string?}?, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
@@ -1919,7 +1919,7 @@ namespace Routes
 #nullable restore
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T21(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -1935,7 +1935,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -1948,7 +1948,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T21(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -1975,7 +1975,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T21.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T21
     {
       /// <summary>
@@ -1991,14 +1991,14 @@ namespace Routes
 #nullable disable
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
 #nullable restore
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T21(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T22(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
     /// </summary>
@@ -2014,7 +2014,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -2027,7 +2027,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T22(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/> which can be used in the route.
       /// </summary>
@@ -2054,7 +2054,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T22.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T22
     {
       /// <summary>
@@ -2070,14 +2070,14 @@ namespace Routes
 #nullable disable
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
 #nullable restore
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T22(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T23(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
     /// </summary>
@@ -2093,7 +2093,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -2106,7 +2106,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T23(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/> which can be used in the route.
       /// </summary>
@@ -2133,7 +2133,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T23.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T23
     {
       /// <summary>
@@ -2149,14 +2149,14 @@ namespace Routes
 #nullable disable
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
 #nullable restore
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T23(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?})"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T24(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
     /// </summary>
@@ -2172,7 +2172,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -2185,7 +2185,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T24(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/> which can be used in the route.
       /// </summary>
@@ -2212,7 +2212,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T24.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T24
     {
       /// <summary>
@@ -2228,14 +2228,14 @@ namespace Routes
 #nullable disable
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
 #nullable restore
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T24(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string?}?)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?> B { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string?>?>("b");
       }
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.T25(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
     /// </summary>
@@ -2251,7 +2251,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -2264,7 +2264,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Parameters of <see cref="global::ProductsController.T25(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/> which can be used in the route.
       /// </summary>
@@ -2291,7 +2291,7 @@ namespace Routes
       public global::System.Collections.Generic.IEnumerable<string> this[global::SafeRouting.RouteKey<T25.ParameterData, global::System.Collections.Generic.IEnumerable<string>> key] { set => RouteValues[key.Name] = value; }
 #nullable restore
     }
-    
+
     namespace T25
     {
       /// <summary>
@@ -2307,7 +2307,7 @@ namespace Routes
 #nullable disable
         public global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>> A { get; } = new global::SafeRouting.RouteKey<ParameterData, global::System.Collections.Generic.IEnumerable<string>>("a");
 #nullable restore
-        
+
         /// <summary>
         /// Route key for the <c>b</c> parameter in <see cref="global::ProductsController.T25(global::System.Collections.Generic.IEnumerable{string}, global::System.Collections.Generic.IEnumerable{string})"/>.
         /// </summary>

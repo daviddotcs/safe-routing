@@ -29,7 +29,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Controllers_Products
   {
     /// <summary>
@@ -43,33 +43,33 @@ namespace Routes
       /// Route key for the property <see cref="global::ProductsController.BindProperty"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> BindProperty { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("BindProperty");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromBody"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> FromBody { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromBody");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromForm"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> FromForm { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromForm");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromHeader"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> FromHeader { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromHeader");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromQuery"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> FromQuery { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromQuery");
-      
+
       /// <summary>
       /// Route key for the property <see cref="global::ProductsController.FromRoute"/>.
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> FromRoute { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("FromRoute");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::ProductsController.Index()"/>.
     /// </summary>
@@ -85,7 +85,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the controller for the route.
       /// </summary>
@@ -98,7 +98,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::ProductsController"/> which can be used in the route.
       /// </summary>

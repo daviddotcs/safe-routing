@@ -28,7 +28,7 @@ namespace Routes
       }
     }
   }
-  
+
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
@@ -43,7 +43,7 @@ namespace Routes
       /// </summary>
       public global::SafeRouting.RouteKey<PropertyData, string?> SomeProperty { get; } = new global::SafeRouting.RouteKey<PropertyData, string?>("SomeProperty");
     }
-    
+
     /// <summary>
     /// Represents route values for routes to <see cref="global::EditModel.OnGet()"/>.
     /// </summary>
@@ -59,7 +59,7 @@ namespace Routes
       {
         RouteValues = routeValues;
       }
-      
+
       /// <summary>
       /// The name of the page for the route.
       /// </summary>
@@ -72,7 +72,7 @@ namespace Routes
       /// Values for the route.
       /// </summary>
       public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
-      
+
       /// <summary>
       /// Properties of <see cref="global::EditModel"/> which can be used in the route.
       /// </summary>
