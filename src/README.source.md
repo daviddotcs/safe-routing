@@ -59,7 +59,9 @@ string editUrl = Routes.Pages.Edit.Get().Url(Url);
 
 ## Installation
 
-To install, simply add the [SafeRouting](https://www.nuget.org/packages/SafeRouting) package to your ASP.NET Core project.
+<!-- See https://github.com/dotnet/roslyn/blob/main/docs/wiki/NuGet-packages.md and https://learn.microsoft.com/en-au/dotnet/core/porting/versioning-sdk-msbuild-vs#lifecycle to determine SDK/VS versions based on Microsoft.CodeAnalysis.CSharp version used by SafeRouting.Generator -->
+
+To install, simply add the [SafeRouting](https://www.nuget.org/packages/SafeRouting) package to your ASP.NET Core project. You must have .NET SDK 6.0.1xx or greater installed which is included in Visual Studio 17.0 or greater.
 
 ### Tag Helpers
 
