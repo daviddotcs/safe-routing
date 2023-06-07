@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
 
   <PropertyGroup>
     <Nullable>enable</Nullable>
@@ -11,7 +11,7 @@
 
   <PropertyGroup>
     <Authors>David Wake</Authors>
-    <Copyright>Copyright © David Wake 2022</Copyright>
+    <Copyright>Copyright © David Wake 2023</Copyright>
     <NeutralLanguage>en-AU</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/daviddotcs/safe-routing</RepositoryUrl>

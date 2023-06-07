@@ -38,6 +38,12 @@ File.WriteAllText("../README.md", markdownContent);
 WriteLine("Done", color: ConsoleColor.DarkGray);
 
 Console.WriteLine();
+Console.WriteLine("Updating copyright...");
+Console.WriteLine();
+UpdateCopyright();
+WriteLine("Done", color: ConsoleColor.DarkGray);
+
+Console.WriteLine();
 Console.WriteLine("Checking working directory...");
 Console.WriteLine();
 if (!IsWorkingDirectoryClean())

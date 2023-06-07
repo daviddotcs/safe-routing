@@ -172,6 +172,28 @@ public void RewriteNugetIntegrationsTestProject(string generatorProject, string 
   File.WriteAllLines($"./Test/{nugetIntegrationTestsProject}/{nugetIntegrationTestsProject}.csproj", lines);
 }
 
+public void UpdateCopyright()
+{
+  const string filename = "./Directory.Build.props";
+
+  var currentYear = DateTime.Now.ToString("yyyy");
+  var copyrightRegex = new Regex(@$"<Copyright>.* (?<year>[0-9]+)</Copyright>", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
+  var matchEvaluator = new MatchEvaluator(m =>
+  {
+    var group = m.Groups["year"];
+    return m.Value[..(group.Index - group.Length)] + currentYear + m.Value[group.Index..];
+  });
+
+  var lines = File.ReadAllLines(filename);
+
+  for (var i = 0; i < lines.Length; i++)
+  {
+    lines[i] = copyrightRegex.Replace(lines[i], matchEvaluator);
+  }
+
+  File.WriteAllLines(filename, lines);
+}
+
 public void WriteLine(string? text, bool isError = false, ConsoleColor? color = null)
 {
   if (text == null) return;
