@@ -798,8 +798,7 @@ internal static class Parser
     foreach (var reference in parameterSymbol.DeclaringSyntaxReferences)
     {
       var node = reference.GetSyntax(cancellationToken);
-      if (node is ParameterSyntax parameterSyntax
-        && parameterSyntax.Default is EqualsValueClauseSyntax equalsValueClauseSyntax
+      if (node is ParameterSyntax { Default: { } equalsValueClauseSyntax }
         && new DefaultValueExpressionRewriter(semanticModel, cancellationToken).Visit(equalsValueClauseSyntax.Value) is ExpressionSyntax rewrittenExpression)
       {
         return rewrittenExpression;

@@ -39,9 +39,7 @@ public sealed class DefaultValueExpressionRewriter : CSharpSyntaxRewriter
   {
     var operation = semanticModel.GetOperation(node, cancellationToken);
 
-    if (operation?.Kind == OperationKind.NameOf
-      && operation.ConstantValue.HasValue
-      && operation.ConstantValue.Value is string stringValue)
+    if (operation is { Kind: OperationKind.NameOf, ConstantValue.Value: string stringValue })
     {
       return CSharpSupport.ToStringLiteralExpression(stringValue);
     }
