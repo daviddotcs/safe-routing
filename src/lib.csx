@@ -2,10 +2,12 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using Markdig;
 
 #nullable enable
@@ -261,4 +263,189 @@ public int RunCommand(string command, string arguments)
   cmd.WaitForExit();
 
   return cmd.ExitCode;
+}
+
+public static IEnumerable<string> EnumerateFiles(string path, params string[] extensions)
+{
+  foreach (var directory in Directory.EnumerateDirectories(path))
+  {
+    var directoryName = new DirectoryInfo(directory).Name;
+    if (string.Equals(directoryName, "bin", StringComparison.Ordinal) || string.Equals(directoryName, "obj", StringComparison.Ordinal) || directoryName.StartsWith(".", StringComparison.Ordinal))
+      continue;
+
+    foreach (var file in EnumerateFiles(directory, extensions))
+      yield return file;
+  }
+
+  if (extensions.Length == 0)
+  {
+    foreach (var file in Directory.EnumerateFiles(path))
+      yield return file;
+  }
+  else
+  {
+    foreach (var extension in extensions)
+      foreach (var file in Directory.EnumerateFiles(path, $"*{extension}"))
+        yield return file;
+  }
+}
+
+var startRegionCsRegex = new Regex(@"^\s*#region\s+(?<name>.+)\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+var endRegionCsRegex = new Regex(@"^\s*#endregion\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+
+var startRegionCshtmlRegex = new Regex(@"^\s*@{\s*#region\s+(?<name>.+)\s*}\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+var endRegionCshtmlRegex = new Regex(@"^\s*@{\s*#endregion\s*}\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+
+var markdownRegionRegex = new Regex(@"^\s*<region:\s*(?<name>.+)\s*>\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Multiline, TimeSpan.FromSeconds(5));
+
+public string ReplaceMarkdownRegions(string content, Dictionary<string, Region> regions)
+{
+  var builder = new StringBuilder(content);
+
+  foreach (Match match in markdownRegionRegex.Matches(content).Reverse())
+  {
+    var regionName = match.Groups["name"].Value;
+    if (!regions.TryGetValue(regionName, out var region))
+      throw new Exception($"Could not find region with name {regionName}");
+
+    builder.Remove(match.Index, match.Length);
+    builder.Insert(match.Index, Environment.NewLine + "```" + region.Language + Environment.NewLine + region.GetContent() + Environment.NewLine + "```" + Environment.NewLine);
+  }
+
+  return builder.ToString();
+}
+
+public IEnumerable<Region> EnumerateRegions(string path)
+{
+  var regionLines = new List<string>();
+  var isInRegion = false;
+  var regionName = "";
+
+  var (startRegionRegex, endRegionRegex, language) = new FileInfo(path).Extension switch
+  {
+    ".cs" => (startRegionCsRegex, endRegionCsRegex, "csharp"),
+    ".cshtml" => (startRegionCshtmlRegex, endRegionCshtmlRegex, "cshtml"),
+    _ => (null, null, "")
+  };
+
+  if (startRegionRegex is null || endRegionRegex is null)
+    yield break;
+
+  foreach (var line in File.ReadAllLines(path))
+  {
+    if (isInRegion)
+    {
+      if (endRegionRegex.IsMatch(line))
+      {
+        if (regionLines.Count > 0)
+        {
+          yield return new Region(regionName, language, regionLines.ToArray());
+          regionLines.Clear();
+        }
+
+        isInRegion = false;
+      }
+      else
+      {
+        regionLines.Add(line);
+      }
+    }
+    else
+    {
+      if (startRegionRegex.Match(line) is { Success: true } match)
+      {
+        regionName = match.Groups["name"].Value.Trim();
+        isInRegion = true;
+      }
+    }
+  }
+}
+
+public sealed class Region
+{
+  public Region(string name, string language, IReadOnlyCollection<string> lines)
+  {
+    Name = name;
+    Language = language;
+    Lines = lines;
+  }
+
+  public string Name { get; }
+  public string Language { get; }
+  public IReadOnlyCollection<string> Lines { get; }
+
+  public string GetContent() =>
+    string.Join(Environment.NewLine, GetCleanedLines());
+  public IEnumerable<string> GetCleanedLines()
+  {
+    var lastNonEmptyLineIndex = default(int?);
+    var leadingWhitespace = default(int?);
+    var result = new List<string>(Lines.Count);
+
+    foreach (var line in Lines)
+    {
+      if (string.IsNullOrWhiteSpace(line))
+      {
+        if (lastNonEmptyLineIndex is not null)
+        {
+          result.Add("");
+        }
+      }
+      else
+      {
+        result.Add(line.TrimEnd());
+        lastNonEmptyLineIndex = result.Count - 1;
+
+        var lineLeadingWhitespace = CountLeadingWhitespaceCharacters(line);
+
+        if (leadingWhitespace is { } w)
+          leadingWhitespace = Math.Min(w, lineLeadingWhitespace);
+        else
+          leadingWhitespace = lineLeadingWhitespace;
+      }
+    }
+
+    if (lastNonEmptyLineIndex is { } lastNonEmptyLineIndexValue
+      && result.Count - (lastNonEmptyLineIndexValue + 1) is var removeCount
+      && removeCount > 0)
+    {
+      result.RemoveRange(lastNonEmptyLineIndexValue + 1, removeCount);
+    }
+
+    return TrimLeadingCharacters(result, leadingWhitespace ?? 0);
+  }
+
+  private static IEnumerable<string> TrimLeadingCharacters(IEnumerable<string> lines, int count)
+  {
+    if (count == 0)
+      return lines;
+
+    return lines.Select(line =>
+    {
+      if (line.Length <= count)
+        return "";
+
+      return line[count..];
+    });
+  }
+  private static int CountLeadingWhitespaceCharacters(string line)
+  {
+    var count = 0;
+
+    foreach (var character in line)
+    {
+      if (!char.IsWhiteSpace(character))
+        break;
+
+      count++;
+    }
+
+    return count;
+  }
+}
+
+public sealed class RegionEqualityComparer : IEqualityComparer<Region>
+{
+  public bool Equals(Region? x, Region? y) => string.Equals(x?.Name, y?.Name, StringComparison.InvariantCulture);
+  public int GetHashCode([DisallowNull] Region obj) => HashCode.Combine(obj.Name);
 }

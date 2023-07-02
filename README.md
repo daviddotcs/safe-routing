@@ -30,16 +30,13 @@ Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csh
 Consider the following contrived example of a controller class.
 
 ```csharp
-public class ProductController : Controller
+public sealed class ProductController : Controller
 {
   [FromRoute]
   public int? Limit { get; set; }
 
   [Route("/Product/Search/{name}/{Limit?}")]
-  public IActionResult Search(string name)
-  {
-    // ...
-  }
+  public IActionResult Search(string name) => Ok();
 }
 ```
 
@@ -64,17 +61,22 @@ Similarly, consider the following razor page model class:
 ```csharp
 public sealed class EditModel : PageModel
 {
-  public Task OnGetAsync()
+  public void OnGet()
+  {
+    // ...
+  }
+
+  public void OnPost()
   {
     // ...
   }
 }
 ```
 
-The generated code enables you to access the URL for the `OnGetAsync` handler with the following code:
+The generated code enables you to access the URL for the `OnGet` handler with the following code:
 
 ```csharp
-string editUrl = Routes.Pages.Edit.Get().Url(Url);
+string? editUrl = Routes.Pages.Edit.Get().Url(Url);
 ```
 
 ## Installation
@@ -93,9 +95,9 @@ To enable the included tag helpers, add the following line to `_ViewImports.csht
 
 This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` elements, for example:
 
-```html
+```cshtml
 @{
-  var controllerRoute = Routes.Controllers.Product.Search("chair");
+  var controllerRoute = Routes.Controllers.Product.Search("chair", 10);
   var pageRoute = Routes.Pages.Edit.Post();
 }
 
@@ -120,12 +122,12 @@ For projects using C# 8 or 9, add `using SafeRouting.Extensions;` to your source
 The following code snippet demonstrates accessing, modifying, and retrieving generated route information for the `ProductController` class defined above.
 
 ```csharp
-// Enable the Redirect() and Url() extension methods
-using SafeRouting.Extensions;
+// For C# 9 and below include this using directive to enable the Redirect() and Url() extension methods:
+//using SafeRouting.Extensions;
 
-// Get route information for the Search method on ProductController with a name value of "chair"
+// Get route information for the Search method on ProductController with a name value of "chair" and limit unset
 // Route: /Product/Search/chair
-var route = Routes.Controllers.Product.Search("chair");
+var route = Routes.Controllers.Product.Search("chair", limit: null);
 
 // Assign a value for the Limit property (defined on the controller class)
 // Route: /Product/Search/chair/5
@@ -145,7 +147,7 @@ route.Remove(route.Properties.Limit);
 
 // Access the URL for the route using an IUrlHelper
 // Value: "/Product/Search/book"
-string routeUrl = route.Url(Url);
+string? routeUrl = route.Url(Url);
 
 // Redirect from within a controller action method or a page handler method
 return route.Redirect(this);

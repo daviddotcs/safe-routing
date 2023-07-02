@@ -9,53 +9,27 @@ Safe Routing is a [source generator](https://docs.microsoft.com/en-us/dotnet/csh
 
 Consider the following contrived example of a controller class.
 
-```csharp
-public class ProductController : Controller
-{
-  [FromRoute]
-  public int? Limit { get; set; }
-
-  [Route("/Product/Search/{name}/{Limit?}")]
-  public IActionResult Search(string name)
-  {
-    // ...
-  }
-}
-```
+<region:ProductController>
 
 Redirecting to the `Search` action could be rewritten as follows:
 
 **BEFORE:**
 
-```csharp
-return RedirectToAction("Search", "Product", new { Name = "chair", Limit = 10 });
-```
+<region:OriginalRedirect>
 
 **AFTER:**
 
-```csharp
-return Routes.Controllers.Product.Search("chair", 10).Redirect(this);
-```
+<region:NewRedirect>
 
 The controller name, action name, names of action method parameters, and names of bound properties on the controller are no longer referenced with strings, and are instead referenced with C# classes, methods, parameters, and properties that offer compile time safety.
 
 Similarly, consider the following razor page model class:
 
-```csharp
-public sealed class EditModel : PageModel
-{
-  public Task OnGetAsync()
-  {
-    // ...
-  }
-}
-```
+<region:EditModel>
 
-The generated code enables you to access the URL for the `OnGetAsync` handler with the following code:
+The generated code enables you to access the URL for the `OnGet` handler with the following code:
 
-```csharp
-string editUrl = Routes.Pages.Edit.Get().Url(Url);
-```
+<region:EditUrl>
 
 ## Installation
 
@@ -67,27 +41,11 @@ To install, simply add the [SafeRouting](https://www.nuget.org/packages/SafeRout
 
 To enable the included tag helpers, add the following line to `_ViewImports.cshtml` files where required.
 
-```cshtml
-@addTagHelper SafeRouting.TagHelpers.*, SafeRouting.Common
-```
+<region:ViewImports>
 
 This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` elements, for example:
 
-```html
-@{
-  var controllerRoute = Routes.Controllers.Product.Search("chair");
-  var pageRoute = Routes.Pages.Edit.Post();
-}
-
-<!-- Adds the URL in the href attribute -->
-<a for-route="controllerRoute">Search for chairs</a>
-
-<!-- Adds the URL in the src attribute -->
-<img for-route="controllerRoute" alt="" />
-
-<!-- Adds the URL in the action attribute -->
-<form for-route="pageRoute" method="post"></form>
-```
+<region:CshtmlExample>
 
 ### Extension Methods
 
@@ -99,37 +57,7 @@ For projects using C# 8 or 9, add `using SafeRouting.Extensions;` to your source
 
 The following code snippet demonstrates accessing, modifying, and retrieving generated route information for the `ProductController` class defined above.
 
-```csharp
-// Enable the Redirect() and Url() extension methods
-using SafeRouting.Extensions;
-
-// Get route information for the Search method on ProductController with a name value of "chair"
-// Route: /Product/Search/chair
-var route = Routes.Controllers.Product.Search("chair");
-
-// Assign a value for the Limit property (defined on the controller class)
-// Route: /Product/Search/chair/5
-route[route.Properties.Limit] = 5;
-
-// Set the value of a parameter
-// Route: /Product/Search/book/5
-route[route.Parameters.Name] = "book";
-
-// Set a value using the Set method
-// Route: /Product/Search/book/10
-route.Set(route.Properties.Limit, 10);
-
-// Remove a route value
-// Route: /Product/Search/book
-route.Remove(route.Properties.Limit);
-
-// Access the URL for the route using an IUrlHelper
-// Value: "/Product/Search/book"
-string routeUrl = route.Url(Url);
-
-// Redirect from within a controller action method or a page handler method
-return route.Redirect(this);
-```
+<region:GettingStarted>
 
 ### Binding Source Attributes
 

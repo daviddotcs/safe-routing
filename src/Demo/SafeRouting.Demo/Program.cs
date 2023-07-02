@@ -13,4 +13,4 @@ app.MapAreaControllerRoute("BlogArea", "Blog", "Blog/{controller=Home}/{action=I
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
 
-app.Run();
+await app.RunAsync().ConfigureAwait(false);

@@ -1,0 +1,19 @@
+﻿@page
+@model SafeRouting.Demo.Pages.EditModel
+@{ #region CshtmlExample }
+
+@{
+  var controllerRoute = Routes.Controllers.Product.Search("chair", 10);
+  var pageRoute = Routes.Pages.Edit.Post();
+}
+
+<!-- Adds the URL in the href attribute -->
+<a for-route="controllerRoute">Search for chairs</a>
+
+<!-- Adds the URL in the src attribute -->
+<img for-route="controllerRoute" alt="" />
+
+<!-- Adds the URL in the action attribute -->
+<form for-route="pageRoute" method="post"></form>
+
+@{ #endregion }

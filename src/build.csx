@@ -34,6 +34,14 @@ Console.WriteLine();
 Console.WriteLine("Updating README.md...");
 Console.WriteLine();
 var markdownContent = AddMarkdownTableOfContents("README.source.md");
+
+var regions = EnumerateFiles(@".\Demo\SafeRouting.Demo", ".cs", ".cshtml")
+  .SelectMany(x => EnumerateRegions(x))
+  .Distinct(new RegionEqualityComparer())
+  .ToDictionary(x => x.Name, x => x, StringComparer.InvariantCulture);
+
+markdownContent = ReplaceMarkdownRegions(markdownContent, regions);
+
 File.WriteAllText("../README.md", markdownContent);
 WriteLine("Done", color: ConsoleColor.DarkGray);
 
