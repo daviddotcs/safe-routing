@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/src"
+    schedule:
+      interval: "daily"
+    ignore:
+      # Version of Microsoft.CodeAnalysis.CSharp used by the generator is pinned to support widest range of SDK versions
+      - dependency-name: "Microsoft.CodeAnalysis.CSharp"
+        versions: ["4.0.1"]
