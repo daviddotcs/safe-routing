@@ -30,9 +30,9 @@ internal static class TestHelper
     }
 
     // There's probably a less heavy-handed way of providing required ASP.NET Core assemblies
-    var references = AppDomain.CurrentDomain.GetAssemblies()
-      .Where(a => !a.IsDynamic)
-      .Select(a => MetadataReference.CreateFromFile(a.Location));
+    var references = (AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string)!
+      .Split(';', StringSplitOptions.RemoveEmptyEntries)
+      .Select(x => MetadataReference.CreateFromFile(x));
 
     var compilation = CSharpCompilation.Create(
       assemblyName: "Tests",
