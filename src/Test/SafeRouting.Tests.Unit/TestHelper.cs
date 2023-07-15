@@ -54,6 +54,12 @@ internal static class TestHelper
 
     var verifySettings = new VerifySettings();
     verifySettings.UseDirectory("Snapshots");
+
+    if (pathSegments is not null)
+    {
+      verifySettings.UniqueForOSPlatform();
+    }
+
     if (parameters is not null)
     {
       verifySettings.UseParameters(parameters);
