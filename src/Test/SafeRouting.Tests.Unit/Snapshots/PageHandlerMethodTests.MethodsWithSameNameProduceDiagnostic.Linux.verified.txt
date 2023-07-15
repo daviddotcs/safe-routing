@@ -1,0 +1,16 @@
+﻿{
+  Diagnostics: [
+    {
+      Id: CSR0001,
+      Title: Conflicting methods,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: /Project/Pages/Products/Edit.cshtml.cs: (2,0)-(6,1),
+      Description: ,
+      HelpLink: ,
+      MessageFormat: The class '{0}' contains multiple methods which map to the route method '{1}',
+      Message: The class 'EditModel' contains multiple methods which map to the route method 'Get',
+      Category: SafeRouting.Generator.RouteGenerator
+    }
+  ]
+}

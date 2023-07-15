@@ -1,0 +1,16 @@
+﻿{
+  Diagnostics: [
+    {
+      Id: CSR0002,
+      Title: Invalid options,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: : (0,0)-(0,0),
+      Description: ,
+      HelpLink: ,
+      MessageFormat: Value for the option '{0}' is invalid. {1},
+      Message: Value for the option 'safe_routing.generated_access_modifier' is invalid. 'invalid access modifier' is not a supported access modifier, must be public or internal.,
+      Category: SafeRouting.Generator.RouteGenerator
+    }
+  ]
+}
