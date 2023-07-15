@@ -15,7 +15,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -43,7 +43,7 @@ public sealed class PageTests
           }
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -58,7 +58,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Foo\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Foo", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -85,7 +85,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -102,7 +102,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   /// <remarks>
@@ -120,7 +120,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -143,7 +143,7 @@ public sealed class PageTests
       public sealed class EditModel : EditModelBase
       {
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   /// <remarks>
@@ -161,7 +161,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -178,7 +178,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -207,7 +207,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs", additionalSources: additionalSources);
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" }, additionalSources: additionalSources);
   }
 
   /// <remarks>
@@ -228,7 +228,7 @@ public sealed class PageTests
           }
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -241,7 +241,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -256,7 +256,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -285,7 +285,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
+      """, pathSegments: new[] { "Project", "Pages", "Index.cshtml.cs" }, additionalSources: additionalSources);
   }
 
   [Fact]
@@ -314,7 +314,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Index.cshtml.cs", additionalSources: additionalSources);
+      """, pathSegments: new[] { "Project", "Pages", "Index.cshtml.cs" }, additionalSources: additionalSources);
   }
 
   [Fact]
@@ -329,7 +329,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Index.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Index.cs" });
   }
 
   [Fact]
@@ -344,7 +344,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Index.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Index.cshtml.cs" });
   }
 
   [Fact]
@@ -359,7 +359,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Pages\Index.cshtml.cs");
+      """, pathSegments: new[] { "Pages", "Index.cshtml.cs" });
   }
 
   [Fact]
@@ -374,7 +374,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Index.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Index.cshtml.cs" });
   }
 
   [Fact]
@@ -389,7 +389,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -404,7 +404,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Areas\AreaName\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Areas", "AreaName", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -434,7 +434,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Index.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Index.cshtml.cs" });
   }
 
   [Fact]
@@ -451,7 +451,7 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -464,6 +464,6 @@ public sealed class PageTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 }

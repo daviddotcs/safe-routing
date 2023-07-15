@@ -19,7 +19,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -38,7 +38,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -69,7 +69,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -90,7 +90,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -111,7 +111,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -130,7 +130,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -164,7 +164,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -189,7 +189,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -210,7 +210,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -235,7 +235,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -265,7 +265,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -284,7 +284,7 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -301,6 +301,6 @@ public sealed class PagePropertyTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 }

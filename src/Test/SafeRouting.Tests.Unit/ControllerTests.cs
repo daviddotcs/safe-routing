@@ -155,7 +155,7 @@ public sealed class ControllerTests
       {
         public IActionResult Index() => View();
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]

@@ -14,7 +14,7 @@ public sealed class PageHandlerMethodTests
       {
         public Task OnGetAsync() => Task.CompletedTask;
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -31,7 +31,7 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -46,7 +46,7 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -63,7 +63,7 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -78,7 +78,7 @@ public sealed class PageHandlerMethodTests
         public void OnGetOut(out int foo) { foo = 2; }
         public void OnGetRef(ref int foo) { }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -93,7 +93,7 @@ public sealed class PageHandlerMethodTests
         public void OnGetIn() { }
         public void OnGetOut() { }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -107,7 +107,7 @@ public sealed class PageHandlerMethodTests
         public void OnGet() { }
         public void OnGet(string foo) { }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -123,7 +123,7 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -138,7 +138,7 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -155,7 +155,7 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 
   [Fact]
@@ -170,6 +170,6 @@ public sealed class PageHandlerMethodTests
         {
         }
       }
-      """, path: @"C:\Project\Pages\Products\Edit.cshtml.cs");
+      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
   }
 }

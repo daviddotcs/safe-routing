@@ -7,13 +7,13 @@ namespace SafeRouting.Tests.Unit;
 
 internal static class TestHelper
 {
-  public static Task Verify(string source, string path = "", LanguageVersion languageVersion = LanguageVersion.Latest, NullableContextOptions nullableContextOptions = NullableContextOptions.Enable, TestConfigOptions? options = null, object?[]? parameters = null, bool testCompilation = true, AdditionalSource[]? additionalSources = null)
+  public static Task Verify(string source, string[]? pathSegments = null, LanguageVersion languageVersion = LanguageVersion.Latest, NullableContextOptions nullableContextOptions = NullableContextOptions.Enable, TestConfigOptions? options = null, object?[]? parameters = null, bool testCompilation = true, AdditionalSource[]? additionalSources = null)
   {
     var parseOptions = CSharpParseOptions.Default.WithLanguageVersion(languageVersion);
 
     var syntaxTree = CSharpSyntaxTree.ParseText(
       source,
-      path: path,
+      path: MakePath(pathSegments),
       options: parseOptions);
 
     var syntaxTrees = new List<SyntaxTree> { syntaxTree };
@@ -72,6 +72,16 @@ internal static class TestHelper
 
     return Verifier.Verify(generatorDriver, verifySettings);
   }
+
+  private static string MakePath(string[]? pathSegments)
+  {
+    if (pathSegments is null)
+      return "";
+
+    return Path.Combine(pathSegments.Prepend(PathRoot).ToArray());
+  }
+
+  private static string PathRoot { get; } = Path.GetPathRoot(Environment.CurrentDirectory)!;
 }
 
 internal sealed record AdditionalSource(string Source, string Path = "", CSharpParseOptions? ParseOptions = null);
