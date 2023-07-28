@@ -46,7 +46,6 @@ internal static class TestHelper
 
     var verifySettings = new VerifySettings();
     verifySettings.UseDirectory("Snapshots");
-    verifySettings.AutoVerify();
 
     if (parameters is not null)
     {
