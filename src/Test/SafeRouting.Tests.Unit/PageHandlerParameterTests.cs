@@ -16,7 +16,7 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]
@@ -32,7 +32,7 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]
@@ -48,7 +48,7 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]
@@ -64,7 +64,7 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]
@@ -79,7 +79,7 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]
@@ -95,7 +95,7 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]
@@ -111,6 +111,6 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 }

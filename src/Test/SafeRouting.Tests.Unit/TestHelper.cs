@@ -7,13 +7,13 @@ namespace SafeRouting.Tests.Unit;
 
 internal static class TestHelper
 {
-  public static Task Verify(string source, string[]? pathSegments = null, LanguageVersion languageVersion = LanguageVersion.Latest, NullableContextOptions nullableContextOptions = NullableContextOptions.Enable, TestConfigOptions? options = null, object?[]? parameters = null, bool testCompilation = true, AdditionalSource[]? additionalSources = null)
+  public static Task Verify(string source, string path = "", LanguageVersion languageVersion = LanguageVersion.Latest, NullableContextOptions nullableContextOptions = NullableContextOptions.Enable, TestConfigOptions? options = null, object?[]? parameters = null, bool testCompilation = true, AdditionalSource[]? additionalSources = null)
   {
     var parseOptions = CSharpParseOptions.Default.WithLanguageVersion(languageVersion);
 
     var syntaxTree = CSharpSyntaxTree.ParseText(
       source,
-      path: MakePath(pathSegments),
+      path: path,
       options: parseOptions);
 
     var syntaxTrees = new List<SyntaxTree> { syntaxTree };
@@ -62,7 +62,7 @@ internal static class TestHelper
       Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x, formatter: null)))}");
       Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
 
-      if (pathSegments is not null && generatorDiagnostics.Any())
+      if ((path.Length > 0 || additionalSources?.Length > 0) && generatorDiagnostics.Any())
       {
         verifySettings.UniqueForOSPlatform();
       }
@@ -75,11 +75,8 @@ internal static class TestHelper
     return Verifier.Verify(generatorDriver, verifySettings);
   }
 
-  private static string MakePath(string[]? pathSegments)
+  public static string MakePath(params string[] pathSegments)
   {
-    if (pathSegments is null)
-      return "";
-
     return Path.Combine(pathSegments.Prepend(PathRoot).ToArray());
   }
 

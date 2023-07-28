@@ -155,7 +155,7 @@ public sealed class ControllerTests
       {
         public IActionResult Index() => View();
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Fact]

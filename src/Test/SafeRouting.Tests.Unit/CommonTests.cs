@@ -55,7 +55,7 @@ public sealed class CommonTests
         }
       }
       """,
-    pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
     options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "internal" });
   }
 
@@ -87,7 +87,7 @@ public sealed class CommonTests
         }
       }
       """,
-    pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
     options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "invalid access modifier" });
   }
 
@@ -119,7 +119,7 @@ public sealed class CommonTests
         }
       }
       """,
-    pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
     options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "x.1nvalid Namespace,[]!" });
   }
 
@@ -151,7 +151,7 @@ public sealed class CommonTests
         }
       }
       """,
-    pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
     options: new TestConfigOptions { ["safe_routing.generated_namespace"] = "Test.Namespace" });
   }
 
@@ -183,7 +183,7 @@ public sealed class CommonTests
         }
       }
       """,
-    pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
     options: new TestConfigOptions { ["safe_routing.generated_parameter_case"] = "pascal" });
   }
 
@@ -215,7 +215,7 @@ public sealed class CommonTests
         }
       }
       """,
-    pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
     options: new TestConfigOptions { ["safe_routing.generated_access_modifier"] = "public" });
   }
 
@@ -249,7 +249,7 @@ public sealed class CommonTests
         {
         }
       }
-      """, pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
   }
 
   [Theory]
@@ -305,7 +305,7 @@ public sealed class CommonTests
       """;
 
     return TestHelper.Verify(source,
-      pathSegments: new[] { "Project", "Pages", "Products", "Edit.cshtml.cs" },
+      path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
       languageVersion: version,
       nullableContextOptions: Microsoft.CodeAnalysis.NullableContextOptions.Disable,
       parameters: new object[] { version },
