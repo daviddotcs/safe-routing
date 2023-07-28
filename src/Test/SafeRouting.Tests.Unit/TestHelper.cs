@@ -29,28 +29,20 @@ internal static class TestHelper
       }
     }
 
-    // There's probably a less heavy-handed way of providing required ASP.NET Core assemblies
-    var references = (AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string)!
-      .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
-      .Select(x => MetadataReference.CreateFromFile(x));
-
     var compilation = CSharpCompilation.Create(
       assemblyName: "Tests",
       syntaxTrees: syntaxTrees,
-      references: references,
+      references: References,
       options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: nullableContextOptions));
 
     var optionsProvider = options is null ? null : new FixedConfigOptionsProvider(options);
 
     var driver = CSharpGeneratorDriver.Create(
-      generators: new[]
-      {
-        new SafeRouting.Generator.RouteGenerator().AsSourceGenerator()
-      },
+      generators: Generators,
       parseOptions: parseOptions,
       optionsProvider: optionsProvider);
 
-    var generatorDriver = driver.RunGenerators(compilation);
+    GeneratorDriver generatorDriver;
 
     var verifySettings = new VerifySettings();
     verifySettings.UseDirectory("Snapshots");
@@ -67,13 +59,17 @@ internal static class TestHelper
 
     if (testCompilation)
     {
-      generatorDriver.RunGeneratorsAndUpdateCompilation(compilation, out var compilationWithGeneratedCode, out var generatorDiagnostics);
+      generatorDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var compilationWithGeneratedCode, out var generatorDiagnostics);
 
       using var stream = new MemoryStream();
       var emitResult = compilationWithGeneratedCode.Emit(stream);
 
       Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x, formatter: null)))}");
       Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
+    }
+    else
+    {
+      generatorDriver = driver.RunGenerators(compilation);
     }
 
     return Verifier.Verify(generatorDriver, verifySettings);
@@ -88,6 +84,18 @@ internal static class TestHelper
   }
 
   private static string PathRoot { get; } = Path.GetPathRoot(Environment.CurrentDirectory)!;
+
+  // There's probably a less heavy-handed way of providing required ASP.NET Core assemblies
+  private static PortableExecutableReference[] References { get; } =
+    (AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string)!
+      .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
+      .Select(x => MetadataReference.CreateFromFile(x))
+      .ToArray();
+
+  private static ISourceGenerator[] Generators { get; } = new[]
+  {
+    new SafeRouting.Generator.RouteGenerator().AsSourceGenerator()
+  };
 }
 
 internal sealed record AdditionalSource(string Source, string Path = "", CSharpParseOptions? ParseOptions = null);
