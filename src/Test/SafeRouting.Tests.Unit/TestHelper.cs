@@ -46,11 +46,7 @@ internal static class TestHelper
 
     var verifySettings = new VerifySettings();
     verifySettings.UseDirectory("Snapshots");
-
-    if (pathSegments is not null)
-    {
-      verifySettings.UniqueForOSPlatform();
-    }
+    verifySettings.AutoVerify();
 
     if (parameters is not null)
     {
@@ -66,6 +62,11 @@ internal static class TestHelper
 
       Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x, formatter: null)))}");
       Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
+
+      if (pathSegments is not null && generatorDiagnostics.Any())
+      {
+        verifySettings.UniqueForOSPlatform();
+      }
     }
     else
     {
