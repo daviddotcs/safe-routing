@@ -229,6 +229,25 @@ public sealed class ControllerPropertyTests
   }
 
   [Fact]
+  public Task SubsequentPropertyBindingAttributesAreIgnored()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class ProductsController : Controller
+      {
+        [BindProperty(SupportsGet = true), FromBody, FromForm, FromHeader]
+        public string? IncludedProperty { get; set; }
+
+        [FromBody, BindProperty(SupportsGet = true), FromQuery, FromRoute]
+        public string? ExcludedProperty { get; set; }
+
+        public IActionResult Index() => View();
+      }
+      """);
+  }
+
+  [Fact]
   public Task UnboundPropertiesAreExcluded()
   {
     return TestHelper.Verify("""

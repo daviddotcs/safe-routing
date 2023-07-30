@@ -291,6 +291,19 @@ public sealed class ControllerActionParameterTests
   }
 
   [Fact]
+  public Task SubsequentBindingAttributesAreIgnored()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc;
+
+      public sealed class ProductsController : Controller
+      {
+        public IActionResult Index([FromQuery, FromBody, FromForm, FromHeader] string includedParameter, [FromBody, FromQuery, FromRoute] string excludedParameter) => View();
+      }
+      """);
+  }
+
+  [Fact]
   public Task UrlBoundParametersAreIncludedInSignature()
   {
     return TestHelper.Verify("""
