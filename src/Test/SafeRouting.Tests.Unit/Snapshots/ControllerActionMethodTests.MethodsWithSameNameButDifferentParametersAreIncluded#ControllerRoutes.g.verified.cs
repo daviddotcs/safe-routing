@@ -37,6 +37,19 @@ namespace Routes
           ["someValue"] = someValue
         });
       }
+
+      /// <summary>
+      /// Generates route values for <see cref="global::ProductsController.Index(string, string)"/>.
+      /// </summary>
+      public static Support.Controllers_Products.Index3RouteValues Index(string someValue, string someOtherValue)
+      {
+        return new Support.Controllers_Products.Index3RouteValues(new global::Microsoft.AspNetCore.Routing.RouteValueDictionary()
+        {
+          ["area"] = "",
+          ["someValue"] = someValue,
+          ["someOtherValue"] = someOtherValue
+        });
+      }
     }
   }
 
@@ -139,6 +152,81 @@ namespace Routes
         /// Route key for the <c>someValue</c> parameter in <see cref="global::ProductsController.Index(string)"/>.
         /// </summary>
         public global::SafeRouting.RouteKey<ParameterData, string> SomeValue { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("someValue");
+      }
+    }
+
+    /// <summary>
+    /// Represents route values for routes to <see cref="global::ProductsController.Index(string, string)"/>.
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public sealed class Index3RouteValues : global::SafeRouting.IControllerRouteValues
+    {
+      /// <summary>
+      /// Initialises a new instance of the <see cref="Index3RouteValues"/> class.
+      /// </summary>
+      /// <param name="routeValues">The initial values for the route.</param>
+      public Index3RouteValues(global::Microsoft.AspNetCore.Routing.RouteValueDictionary routeValues)
+      {
+        RouteValues = routeValues;
+      }
+
+      /// <summary>
+      /// The name of the controller for the route.
+      /// </summary>
+      public string ControllerName => "Products";
+      /// <summary>
+      /// The name of the action for the route.
+      /// </summary>
+      public string ActionName => "Index";
+      /// <summary>
+      /// Values for the route.
+      /// </summary>
+      public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }
+
+      /// <summary>
+      /// Parameters of <see cref="global::ProductsController.Index(string, string)"/> which can be used in the route.
+      /// </summary>
+      public Index3.ParameterData Parameters { get; } = new Index3.ParameterData();
+      /// <summary>
+      /// Removes a parameter value from the route.
+      /// </summary>
+      /// <typeparam name="T">The type of values applicable to the key.</typeparam>
+      /// <param name="key">The key for the route.</param>
+      /// <returns><see langword="true"/> if the element is successfully found and removed; otherwise <see langword="false"/>.</returns>
+      public bool Remove<T>(global::SafeRouting.RouteKey<Index3.ParameterData, T> key) => RouteValues.Remove(key.Name);
+      /// <summary>
+      /// Sets a parameter value for the route.
+      /// </summary>
+      /// <typeparam name="T">The type of values applicable to the key.</typeparam>
+      /// <param name="key">The key for the route.</param>
+      /// <param name="value">The value for the route.</param>
+      public void Set<T>(global::SafeRouting.RouteKey<Index3.ParameterData, T> key, T value) => RouteValues[key.Name] = value;
+      /// <summary>
+      /// Sets a parameter value for the route.
+      /// </summary>
+      /// <param name="key">The key for the route.</param>
+      public string this[global::SafeRouting.RouteKey<Index3.ParameterData, string> key] { set => RouteValues[key.Name] = value; }
+    }
+
+    namespace Index3
+    {
+      /// <summary>
+      /// Represents route keys for parameters to <see cref="global::ProductsController.Index(string, string)"/>.
+      /// </summary>
+      [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
+      [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+      public sealed class ParameterData
+      {
+        /// <summary>
+        /// Route key for the <c>someValue</c> parameter in <see cref="global::ProductsController.Index(string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> SomeValue { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("someValue");
+
+        /// <summary>
+        /// Route key for the <c>someOtherValue</c> parameter in <see cref="global::ProductsController.Index(string, string)"/>.
+        /// </summary>
+        public global::SafeRouting.RouteKey<ParameterData, string> SomeOtherValue { get; } = new global::SafeRouting.RouteKey<ParameterData, string>("someOtherValue");
       }
     }
   }

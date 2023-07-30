@@ -156,6 +156,7 @@ public sealed class ControllerActionMethodTests
       {
         public IActionResult Index() => View();
         public IActionResult Index(string someValue) => View();
+        public IActionResult Index(string someValue, string someOtherValue) => View();
       }
       """);
   }
