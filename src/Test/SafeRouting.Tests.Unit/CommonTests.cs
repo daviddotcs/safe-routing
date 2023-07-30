@@ -124,6 +124,38 @@ public sealed class CommonTests
   }
 
   [Fact]
+  public Task InvalidParameterCaseOptionProducesDiagnostic()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class ProductsController : Controller
+      {
+        [FromRoute]
+        public string? Name { get; set; }
+
+        public IActionResult Index(int id)
+        {
+          return View();
+        }
+      }
+
+      public sealed class EditModel : PageModel
+      {
+        [FromRoute]
+        public string? Title { get; set; }
+
+        public void OnGet(string name)
+        {
+        }
+      }
+      """,
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
+    options: new TestConfigOptions { ["safe_routing.generated_parameter_case"] = "invalid" });
+  }
+
+  [Fact]
   public Task NamespaceOptionChangesNamespace()
   {
     return TestHelper.Verify("""
@@ -250,6 +282,38 @@ public sealed class CommonTests
         }
       }
       """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
+  }
+
+  [Fact]
+  public Task StandardParameterCaseOptionProducesCamelCaseParameters()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc;
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class ProductsController : Controller
+      {
+        [FromRoute]
+        public string? Name { get; set; }
+
+        public IActionResult Index(int id)
+        {
+          return View();
+        }
+      }
+
+      public sealed class EditModel : PageModel
+      {
+        [FromRoute]
+        public string? Title { get; set; }
+
+        public void OnGet(string name)
+        {
+        }
+      }
+      """,
+    path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
+    options: new TestConfigOptions { ["safe_routing.generated_parameter_case"] = "standard" });
   }
 
   [Theory]

@@ -1,0 +1,16 @@
+﻿{
+  Diagnostics: [
+    {
+      Id: CSR0002,
+      Title: Invalid options,
+      Severity: Error,
+      WarningLevel: 0,
+      Location: : (0,0)-(0,0),
+      Description: ,
+      HelpLink: ,
+      MessageFormat: Value for the option '{0}' is invalid. {1},
+      Message: Value for the option 'safe_routing.generated_parameter_case' is invalid. 'invalid' is not a supported parameter case, must be standard or pascal.,
+      Category: SafeRouting.Generator.RouteGenerator
+    }
+  ]
+}
