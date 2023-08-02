@@ -14,11 +14,11 @@ public static class IncrementalGeneratorInitializationContextExtensions
 
   public static void RegisterConditionalOutput(this IncrementalGeneratorInitializationContext context, IncrementalValueProvider<bool> source, Action<SourceProductionContext> action)
   {
-    context.RegisterSourceOutput(source, (context, value) =>
+    context.RegisterSourceOutput(source, (sourceProductionContext, value) =>
     {
       if (value)
       {
-        action(context);
+        action(sourceProductionContext);
       }
     });
   }

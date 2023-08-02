@@ -17,7 +17,7 @@ internal sealed class CandidateClassInfoEqualityComparer : IEqualityComparer<Can
 
   public int GetHashCode(CandidateClassInfo obj) => obj.GetHashCode();
 
-  public static CandidateClassInfoEqualityComparer Default { get; } = new CandidateClassInfoEqualityComparer();
+  public static CandidateClassInfoEqualityComparer Default { get; } = new();
 
   private static readonly EqualityComparer<TypeDeclarationSyntax> Comparer = EqualityComparer<TypeDeclarationSyntax>.Default;
 }

@@ -101,7 +101,7 @@ internal static class Emitter
     writer.Indent++;
 
     writer.Write("""["area"] = """);
-    if ((method.Area ?? item.Area) is string area)
+    if ((method.Area ?? item.Area) is { } area)
     {
       CSharpSupport.ToStringLiteralExpression(area).WriteTo(writer);
     }

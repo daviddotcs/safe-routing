@@ -32,7 +32,7 @@ internal static class Parser
   {
     var typeDeclarationSyntax = (TypeDeclarationSyntax)context.Node;
 
-    if (context.SemanticModel.GetDeclaredSymbol(typeDeclarationSyntax, cancellationToken) is not INamedTypeSymbol typeSymbol)
+    if (context.SemanticModel.GetDeclaredSymbol(typeDeclarationSyntax, cancellationToken) is not { } typeSymbol)
     {
       return null;
     }
@@ -213,7 +213,7 @@ internal static class Parser
       return generatedNamespace;
     }
 
-    if (generatedNamespaceValue.Split('.').All(x => SyntaxFacts.IsValidIdentifier(x)))
+    if (generatedNamespaceValue.Split('.').All(SyntaxFacts.IsValidIdentifier))
     {
       generatedNamespace = generatedNamespaceValue;
     }
@@ -324,7 +324,7 @@ internal static class Parser
 
         if (member is IPropertySymbol propertySymbol)
         {
-          if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is MvcPropertyInfo propertyInfo)
+          if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is { } propertyInfo)
           {
             properties.Add(propertyInfo);
           }
@@ -344,7 +344,7 @@ internal static class Parser
 
     foreach (var methodSymbol in methodSymbols)
     {
-      if (GetControllerMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is ControllerMethodInfo method)
+      if (GetControllerMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is { } method)
       {
         var (isModified, parameters) = CombineBoundProperties(method.Parameters, properties);
         if (isModified)
@@ -431,7 +431,7 @@ internal static class Parser
         return null;
       }
 
-      if (GetMvcMethodParameterInfo(parameterSymbol, semanticModel, diagnostics, cancellationToken) is MvcMethodParameterInfo parameter)
+      if (GetMvcMethodParameterInfo(parameterSymbol, semanticModel, diagnostics, cancellationToken) is { } parameter)
       {
         parameters.Add(parameter);
       }
@@ -700,7 +700,7 @@ internal static class Parser
 
         if (member is IPropertySymbol propertySymbol)
         {
-          if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is MvcPropertyInfo propertyInfo)
+          if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is { } propertyInfo)
           {
             properties.Add(propertyInfo);
           }
@@ -717,7 +717,7 @@ internal static class Parser
 
     foreach (var methodSymbol in methodSymbols)
     {
-      if (GetPageMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is not PageMethodInfo method)
+      if (GetPageMethodInfo(methodSymbol, classInfo.SemanticModel, diagnostics, cancellationToken) is not { } method)
       {
         continue;
       }
@@ -778,7 +778,7 @@ internal static class Parser
         return null;
       }
 
-      if (GetMvcMethodParameterInfo(parameterSymbol, semanticModel, diagnostics, cancellationToken) is MvcMethodParameterInfo parameter)
+      if (GetMvcMethodParameterInfo(parameterSymbol, semanticModel, diagnostics, cancellationToken) is { } parameter)
       {
         parameters.Add(parameter);
       }
@@ -903,7 +903,7 @@ internal static class Parser
         continue;
       }
 
-      var propertyBoundName = property.BindingSource?.Name ?? property.EscapedName;
+      var propertyBoundName = property.BindingSource.Name ?? property.EscapedName;
       var hasConflictingBoundParameter = false;
       var hasConflictingParameterName = false;
 
@@ -959,5 +959,5 @@ internal static class Parser
   private static readonly SymbolDisplayFormat FullyQualifiedWithAnnotationsFormat = SymbolDisplayFormat.FullyQualifiedFormat
     .AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 
-  private static readonly Regex RazorPageMethodNameRegex = new(@"^On(?<name>(?<verb>Delete|Get|Head|Options|Patch|Post|Put)(?<handler>.*?))(Async)?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
+  private static readonly Regex RazorPageMethodNameRegex = new("^On(?<name>(?<verb>Delete|Get|Head|Options|Patch|Post|Put)(?<handler>.*?))(Async)?$", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
 }
