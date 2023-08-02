@@ -24,6 +24,7 @@ public interface IControllerRouteValues : IRouteValues
   /// The name of the controller.
   /// </summary>
   string ControllerName { get; }
+
   /// <summary>
   /// The name of the action method.
   /// </summary>
@@ -39,6 +40,7 @@ public interface IPageRouteValues : IRouteValues
   /// The name of the page.
   /// </summary>
   string PageName { get; }
+
   /// <summary>
   /// The name of the handler.
   /// </summary>
@@ -55,7 +57,7 @@ public sealed class RouteKey<TScope, TValue>
   /// <summary>
   /// Creates a route key with the specified name.
   /// </summary>
-  /// <param name="name">The name of the key</param>
+  /// <param name="name">The name of the key.</param>
   public RouteKey(string name)
   {
     Name = name;
