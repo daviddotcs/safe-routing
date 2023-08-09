@@ -16,7 +16,7 @@ namespace Routes
     public static class Products
     {
       /// <summary>
-      /// Generates route values for <see cref="global::ProductsController.Index(string)"/>.
+      /// Generates route values for <see cref="global::ProductsController.Index(string, object)"/>.
       /// </summary>
       public static Support.Controllers_Products.IndexRouteValues Index()
       {
@@ -31,7 +31,7 @@ namespace Routes
   namespace Support.Controllers_Products
   {
     /// <summary>
-    /// Represents route values for routes to <see cref="global::ProductsController.Index(string)"/>.
+    /// Represents route values for routes to <see cref="global::ProductsController.Index(string, object)"/>.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]

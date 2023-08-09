@@ -504,6 +504,7 @@ internal static class Parser
           bindingSource ??= attribute.ParseBindingSourceAttribute(MvcBindingSourceType.Route);
           break;
 
+        case AspNetClassNames.FromKeyedServicesAttribute:
         case AspNetClassNames.FromServicesAttribute:
           // Exclude service-bound parameters since their values come from services rather than the HTTP request
           if (bindingSource is null)

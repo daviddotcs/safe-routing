@@ -104,13 +104,14 @@ public sealed class PageHandlerParameterTests
     return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
       using Microsoft.AspNetCore.Mvc.RazorPages;
+      using Microsoft.Extensions.DependencyInjection;
 
       public sealed class EditModel : PageModel
       {
-        public void OnGet([FromServices] string fromServices)
+        public void OnGet([FromServices] string fromServices, [FromKeyedServices("foo")] object fromKeyedServices)
         {
         }
       }
-      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"), additionalSources: new[] { TestHelper.GetFromKeyedServicesAttributeAdditionalSource() });
   }
 }

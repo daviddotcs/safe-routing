@@ -62,7 +62,7 @@ internal static class TestHelper
       Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x, formatter: null)))}");
       Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
 
-      if ((path.Length > 0 || additionalSources?.Length > 0) && generatorDiagnostics.Any())
+      if ((path.Length > 0 || (additionalSources?.Any(x => x.Path.Length > 0) ?? false)) && generatorDiagnostics.Any())
       {
         verifySettings.UniqueForOSPlatform();
       }
@@ -78,6 +78,26 @@ internal static class TestHelper
   public static string MakePath(params string[] pathSegments)
   {
     return Path.Combine(pathSegments.Prepend(PathRoot).ToArray());
+  }
+
+  public static AdditionalSource GetFromKeyedServicesAttributeAdditionalSource()
+  {
+    return new("""
+      #if !NET8_0_OR_GREATER
+      using System;
+
+      namespace Microsoft.Extensions.DependencyInjection
+      {
+        [AttributeUsage(AttributeTargets.Parameter)]
+        public class FromKeyedServicesAttribute : Attribute
+        {
+          public FromKeyedServicesAttribute(object key) => Key = key;
+
+          public object Key { get; }
+        }
+      }
+      #endif
+      """);
   }
 
   private static string PathRoot { get; } = Path.GetPathRoot(Environment.CurrentDirectory)!;

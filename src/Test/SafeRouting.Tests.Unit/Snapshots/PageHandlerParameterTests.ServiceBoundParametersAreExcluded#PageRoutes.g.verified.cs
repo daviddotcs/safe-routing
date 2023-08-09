@@ -16,7 +16,7 @@ namespace Routes
     public static class Products_Edit
     {
       /// <summary>
-      /// Generates route values for <see cref="global::EditModel.OnGet(string)"/>.
+      /// Generates route values for <see cref="global::EditModel.OnGet(string, object)"/>.
       /// </summary>
       public static Support.Pages_Products_Edit.GetRouteValues Get()
       {
@@ -31,7 +31,7 @@ namespace Routes
   namespace Support.Pages_Products_Edit
   {
     /// <summary>
-    /// Represents route values for routes to <see cref="global::EditModel.OnGet(string)"/>.
+    /// Represents route values for routes to <see cref="global::EditModel.OnGet(string, object)"/>.
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("SafeRouting.Generator", "1.0.0.0")]
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]

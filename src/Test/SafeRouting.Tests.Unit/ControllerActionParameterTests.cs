@@ -282,12 +282,13 @@ public sealed class ControllerActionParameterTests
   {
     return TestHelper.Verify("""
       using Microsoft.AspNetCore.Mvc;
+      using Microsoft.Extensions.DependencyInjection;
 
       public sealed class ProductsController : Controller
       {
-        public IActionResult Index([FromServices] string fromServices) => View();
+        public IActionResult Index([FromServices] string fromServices, [FromKeyedServices("foo")] object fromKeyedServices) => View();
       }
-      """);
+      """, additionalSources: new[] { TestHelper.GetFromKeyedServicesAttributeAdditionalSource() });
   }
 
   [Fact]

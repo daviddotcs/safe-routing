@@ -189,7 +189,7 @@ safe_routing.generated_namespace = Example.Namespace.Routes
 * Custom attributes which affect routing are unsupported and will be ignored by the source generator.
 * Nullable annotations on parameter and property types are respected, but attributes affecting nullability are not copied across to the generated code.
 * Generic classes, nested classes, and non-public classes which inherit from `PageModel` are ignored by the source generator.
-* For .NET 7, it is recommended to either continue using the `[FromServices]` attribute for parameters which are implicitly injected, or to replace it with `[ExcludeFromRouteGenerator]`. Otherwise injected parameters will be included in the method signatures of the generated route methods.
+* For .NET 7 and beyond, it is recommended to either continue using the `[FromServices]` attribute (or optionally `[FromKeyedServices]` in .NET 8+) for parameters which are implicitly injected, or to replace it with `[ExcludeFromRouteGenerator]`. Otherwise injected parameters will be included in the method signatures of the generated route methods.
 * Only parameters and properties of [simple types](https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-6.0#simple-types) are currently supported.
 
 ## Working with the Source Code

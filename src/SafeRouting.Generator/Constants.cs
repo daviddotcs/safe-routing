@@ -13,6 +13,7 @@ internal static class AspNetClassNames
   public const string FromBodyAttribute = "Microsoft.AspNetCore.Mvc.FromBodyAttribute";
   public const string FromFormAttribute = "Microsoft.AspNetCore.Mvc.FromFormAttribute";
   public const string FromHeaderAttribute = "Microsoft.AspNetCore.Mvc.FromHeaderAttribute";
+  public const string FromKeyedServicesAttribute = "Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute";
   public const string FromQueryAttribute = "Microsoft.AspNetCore.Mvc.FromQueryAttribute";
   public const string FromRouteAttribute = "Microsoft.AspNetCore.Mvc.FromRouteAttribute";
   public const string FromServicesAttribute = "Microsoft.AspNetCore.Mvc.FromServicesAttribute";
