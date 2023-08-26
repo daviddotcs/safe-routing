@@ -298,7 +298,8 @@ internal static class Parser
   {
     properties = new List<MvcPropertyInfo>();
     var methodSymbols = new List<IMethodSymbol>();
-    var methodIdentifierDictionary = new Dictionary<string, ControllerMethodInfo>(StringComparer.Ordinal);
+    var methodIdentifiers = new HashSet<string>(StringComparer.Ordinal);
+    var methodsBuilder = ImmutableArray.CreateBuilder<ControllerMethodInfo>();
     // Track all unique member names to avoid including the same member from base classes
     var accessedMembers = new HashSet<string>(StringComparer.Ordinal);
     var urlAffectedIdentifiers = new HashSet<string>(StringComparer.Ordinal);
@@ -352,11 +353,11 @@ internal static class Parser
           method = method with { Parameters = parameters };
         }
 
-        AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifierDictionary, urlAffectedIdentifiers, methodNames, diagnostics, cancellationToken);
+        AddUniqueControllerMethodInfo(classInfo, method, methodSymbol, methodIdentifiers, methodsBuilder, urlAffectedIdentifiers, methodNames, diagnostics, cancellationToken);
       }
     }
 
-    methods = methodIdentifierDictionary.Values;
+    methods = methodsBuilder.ToImmutableArray();
   }
   private static bool TryGetControllerMethodAttributes(IMethodSymbol methodSymbol, List<Diagnostic> diagnostics, out string? areaName, ref string name, ref string actionName, CancellationToken cancellationToken)
   {
@@ -442,12 +443,12 @@ internal static class Parser
 
     return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, fullyQualifiedMethodDeclaration, parameters);
   }
-  private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, Dictionary<string, ControllerMethodInfo> methodIdentifierDictionary, HashSet<string> urlAffectedIdentifiers, HashSet<string> methodNames, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
+  private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, HashSet<string> methodIdentifiers, ImmutableArray<ControllerMethodInfo>.Builder methods, HashSet<string> urlAffectedIdentifiers, HashSet<string> methodNames, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
   {
     var identifier = $"{method.Name}({string.Join(", ", method.Parameters.Select(x => x.Type.FullyQualifiedName))})";
 
     // Collapse multiple methods with the same parameters
-    if (methodIdentifierDictionary.ContainsKey(identifier))
+    if (methodIdentifiers.Contains(identifier))
     {
       return;
     }
@@ -474,7 +475,8 @@ internal static class Parser
       method = method with { UniqueName = uniqueName };
     }
 
-    methodIdentifierDictionary[identifier] = method;
+    methodIdentifiers.Add(identifier);
+    methods.Add(method);
   }
   private static bool TryGetMvcMethodParameterAttributes(IParameterSymbol parameterSymbol, List<Diagnostic> diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
   {
