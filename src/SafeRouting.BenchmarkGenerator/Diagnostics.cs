@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using SafeRouting.BenchmarkGenerator;
 
 namespace SafeRouting.Generator;
 

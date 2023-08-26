@@ -2,8 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
+using SafeRouting.Generator;
 
-namespace SafeRouting.Generator;
+namespace SafeRouting.BenchmarkGenerator;
 
 [Generator(LanguageNames.CSharp)]
 public sealed class RouteGenerator : IIncrementalGenerator
