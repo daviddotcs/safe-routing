@@ -92,7 +92,7 @@ public sealed class RouteGenerator : IIncrementalGenerator
         return;
       }
 
-      var source = Emitter.Emit(controllers, options, context.CancellationToken);
+      var source = Emitter.Emit<ControllerInfo, ControllerMethodInfo>(controllers, options, context.CancellationToken);
 
       context.AddSource("ControllerRoutes.g.cs", SourceText.From(source, Encoding.UTF8));
     });
@@ -135,7 +135,7 @@ public sealed class RouteGenerator : IIncrementalGenerator
         return;
       }
 
-      var source = Emitter.Emit(pages, options, context.CancellationToken);
+      var source = Emitter.Emit<PageInfo, PageMethodInfo>(pages, options, context.CancellationToken);
 
       context.AddSource("PageRoutes.g.cs", SourceText.From(source, Encoding.UTF8));
     });

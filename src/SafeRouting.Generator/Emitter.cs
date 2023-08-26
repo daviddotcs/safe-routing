@@ -7,7 +7,9 @@ namespace SafeRouting.Generator;
 
 internal static class Emitter
 {
-  public static string Emit(IEnumerable<IMvcObjectInfo> items, GeneratorOptions options, CancellationToken cancellationToken)
+  public static string Emit<T, TMethod>(ImmutableArray<T> items, GeneratorOptions options, CancellationToken cancellationToken)
+    where T : IMvcObjectInfo<TMethod>
+    where TMethod : IMvcMethodInfo
   {
     var builder = new StringBuilder();
     using var stringWriter = new StringWriter(builder);
@@ -40,7 +42,7 @@ internal static class Emitter
       writer.WriteLine("{");
       writer.Indent++;
 
-      WriteMethodClass(writer, options, item, supportNamespace);
+      WriteMethodClass<T, TMethod>(writer, options, item, supportNamespace);
 
       writer.Indent--;
       writer.WriteLine("}");
@@ -53,7 +55,7 @@ internal static class Emitter
 
       if (item.Properties.Length > 0)
       {
-        WritePropertyDataClass(writer, options, item);
+        WritePropertyDataClass<T, TMethod>(writer, options, item);
         namespaceItemIndex++;
       }
 
@@ -64,7 +66,7 @@ internal static class Emitter
           writer.WriteLineNoTabs(s: null);
         }
 
-        WriteRouteValuesClass(writer, options, item, method);
+        WriteRouteValuesClass<T, TMethod>(writer, options, item, method);
       }
 
       writer.Indent--;
@@ -77,7 +79,9 @@ internal static class Emitter
     return builder.ToString();
   }
 
-  private static void WriteMethod(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, IMvcMethodInfo method, string uniqueName)
+  private static void WriteMethod<T, TMethod>(IndentedTextWriter writer, GeneratorOptions options, T item, IMvcMethodInfo method, string uniqueName)
+    where T : IMvcObjectInfo<TMethod>
+    where TMethod : IMvcMethodInfo
   {
     var parameters = method.GetUrlParameters().ToArray();
     var returnType = $"{uniqueName}RouteValues";
@@ -127,7 +131,9 @@ internal static class Emitter
     writer.Indent--;
     writer.WriteLine("}");
   }
-  private static void WriteMethodClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, string supportNamespace)
+  private static void WriteMethodClass<T, TMethod>(IndentedTextWriter writer, GeneratorOptions options, T item, string supportNamespace)
+    where T : IMvcObjectInfo<TMethod>
+    where TMethod : IMvcMethodInfo
   {
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"""/// Generates route values for <see cref="{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}"/>.""");
@@ -147,7 +153,7 @@ internal static class Emitter
         writer.WriteLineNoTabs(s: null);
       }
 
-      WriteMethod(writer, options, item, method, $"{supportNamespace}.{method.UniqueName}");
+      WriteMethod<T, TMethod>(writer, options, item, method, $"{supportNamespace}.{method.UniqueName}");
     }
 
     writer.Indent--;
@@ -193,7 +199,9 @@ internal static class Emitter
 
     writer.Indent = indentLevel;
   }
-  private static void WriteParameterDataClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, IMvcMethodInfo method)
+  private static void WriteParameterDataClass<T, TMethod>(IndentedTextWriter writer, GeneratorOptions options, T item, IMvcMethodInfo method)
+    where T : IMvcObjectInfo<TMethod>
+    where TMethod : IMvcMethodInfo
   {
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"""/// Represents route keys for parameters to <see cref="{CSharpSupport.EscapeXmlDocType($"{item.FullyQualifiedTypeName}.{method.FullyQualifiedMethodDeclaration}")}"/>.""");
@@ -230,7 +238,9 @@ internal static class Emitter
     writer.Indent--;
     writer.WriteLine("}");
   }
-  private static void WritePropertyDataClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item)
+  private static void WritePropertyDataClass<T, TMethod>(IndentedTextWriter writer, GeneratorOptions options, T item)
+    where T : IMvcObjectInfo<TMethod>
+    where TMethod : IMvcMethodInfo
   {
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"""/// Represents route keys for the properties of <see cref="{CSharpSupport.EscapeXmlDocType(item.FullyQualifiedTypeName)}"/>.""");
@@ -307,7 +317,9 @@ internal static class Emitter
 
     writer.Indent = indentLevel;
   }
-  private static void WriteRouteValuesClass(IndentedTextWriter writer, GeneratorOptions options, IMvcObjectInfo item, IMvcMethodInfo method)
+  private static void WriteRouteValuesClass<T, TMethod>(IndentedTextWriter writer, GeneratorOptions options, T item, IMvcMethodInfo method)
+    where T : IMvcObjectInfo<TMethod>
+    where TMethod : IMvcMethodInfo
   {
     var methodClassName = $"{method.UniqueName}RouteValues";
 
@@ -378,7 +390,7 @@ internal static class Emitter
       writer.WriteLine("{");
       writer.Indent++;
 
-      WriteParameterDataClass(writer, options, item, method);
+      WriteParameterDataClass<T, TMethod>(writer, options, item, method);
 
       writer.Indent--;
       writer.WriteLine("}");

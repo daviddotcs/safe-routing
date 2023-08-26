@@ -23,7 +23,8 @@ internal sealed class CandidateClassInfoEqualityComparer : IEqualityComparer<Can
   private static readonly EqualityComparer<TypeDeclarationSyntax> Comparer = EqualityComparer<TypeDeclarationSyntax>.Default;
 }
 
-internal interface IMvcObjectInfo
+internal interface IMvcObjectInfo<TMethod>
+  where TMethod : IMvcMethodInfo
 {
   string RouteValue { get; }
   string OutputClassName { get; }
@@ -32,7 +33,7 @@ internal interface IMvcObjectInfo
   string Noun { get; }
   string DivisionName { get; }
   ImmutableArray<MvcPropertyInfo> Properties { get; }
-  IReadOnlyList<IMvcMethodInfo> Methods { get; }
+  ImmutableArray<TMethod> Methods { get; }
 }
 
 internal sealed record ControllerInfo(
@@ -42,12 +43,12 @@ internal sealed record ControllerInfo(
   string FullyQualifiedTypeName,
   TypeDeclarationSyntax TypeDeclarationSyntax,
   ImmutableArray<MvcPropertyInfo> Properties,
-  ImmutableArray<ControllerMethodInfo> Methods) : IMvcObjectInfo
+  ImmutableArray<ControllerMethodInfo> Methods) : IMvcObjectInfo<ControllerMethodInfo>
 {
-  string IMvcObjectInfo.OutputClassName => Name;
-  string IMvcObjectInfo.Noun => "Controller";
-  string IMvcObjectInfo.DivisionName => "Action";
-  IReadOnlyList<IMvcMethodInfo> IMvcObjectInfo.Methods => Methods;
+  string IMvcObjectInfo<ControllerMethodInfo>.OutputClassName => Name;
+  string IMvcObjectInfo<ControllerMethodInfo>.Noun => "Controller";
+  string IMvcObjectInfo<ControllerMethodInfo>.DivisionName => "Action";
+  ImmutableArray<ControllerMethodInfo> IMvcObjectInfo<ControllerMethodInfo>.Methods => Methods;
 }
 
 internal sealed record PageInfo(
@@ -58,12 +59,12 @@ internal sealed record PageInfo(
   string FullyQualifiedTypeName,
   TypeDeclarationSyntax TypeDeclarationSyntax,
   ImmutableArray<MvcPropertyInfo> Properties,
-  ImmutableArray<PageMethodInfo> Methods) : IMvcObjectInfo
+  ImmutableArray<PageMethodInfo> Methods) : IMvcObjectInfo<PageMethodInfo>
 {
-  string IMvcObjectInfo.OutputClassName => $"{(PageNamespace.Length > 0 ? $"{PageNamespace}_" : null)}{Name}";
-  string IMvcObjectInfo.Noun => "Page";
-  string IMvcObjectInfo.DivisionName => "Handler";
-  IReadOnlyList<IMvcMethodInfo> IMvcObjectInfo.Methods => Methods;
+  string IMvcObjectInfo<PageMethodInfo>.OutputClassName => $"{(PageNamespace.Length > 0 ? $"{PageNamespace}_" : null)}{Name}";
+  string IMvcObjectInfo<PageMethodInfo>.Noun => "Page";
+  string IMvcObjectInfo<PageMethodInfo>.DivisionName => "Handler";
+  ImmutableArray<PageMethodInfo> IMvcObjectInfo<PageMethodInfo>.Methods => Methods;
 }
 
 internal sealed record MvcPropertyInfo(
