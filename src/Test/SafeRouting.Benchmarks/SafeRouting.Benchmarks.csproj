@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.7" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SafeRouting.BenchmarkGenerator\SafeRouting.BenchmarkGenerator.csproj" />
+    <ProjectReference Include="..\..\SafeRouting.Common\SafeRouting.Common.csproj" />
+    <ProjectReference Include="..\..\SafeRouting.Generator\SafeRouting.Generator.csproj" />
+  </ItemGroup>
+
+</Project>

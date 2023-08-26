@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{DC1FF922-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.BenchmarkGenerator", "SafeRouting.BenchmarkGenerator\SafeRouting.BenchmarkGenerator.csproj", "{D373CBE0-6EA9-49F6-991B-200C2AA61E47}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SafeRouting.Benchmarks", "Test\SafeRouting.Benchmarks\SafeRouting.Benchmarks.csproj", "{08D79223-677A-4011-8FEB-CC69E9E907C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{D373CBE0-6EA9-49F6-991B-200C2AA61E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D373CBE0-6EA9-49F6-991B-200C2AA61E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D373CBE0-6EA9-49F6-991B-200C2AA61E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08D79223-677A-4011-8FEB-CC69E9E907C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D79223-677A-4011-8FEB-CC69E9E907C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D79223-677A-4011-8FEB-CC69E9E907C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D79223-677A-4011-8FEB-CC69E9E907C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{A1E0FE1F-FA90-4A83-8D14-98A2421ADB98} = {DC1FF922-DF35-4B03-8CAA-59ABA30FB813}
 		{740264CD-94AF-4B9D-8891-94CEC3C7AE8F} = {CFB644F0-2666-4C46-AAE5-FA3FD1AA4BCE}
 		{D373CBE0-6EA9-49F6-991B-200C2AA61E47} = {CFB644F0-2666-4C46-AAE5-FA3FD1AA4BCE}
+		{08D79223-677A-4011-8FEB-CC69E9E907C9} = {60AF66E6-866A-4358-BCFE-A137C9D34B1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E569673F-9964-4086-832A-A3418468D574}
