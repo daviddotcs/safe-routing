@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Immutable;
 
 namespace SafeRouting.Generator;
 
@@ -30,8 +31,8 @@ internal interface IMvcObjectInfo
   string FullyQualifiedTypeName { get; }
   string Noun { get; }
   string DivisionName { get; }
-  IReadOnlyCollection<MvcPropertyInfo> Properties { get; }
-  IReadOnlyCollection<IMvcMethodInfo> Methods { get; }
+  ImmutableArray<MvcPropertyInfo> Properties { get; }
+  IReadOnlyList<IMvcMethodInfo> Methods { get; }
 }
 
 internal sealed record ControllerInfo(
@@ -40,13 +41,13 @@ internal sealed record ControllerInfo(
   string? Area,
   string FullyQualifiedTypeName,
   TypeDeclarationSyntax TypeDeclarationSyntax,
-  IReadOnlyCollection<MvcPropertyInfo> Properties,
-  IReadOnlyCollection<ControllerMethodInfo> Methods) : IMvcObjectInfo
+  ImmutableArray<MvcPropertyInfo> Properties,
+  ImmutableArray<ControllerMethodInfo> Methods) : IMvcObjectInfo
 {
   string IMvcObjectInfo.OutputClassName => Name;
   string IMvcObjectInfo.Noun => "Controller";
   string IMvcObjectInfo.DivisionName => "Action";
-  IReadOnlyCollection<IMvcMethodInfo> IMvcObjectInfo.Methods => Methods;
+  IReadOnlyList<IMvcMethodInfo> IMvcObjectInfo.Methods => Methods;
 }
 
 internal sealed record PageInfo(
@@ -56,13 +57,13 @@ internal sealed record PageInfo(
   string PageNamespace,
   string FullyQualifiedTypeName,
   TypeDeclarationSyntax TypeDeclarationSyntax,
-  IReadOnlyCollection<MvcPropertyInfo> Properties,
-  IReadOnlyCollection<PageMethodInfo> Methods) : IMvcObjectInfo
+  ImmutableArray<MvcPropertyInfo> Properties,
+  ImmutableArray<PageMethodInfo> Methods) : IMvcObjectInfo
 {
   string IMvcObjectInfo.OutputClassName => $"{(PageNamespace.Length > 0 ? $"{PageNamespace}_" : null)}{Name}";
   string IMvcObjectInfo.Noun => "Page";
   string IMvcObjectInfo.DivisionName => "Handler";
-  IReadOnlyCollection<IMvcMethodInfo> IMvcObjectInfo.Methods => Methods;
+  IReadOnlyList<IMvcMethodInfo> IMvcObjectInfo.Methods => Methods;
 }
 
 internal sealed record MvcPropertyInfo(
@@ -84,7 +85,7 @@ internal interface IMvcMethodInfo
   string? DivisionRouteValue { get; }
   string? Area { get; }
   string FullyQualifiedMethodDeclaration { get; }
-  IReadOnlyCollection<MvcMethodParameterInfo> Parameters { get; }
+  ImmutableArray<MvcMethodParameterInfo> Parameters { get; }
 
   IEnumerable<MvcMethodParameterInfo> GetUrlParameters();
 }
@@ -96,7 +97,7 @@ internal sealed record ControllerMethodInfo(
   string ActionName,
   string? Area,
   string FullyQualifiedMethodDeclaration,
-  IReadOnlyCollection<MvcMethodParameterInfo> Parameters) : IMvcMethodInfo
+  ImmutableArray<MvcMethodParameterInfo> Parameters) : IMvcMethodInfo
 {
   string IMvcMethodInfo.DivisionRouteValue => ActionName;
 
@@ -110,7 +111,7 @@ internal sealed record PageMethodInfo(
   string UniqueName,
   string? HandlerName,
   string FullyQualifiedMethodDeclaration,
-  IReadOnlyCollection<MvcMethodParameterInfo> Parameters) : IMvcMethodInfo
+  ImmutableArray<MvcMethodParameterInfo> Parameters) : IMvcMethodInfo
 {
   string? IMvcMethodInfo.DivisionRouteValue => HandlerName;
   string? IMvcMethodInfo.Area => null;
@@ -171,4 +172,4 @@ internal sealed record GeneratorOptions(
   string GeneratedAccessModifier,
   string GeneratedNamespace,
   IdentifierCase GeneratedParameterCase,
-  IReadOnlyCollection<Diagnostic> Diagnostics);
+  ImmutableArray<Diagnostic> Diagnostics);

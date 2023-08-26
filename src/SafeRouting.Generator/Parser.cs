@@ -12,13 +12,13 @@ internal static class Parser
 {
   public static GeneratorOptions GetOptions(AnalyzerConfigOptionsProvider optionsProvider)
   {
-    var diagnostics = new List<Diagnostic>();
+    var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
     var generatedAccessModifier = GetGeneratedAccessModifierOption(optionsProvider.GlobalOptions, diagnostics);
     var generatedNamespace = GetGeneratedNamespaceOption(optionsProvider.GlobalOptions, diagnostics);
     var generatedParameterCase = GetGeneratedParameterCaseOption(optionsProvider.GlobalOptions, diagnostics);
 
-    return new GeneratorOptions(generatedAccessModifier, generatedNamespace, generatedParameterCase, diagnostics);
+    return new GeneratorOptions(generatedAccessModifier, generatedNamespace, generatedParameterCase, diagnostics.ToImmutable());
   }
 
   public static bool IsCandidateNode(SyntaxNode node)
@@ -47,13 +47,11 @@ internal static class Parser
     return new CandidateClassInfo(typeDeclarationSyntax, typeSymbol, context.SemanticModel, isController, isPage);
   }
 
-  public static (ControllerInfo? ControllerInfo, List<Diagnostic> Diagnostics) GetControllerInfo(CandidateClassInfo classInfo, CancellationToken cancellationToken)
+  public static (ControllerInfo? ControllerInfo, ImmutableArray<Diagnostic> Diagnostics) GetControllerInfo(CandidateClassInfo classInfo, CancellationToken cancellationToken)
   {
-    var diagnostics = new List<Diagnostic>();
-
     if (!classInfo.IsController)
     {
-      return (null, diagnostics);
+      return (null, ImmutableArray<Diagnostic>.Empty);
     }
 
     var typeSymbol = classInfo.TypeSymbol;
@@ -65,21 +63,23 @@ internal static class Parser
 
     if (controllerName.Length == 0)
     {
-      return (null, diagnostics);
+      return (null, ImmutableArray<Diagnostic>.Empty);
     }
 
     var generatorName = controllerName;
+
+    var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
     GetControllerAttributes(typeSymbol, diagnostics, out var areaName, out var defaultBindingSource, out var defaultBindingLevel, ref generatorName, cancellationToken);
 
     GetControllerMembers(classInfo, typeSymbol, defaultBindingSource, defaultBindingLevel, diagnostics, out var properties, out var methods, cancellationToken);
 
-    if (methods.Count == 0)
+    if (methods.Length == 0)
     {
-      return (null, diagnostics);
+      return (null, diagnostics.ToImmutable());
     }
 
-    return (new ControllerInfo(controllerName, generatorName, areaName, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods), diagnostics);
+    return (new ControllerInfo(controllerName, generatorName, areaName, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), classInfo.TypeDeclarationSyntax, properties, methods), diagnostics.ToImmutable());
   }
 
   public static (ImmutableArray<ControllerInfo> Controllers, ImmutableArray<Diagnostic> Diagnostics) GetUniqueControllers(ImmutableArray<ControllerInfo> controllers)
@@ -102,13 +102,11 @@ internal static class Parser
     return (emitControllers.ToImmutable(), diagnostics.ToImmutable());
   }
 
-  public static (PageInfo? PageInfo, List<Diagnostic> Diagnostics) GetPageInfo(CandidateClassInfo classInfo, CancellationToken cancellationToken)
+  public static (PageInfo? PageInfo, ImmutableArray<Diagnostic> Diagnostics) GetPageInfo(CandidateClassInfo classInfo, CancellationToken cancellationToken)
   {
-    var diagnostics = new List<Diagnostic>();
-
     if (!classInfo.IsPage)
     {
-      return (null, diagnostics);
+      return (null, ImmutableArray<Diagnostic>.Empty);
     }
 
     var typeSymbol = classInfo.TypeSymbol;
@@ -117,17 +115,17 @@ internal static class Parser
     var filePath = typeDeclarationSyntax.SyntaxTree.FilePath;
     if (string.IsNullOrEmpty(filePath))
     {
-      return (null, diagnostics);
+      return (null, ImmutableArray<Diagnostic>.Empty);
     }
 
     var fileInfo = new FileInfo(filePath);
     if (!fileInfo.Name.EndsWith(".cshtml.cs", StringComparison.InvariantCultureIgnoreCase))
     {
-      return (null, diagnostics);
+      return (null, ImmutableArray<Diagnostic>.Empty);
     }
 
     var directory = fileInfo.Directory;
-    var pathSegments = new List<string>();
+    var pathSegments = ImmutableArray.CreateBuilder<string>();
 
     for (; directory != null && !string.Equals(directory.Name, "Pages", StringComparison.InvariantCultureIgnoreCase); directory = directory.Parent)
     {
@@ -136,7 +134,7 @@ internal static class Parser
 
     if (directory is null)
     {
-      return (null, diagnostics);
+      return (null, ImmutableArray<Diagnostic>.Empty);
     }
 
     var pageNamespace = string.Join("_", pathSegments);
@@ -152,16 +150,18 @@ internal static class Parser
 
     var generatorName = pageName;
 
+    var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+
     GetPageAttributes(typeSymbol, diagnostics, out var defaultBindingSource, ref generatorName, cancellationToken);
 
     GetPageMembers(classInfo, typeSymbol, defaultBindingSource, diagnostics, out var properties, out var methods, cancellationToken);
 
-    if (methods.Count == 0)
+    if (methods.Length == 0)
     {
-      return (null, diagnostics);
+      return (null, diagnostics.ToImmutable());
     }
 
-    return (new PageInfo(pagePath, generatorName, areaName, pageNamespace, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), typeDeclarationSyntax, properties, methods), diagnostics);
+    return (new PageInfo(pagePath, generatorName, areaName, pageNamespace, typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), typeDeclarationSyntax, properties, methods), diagnostics.ToImmutable());
   }
 
   public static (ImmutableArray<PageInfo> Pages, ImmutableArray<Diagnostic> Diagnostics) GetUniquePages(ImmutableArray<PageInfo> pages)
@@ -184,7 +184,7 @@ internal static class Parser
     return (emitPages.ToImmutable(), diagnostics.ToImmutable());
   }
 
-  private static string GetGeneratedAccessModifierOption(AnalyzerConfigOptions options, List<Diagnostic> diagnostics)
+  private static string GetGeneratedAccessModifierOption(AnalyzerConfigOptions options, ImmutableArray<Diagnostic>.Builder diagnostics)
   {
     var generatedAccessModifier = GeneratorSupport.DefaultGeneratedAccessModifier;
 
@@ -204,7 +204,7 @@ internal static class Parser
 
     return generatedAccessModifier;
   }
-  private static string GetGeneratedNamespaceOption(AnalyzerConfigOptions options, List<Diagnostic> diagnostics)
+  private static string GetGeneratedNamespaceOption(AnalyzerConfigOptions options, ImmutableArray<Diagnostic>.Builder diagnostics)
   {
     var generatedNamespace = GeneratorSupport.DefaultGeneratedRootNamespace;
 
@@ -224,7 +224,7 @@ internal static class Parser
 
     return generatedNamespace;
   }
-  private static IdentifierCase GetGeneratedParameterCaseOption(AnalyzerConfigOptions options, List<Diagnostic> diagnostics)
+  private static IdentifierCase GetGeneratedParameterCaseOption(AnalyzerConfigOptions options, ImmutableArray<Diagnostic>.Builder diagnostics)
   {
     var generatedParameterCase = GeneratorSupport.DefaultGeneratedParameterCase;
 
@@ -248,7 +248,7 @@ internal static class Parser
 
     return generatedParameterCase;
   }
-  private static void GetControllerAttributes(INamedTypeSymbol typeSymbol, List<Diagnostic> diagnostics, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName, CancellationToken cancellationToken)
+  private static void GetControllerAttributes(INamedTypeSymbol typeSymbol, ImmutableArray<Diagnostic>.Builder diagnostics, out string? areaName, out MvcBindingSourceInfo? defaultBindingSource, out INamedTypeSymbol? defaultBindingLevel, ref string generatorName, CancellationToken cancellationToken)
   {
     areaName = null;
     defaultBindingSource = null;
@@ -294,10 +294,10 @@ internal static class Parser
       }
     }
   }
-  private static void GetControllerMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, List<Diagnostic> diagnostics, out List<MvcPropertyInfo> properties, out IReadOnlyCollection<ControllerMethodInfo> methods, CancellationToken cancellationToken)
+  private static void GetControllerMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, INamedTypeSymbol? defaultBindingLevel, ImmutableArray<Diagnostic>.Builder diagnostics, out ImmutableArray<MvcPropertyInfo> properties, out ImmutableArray<ControllerMethodInfo> methods, CancellationToken cancellationToken)
   {
-    properties = new List<MvcPropertyInfo>();
-    var methodSymbols = new List<IMethodSymbol>();
+    var propertiesBuilder = ImmutableArray.CreateBuilder<MvcPropertyInfo>();
+    var methodSymbols = ImmutableArray.CreateBuilder<IMethodSymbol>();
     var methodIdentifiers = new HashSet<string>(StringComparer.Ordinal);
     var methodsBuilder = ImmutableArray.CreateBuilder<ControllerMethodInfo>();
     // Track all unique member names to avoid including the same member from base classes
@@ -327,7 +327,7 @@ internal static class Parser
         {
           if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is { } propertyInfo)
           {
-            properties.Add(propertyInfo);
+            propertiesBuilder.Add(propertyInfo);
           }
         }
         else if (member is IMethodSymbol methodSymbol)
@@ -342,6 +342,8 @@ internal static class Parser
         defaultBindingSource = null;
       }
     }
+
+    properties = propertiesBuilder.ToImmutable();
 
     foreach (var methodSymbol in methodSymbols)
     {
@@ -359,7 +361,7 @@ internal static class Parser
 
     methods = methodsBuilder.ToImmutableArray();
   }
-  private static bool TryGetControllerMethodAttributes(IMethodSymbol methodSymbol, List<Diagnostic> diagnostics, out string? areaName, ref string name, ref string actionName, CancellationToken cancellationToken)
+  private static bool TryGetControllerMethodAttributes(IMethodSymbol methodSymbol, ImmutableArray<Diagnostic>.Builder diagnostics, out string? areaName, ref string name, ref string actionName, CancellationToken cancellationToken)
   {
     areaName = null;
 
@@ -403,7 +405,7 @@ internal static class Parser
 
     return true;
   }
-  private static ControllerMethodInfo? GetControllerMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
+  private static ControllerMethodInfo? GetControllerMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, ImmutableArray<Diagnostic>.Builder diagnostics, CancellationToken cancellationToken)
   {
     if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod)
     {
@@ -422,7 +424,7 @@ internal static class Parser
       return null;
     }
 
-    var parameters = new List<MvcMethodParameterInfo>();
+    var parameters = ImmutableArray.CreateBuilder<MvcMethodParameterInfo>();
 
     foreach (var parameterSymbol in methodSymbol.Parameters)
     {
@@ -441,9 +443,9 @@ internal static class Parser
     var escapedName = CSharpSupport.EscapeIdentifier(name);
     var fullyQualifiedMethodDeclaration = methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat);
 
-    return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, fullyQualifiedMethodDeclaration, parameters);
+    return new ControllerMethodInfo(name, escapedName, name, actionName, areaName, fullyQualifiedMethodDeclaration, parameters.ToImmutable());
   }
-  private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, HashSet<string> methodIdentifiers, ImmutableArray<ControllerMethodInfo>.Builder methods, HashSet<string> urlAffectedIdentifiers, HashSet<string> methodNames, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
+  private static void AddUniqueControllerMethodInfo(CandidateClassInfo classInfo, ControllerMethodInfo method, IMethodSymbol methodSymbol, HashSet<string> methodIdentifiers, ImmutableArray<ControllerMethodInfo>.Builder methods, HashSet<string> urlAffectedIdentifiers, HashSet<string> methodNames, ImmutableArray<Diagnostic>.Builder diagnostics, CancellationToken cancellationToken)
   {
     var identifier = $"{method.Name}({string.Join(", ", method.Parameters.Select(x => x.Type.FullyQualifiedName))})";
 
@@ -478,7 +480,7 @@ internal static class Parser
     methodIdentifiers.Add(identifier);
     methods.Add(method);
   }
-  private static bool TryGetMvcMethodParameterAttributes(IParameterSymbol parameterSymbol, List<Diagnostic> diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
+  private static bool TryGetMvcMethodParameterAttributes(IParameterSymbol parameterSymbol, ImmutableArray<Diagnostic>.Builder diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
   {
     bindingSource = null;
 
@@ -536,7 +538,7 @@ internal static class Parser
 
     return true;
   }
-  private static MvcMethodParameterInfo? GetMvcMethodParameterInfo(IParameterSymbol parameterSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
+  private static MvcMethodParameterInfo? GetMvcMethodParameterInfo(IParameterSymbol parameterSymbol, SemanticModel semanticModel, ImmutableArray<Diagnostic>.Builder diagnostics, CancellationToken cancellationToken)
   {
     if (string.Equals(parameterSymbol.Type.ToDisplayString(), AspNetClassNames.CancellationToken, StringComparison.Ordinal))
     {
@@ -559,7 +561,7 @@ internal static class Parser
 
     return new MvcMethodParameterInfo(name, escapedName, propertyName, routeKey, type, defaultValueExpression, bindingSource);
   }
-  private static bool TryGetMvcPropertyAttributes(IPropertySymbol propertySymbol, List<Diagnostic> diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
+  private static bool TryGetMvcPropertyAttributes(IPropertySymbol propertySymbol, ImmutableArray<Diagnostic>.Builder diagnostics, ref string generatorName, out MvcBindingSourceInfo? bindingSource, CancellationToken cancellationToken)
   {
     bindingSource = null;
 
@@ -612,7 +614,7 @@ internal static class Parser
 
     return true;
   }
-  private static MvcPropertyInfo? GetMvcPropertyInfo(IPropertySymbol propertySymbol, SemanticModel semanticModel, MvcBindingSourceInfo? defaultBindingSource, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
+  private static MvcPropertyInfo? GetMvcPropertyInfo(IPropertySymbol propertySymbol, SemanticModel semanticModel, MvcBindingSourceInfo? defaultBindingSource, ImmutableArray<Diagnostic>.Builder diagnostics, CancellationToken cancellationToken)
   {
     if (propertySymbol.GetMethod?.DeclaredAccessibility != Accessibility.Public || propertySymbol.SetMethod?.DeclaredAccessibility != Accessibility.Public)
     {
@@ -641,7 +643,7 @@ internal static class Parser
 
     return new MvcPropertyInfo(originalName, escapedOriginalName, escapedName, routeKey, type, bindingSource);
   }
-  private static void GetPageAttributes(INamedTypeSymbol typeSymbol, List<Diagnostic> diagnostics, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName, CancellationToken cancellationToken)
+  private static void GetPageAttributes(INamedTypeSymbol typeSymbol, ImmutableArray<Diagnostic>.Builder diagnostics, out MvcBindingSourceInfo? defaultBindingSource, ref string generatorName, CancellationToken cancellationToken)
   {
     defaultBindingSource = null;
 
@@ -669,11 +671,11 @@ internal static class Parser
       }
     }
   }
-  private static void GetPageMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, List<Diagnostic> diagnostics, out List<MvcPropertyInfo> properties, out List<PageMethodInfo> methods, CancellationToken cancellationToken)
+  private static void GetPageMembers(CandidateClassInfo classInfo, INamedTypeSymbol typeSymbol, MvcBindingSourceInfo? defaultBindingSource, ImmutableArray<Diagnostic>.Builder diagnostics, out ImmutableArray<MvcPropertyInfo> properties, out ImmutableArray<PageMethodInfo> methods, CancellationToken cancellationToken)
   {
-    properties = new List<MvcPropertyInfo>();
-    methods = new List<PageMethodInfo>();
-    var methodSymbols = new List<IMethodSymbol>();
+    var propertiesBuilder = ImmutableArray.CreateBuilder<MvcPropertyInfo>();
+    var methodsBuilder = ImmutableArray.CreateBuilder<PageMethodInfo>();
+    var methodSymbols = ImmutableArray.CreateBuilder<IMethodSymbol>();
     var accessedMembers = new HashSet<string>(StringComparer.Ordinal);
     var methodNames = new HashSet<string>(StringComparer.Ordinal);
 
@@ -705,7 +707,7 @@ internal static class Parser
         {
           if (GetMvcPropertyInfo(propertySymbol, classInfo.SemanticModel, defaultBindingSource, diagnostics, cancellationToken) is { } propertyInfo)
           {
-            properties.Add(propertyInfo);
+            propertiesBuilder.Add(propertyInfo);
           }
         }
         else if (member is IMethodSymbol methodSymbol)
@@ -717,6 +719,8 @@ internal static class Parser
       // Inherited members don't receive default binding
       defaultBindingSource = null;
     }
+
+    properties = propertiesBuilder.ToImmutable();
 
     foreach (var methodSymbol in methodSymbols)
     {
@@ -737,10 +741,12 @@ internal static class Parser
         continue;
       }
 
-      methods.Add(method);
+      methodsBuilder.Add(method);
     }
+
+    methods = methodsBuilder.ToImmutable();
   }
-  private static PageMethodInfo? GetPageMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, List<Diagnostic> diagnostics, CancellationToken cancellationToken)
+  private static PageMethodInfo? GetPageMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, ImmutableArray<Diagnostic>.Builder diagnostics, CancellationToken cancellationToken)
   {
     if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod
       || !TryParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
@@ -772,7 +778,7 @@ internal static class Parser
       }
     }
 
-    var parameters = new List<MvcMethodParameterInfo>();
+    var parameters = ImmutableArray.CreateBuilder<MvcMethodParameterInfo>();
 
     foreach (var parameterSymbol in methodSymbol.Parameters)
     {
@@ -789,7 +795,7 @@ internal static class Parser
 
     var escapedName = CSharpSupport.EscapeIdentifier(name);
 
-    return new PageMethodInfo(name, escapedName, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters);
+    return new PageMethodInfo(name, escapedName, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters.ToImmutable());
   }
   private static ExpressionSyntax? GetSanitisedDefaultValue(IParameterSymbol parameterSymbol, SemanticModel semanticModel, CancellationToken cancellationToken)
   {
@@ -895,9 +901,14 @@ internal static class Parser
 
     return true;
   }
-  private static (bool IsModified, IReadOnlyCollection<MvcMethodParameterInfo> Parameters) CombineBoundProperties(IReadOnlyCollection<MvcMethodParameterInfo> parameters, IEnumerable<MvcPropertyInfo> properties)
+  private static (bool IsModified, ImmutableArray<MvcMethodParameterInfo> Parameters) CombineBoundProperties(ImmutableArray<MvcMethodParameterInfo> parameters, ImmutableArray<MvcPropertyInfo> properties)
   {
-    var resultParameters = new Lazy<List<MvcMethodParameterInfo>>(() => new List<MvcMethodParameterInfo>(parameters));
+    var resultParameters = new Lazy<ImmutableArray<MvcMethodParameterInfo>.Builder>(() =>
+    {
+      var builder = ImmutableArray.CreateBuilder<MvcMethodParameterInfo>(parameters.Length);
+      builder.AddRange(parameters);
+      return builder;
+    });
 
     foreach (var property in properties)
     {
@@ -940,7 +951,7 @@ internal static class Parser
       resultParameters.Value.Add(new MvcMethodParameterInfo(property.OriginalName, CSharpSupport.PascalToCamelCase(property.EscapedName), PropertyName: null, property.RouteKey, property.Type, DefaultValueExpression: null, property.BindingSource));
     }
 
-    return (resultParameters.IsValueCreated, resultParameters.IsValueCreated ? resultParameters.Value : parameters);
+    return (resultParameters.IsValueCreated, resultParameters.IsValueCreated ? resultParameters.Value.ToImmutable() : parameters);
   }
 
   private static readonly SymbolDisplayFormat UniqueClassMemberSymbolDisplayFormat = new(

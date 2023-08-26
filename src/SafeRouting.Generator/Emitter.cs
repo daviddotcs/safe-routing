@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace SafeRouting.Generator;
@@ -50,7 +51,7 @@ internal static class Emitter
 
       var namespaceItemIndex = 0;
 
-      if (item.Properties.Count > 0)
+      if (item.Properties.Length > 0)
       {
         WritePropertyDataClass(writer, options, item);
         namespaceItemIndex++;
@@ -355,7 +356,7 @@ internal static class Emitter
     writer.WriteLine("/// </summary>");
     writer.WriteLine("public global::Microsoft.AspNetCore.Routing.RouteValueDictionary RouteValues { get; }");
 
-    if (item.Properties.Count > 0)
+    if (item.Properties.Length > 0)
     {
       WriteRouteValuesClassMembers(writer, "PropertyData", item.Properties.Select(x => x.Type), item.FullyQualifiedTypeName, MemberType.Property);
     }
@@ -418,13 +419,13 @@ internal static class Emitter
       WriteRouteKeyIndexer(writer, scopeType: memberDataClassName, valueType: parameterType);
     }
   }
-  private static List<TypeInfo> ConsolidateTypes(IEnumerable<TypeInfo> types)
+  private static ImmutableArray<TypeInfo> ConsolidateTypes(IEnumerable<TypeInfo> types)
   {
     // 1. Group all types by their names without nullable reference type annotations.
     // 2. If any within the group are from an annotation disabled context, take that and ignore the rest.
     // 3. If all remaining types are identical, return that, otherwise fall back to a nullable disabled context.
 
-    var results = new List<TypeInfo>();
+    var results = ImmutableArray.CreateBuilder<TypeInfo>();
 
     foreach (var typeGroup in types.GroupBy(x => x.FullyQualifiedNameSansAnnotations, StringComparer.Ordinal))
     {
@@ -453,7 +454,7 @@ internal static class Emitter
       results.Add(resultType!);
     }
 
-    return results;
+    return results.ToImmutable();
   }
   private static string FormatIdentifier(string identifier, IdentifierCase forcedCase)
   {
