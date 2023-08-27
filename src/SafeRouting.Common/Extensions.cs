@@ -76,7 +76,7 @@ public static class RouteValueExtensions
   /// <summary>
   /// Generates a URL with a relative path for the specified <paramref name="route"/>.
   /// </summary>
-  /// <param name="route">The <see cref="IPageRouteValues"/> to generate the url for.</param>
+  /// <param name="route">The <see cref="IPageRouteValues"/> to generate the URL for.</param>
   /// <param name="url">The <see cref="IUrlHelper"/>.</param>
   /// <param name="protocol">The protocol for the URL, such as "http" or "https".</param>
   /// <param name="host">The host name for the URL.</param>
@@ -89,7 +89,7 @@ public static class RouteValueExtensions
   /// <summary>
   /// Generates a URL with a relative path for the specified <paramref name="route"/>.
   /// </summary>
-  /// <param name="route">The <see cref="IControllerRouteValues"/> to generate the url for.</param>
+  /// <param name="route">The <see cref="IControllerRouteValues"/> to generate the URL for.</param>
   /// <param name="url">The <see cref="IUrlHelper"/>.</param>
   /// <param name="protocol">The protocol for the URL, such as "http" or "https".</param>
   /// <param name="host">The host name for the URL.</param>
@@ -102,7 +102,7 @@ public static class RouteValueExtensions
   /// <summary>
   /// Generates a URL with a relative path for the specified <paramref name="route"/>.
   /// </summary>
-  /// <param name="route">The <see cref="IRouteValues"/> to generate the url for.</param>
+  /// <param name="route">The <see cref="IRouteValues"/> to generate the URL for.</param>
   /// <param name="url">The <see cref="IUrlHelper"/>.</param>
   /// <param name="protocol">The protocol for the URL, such as "http" or "https".</param>
   /// <param name="host">The host name for the URL.</param>
