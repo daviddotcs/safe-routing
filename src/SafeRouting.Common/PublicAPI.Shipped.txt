@@ -1,0 +1,34 @@
+﻿#nullable enable
+override SafeRouting.TagHelpers.RouteValuesTagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext! context, Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput! output) -> void
+SafeRouting.ExcludeFromRouteGeneratorAttribute
+SafeRouting.ExcludeFromRouteGeneratorAttribute.ExcludeFromRouteGeneratorAttribute() -> void
+SafeRouting.Extensions.RouteValueExtensions
+SafeRouting.IControllerRouteValues
+SafeRouting.IControllerRouteValues.ActionName.get -> string!
+SafeRouting.IControllerRouteValues.ControllerName.get -> string!
+SafeRouting.IPageRouteValues
+SafeRouting.IPageRouteValues.HandlerName.get -> string?
+SafeRouting.IPageRouteValues.PageName.get -> string!
+SafeRouting.IRouteValues
+SafeRouting.IRouteValues.RouteValues.get -> Microsoft.AspNetCore.Routing.RouteValueDictionary!
+SafeRouting.RouteGeneratorNameAttribute
+SafeRouting.RouteGeneratorNameAttribute.Name.get -> string!
+SafeRouting.RouteGeneratorNameAttribute.RouteGeneratorNameAttribute(string! name) -> void
+SafeRouting.RouteKey<TScope, TValue>
+SafeRouting.RouteKey<TScope, TValue>.Name.get -> string!
+SafeRouting.RouteKey<TScope, TValue>.RouteKey(string! name) -> void
+SafeRouting.TagHelpers.RouteValuesTagHelper
+SafeRouting.TagHelpers.RouteValuesTagHelper.ForRoute.get -> SafeRouting.IRouteValues?
+SafeRouting.TagHelpers.RouteValuesTagHelper.ForRoute.set -> void
+SafeRouting.TagHelpers.RouteValuesTagHelper.RouteValuesTagHelper(Microsoft.AspNetCore.Mvc.Routing.IUrlHelperFactory! urlHelperFactory) -> void
+SafeRouting.TagHelpers.RouteValuesTagHelper.ViewContext.get -> Microsoft.AspNetCore.Mvc.Rendering.ViewContext!
+SafeRouting.TagHelpers.RouteValuesTagHelper.ViewContext.set -> void
+static SafeRouting.Extensions.RouteValueExtensions.Redirect(this SafeRouting.IControllerRouteValues! route, Microsoft.AspNetCore.Mvc.ControllerBase! controller) -> Microsoft.AspNetCore.Mvc.RedirectToActionResult!
+static SafeRouting.Extensions.RouteValueExtensions.Redirect(this SafeRouting.IControllerRouteValues! route, Microsoft.AspNetCore.Mvc.RazorPages.PageModel! page) -> Microsoft.AspNetCore.Mvc.RedirectToActionResult!
+static SafeRouting.Extensions.RouteValueExtensions.Redirect(this SafeRouting.IPageRouteValues! route, Microsoft.AspNetCore.Mvc.ControllerBase! controller) -> Microsoft.AspNetCore.Mvc.RedirectToPageResult!
+static SafeRouting.Extensions.RouteValueExtensions.Redirect(this SafeRouting.IPageRouteValues! route, Microsoft.AspNetCore.Mvc.RazorPages.PageModel! page) -> Microsoft.AspNetCore.Mvc.RedirectToPageResult!
+static SafeRouting.Extensions.RouteValueExtensions.Redirect(this SafeRouting.IRouteValues! route, Microsoft.AspNetCore.Mvc.ControllerBase! controller) -> Microsoft.AspNetCore.Mvc.ActionResult!
+static SafeRouting.Extensions.RouteValueExtensions.Redirect(this SafeRouting.IRouteValues! route, Microsoft.AspNetCore.Mvc.RazorPages.PageModel! page) -> Microsoft.AspNetCore.Mvc.ActionResult!
+static SafeRouting.Extensions.RouteValueExtensions.Url(this SafeRouting.IControllerRouteValues! route, Microsoft.AspNetCore.Mvc.IUrlHelper! url, string? protocol = null, string? host = null, string? fragment = null) -> string?
+static SafeRouting.Extensions.RouteValueExtensions.Url(this SafeRouting.IPageRouteValues! route, Microsoft.AspNetCore.Mvc.IUrlHelper! url, string? protocol = null, string? host = null, string? fragment = null) -> string?
+static SafeRouting.Extensions.RouteValueExtensions.Url(this SafeRouting.IRouteValues! route, Microsoft.AspNetCore.Mvc.IUrlHelper! url, string? protocol = null, string? host = null, string? fragment = null) -> string?
