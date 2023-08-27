@@ -12,353 +12,385 @@ using Markdig;
 
 #nullable enable
 
-var consoleLock = new object();
-
-public static string GetCallerFilePath([CallerFilePath] string path = "") => path;
-
-public string AddMarkdownTableOfContents(string sourceFile)
+public static class ConsoleHelper
 {
-  var text = File.ReadAllText(sourceFile);
-
-  var pipeline = new Markdig.MarkdownPipelineBuilder()
-    .UseAdvancedExtensions()
-    .Build();
-
-  var document = Markdig.Markdown.Parse(text, pipeline);
-  if (document is null)
+  public static void WriteLine(string? text, bool isError = false, ConsoleColor? color = null)
   {
-    return text;
-  }
+    if (text == null) return;
 
-  var headings = document
-    .OfType<Markdig.Syntax.HeadingBlock>()
-    .Where(x => x.Level > 1)
-    .ToArray();
-
-  if (headings.Length == 0)
-  {
-    return text;
-  }
-
-  var plainTextBuilder = new StringBuilder();
-  using var plainTextWriter = new StringWriter(plainTextBuilder);
-  var plainTextRenderer = new Markdig.Renderers.HtmlRenderer(plainTextWriter)
-  {
-    EnableHtmlForBlock = false,
-    EnableHtmlForInline = false,
-    EnableHtmlEscape = false
-  };
-
-  var tocBuilder = new StringBuilder();
-  var firstHeadingLocation = -1;
-
-  tocBuilder.AppendLine("## Table of Contents").AppendLine();
-
-  foreach (var heading in headings)
-  {
-    var attributes = Markdig.Renderers.Html.HtmlAttributesExtensions.TryGetAttributes(heading);
-    if (attributes is null)
+    lock (consoleLock)
     {
-      continue;
+      if (color != null)
+      {
+        Console.ForegroundColor = color.Value;
+      }
+
+      if (isError)
+      {
+        Console.Error.WriteLine(text);
+      }
+      else
+      {
+        Console.WriteLine(text);
+      }
+
+      if (color != null)
+      {
+        Console.ResetColor();
+      }
+    }
+  }
+
+  public static int RunCommand(string command, string arguments)
+  {
+    ConsoleHelper.WriteLine($"> {command} {arguments}{Environment.NewLine}");
+
+    var cmd = new Process();
+    cmd.StartInfo = new ProcessStartInfo
+    {
+      FileName = command,
+      Arguments = arguments,
+      CreateNoWindow = true,
+      RedirectStandardOutput = true,
+      RedirectStandardError = true,
+      UseShellExecute = false,
+      WindowStyle = ProcessWindowStyle.Hidden
+    };
+    cmd.OutputDataReceived += (_, e) => ConsoleHelper.WriteLine(e.Data, isError: false, ConsoleHelper.GetColorForLine(e.Data) ?? ConsoleColor.DarkGray);
+    cmd.ErrorDataReceived += (_, e) => ConsoleHelper.WriteLine(e.Data, isError: true, ConsoleColor.Red);
+
+    cmd.Start();
+    cmd.BeginOutputReadLine();
+    cmd.BeginErrorReadLine();
+    cmd.WaitForExit();
+
+    return cmd.ExitCode;
+  }
+
+  public static ConsoleColor? GetColorForLine(string? text)
+  {
+    if (text is null) return null;
+
+    if (text.StartsWith("Passed!"))
+      return ConsoleColor.Green;
+
+    if (text.StartsWith("Failed!") || text.Contains(": error "))
+      return ConsoleColor.Red;
+
+    if (text.Contains(": warning "))
+      return ConsoleColor.Yellow;
+
+    return null;
+  }
+
+  private static readonly object consoleLock = new object();
+}
+
+public static class MarkdownHelper
+{
+  public static string AddMarkdownTableOfContents(string sourceFile)
+  {
+    var text = File.ReadAllText(sourceFile);
+
+    var pipeline = new Markdig.MarkdownPipelineBuilder()
+      .UseAdvancedExtensions()
+      .Build();
+
+    var document = Markdig.Markdown.Parse(text, pipeline);
+    if (document is null)
+    {
+      return text;
+    }
+
+    var headings = document
+      .OfType<Markdig.Syntax.HeadingBlock>()
+      .Where(x => x.Level > 1)
+      .ToArray();
+
+    if (headings.Length == 0)
+    {
+      return text;
+    }
+
+    var plainTextBuilder = new StringBuilder();
+    using var plainTextWriter = new StringWriter(plainTextBuilder);
+    var plainTextRenderer = new Markdig.Renderers.HtmlRenderer(plainTextWriter)
+    {
+      EnableHtmlForBlock = false,
+      EnableHtmlForInline = false,
+      EnableHtmlEscape = false
+    };
+
+    var tocBuilder = new StringBuilder();
+    var firstHeadingLocation = -1;
+
+    tocBuilder.AppendLine("## Table of Contents").AppendLine();
+
+    foreach (var heading in headings)
+    {
+      var attributes = Markdig.Renderers.Html.HtmlAttributesExtensions.TryGetAttributes(heading);
+      if (attributes is null)
+      {
+        continue;
+      }
+
+      if (firstHeadingLocation == -1)
+      {
+        firstHeadingLocation = heading.Span.Start;
+      }
+
+      plainTextBuilder.Clear();
+      plainTextRenderer.Render(heading);
+
+      tocBuilder
+        .Append(' ', (heading.Level - 2) * 4)
+        .Append("- [")
+        .Append(plainTextBuilder.ToString().Trim())
+        .Append("](#")
+        .Append(attributes.Id)
+        .AppendLine(")");
     }
 
     if (firstHeadingLocation == -1)
     {
-      firstHeadingLocation = heading.Span.Start;
+      return text;
     }
 
-    plainTextBuilder.Clear();
-    plainTextRenderer.Render(heading);
+    tocBuilder.AppendLine();
 
-    tocBuilder
-      .Append(' ', (heading.Level - 2) * 4)
-      .Append("- [")
-      .Append(plainTextBuilder.ToString().Trim())
-      .Append("](#")
-      .Append(attributes.Id)
-      .AppendLine(")");
+    var resultBuilder = new StringBuilder(text);
+    resultBuilder.Insert(firstHeadingLocation, tocBuilder.ToString());
+    resultBuilder.Insert(0, Environment.NewLine);
+    resultBuilder.Insert(0, "[//]: # (Generated file, do not edit manually. Source: " + sourceFile + ")");
+
+    return resultBuilder.ToString();
   }
 
-  if (firstHeadingLocation == -1)
+  public static void GenerateMarkdownFiles(string sourceFile, string destinationFile, string regionProjectPath)
   {
-    return text;
+    var markdownContent = MarkdownHelper.AddMarkdownTableOfContents(sourceFile);
+
+    var regions = FileHelper.EnumerateFiles(regionProjectPath, ".cs", ".cshtml")
+      .SelectMany(x => CSharpHelper.EnumerateRegions(x))
+      .Distinct(new RegionEqualityComparer())
+      .ToDictionary(x => x.Name, x => x, StringComparer.InvariantCulture);
+
+    markdownContent = MarkdownHelper.ReplaceMarkdownRegions(markdownContent, regions);
+
+    File.WriteAllText(destinationFile, markdownContent);
   }
 
-  tocBuilder.AppendLine();
-
-  var resultBuilder = new StringBuilder(text);
-  resultBuilder.Insert(firstHeadingLocation, tocBuilder.ToString());
-  resultBuilder.Insert(0, Environment.NewLine);
-  resultBuilder.Insert(0, "[//]: # (Generated file, do not edit manually. Source: " + sourceFile + ")");
-
-  return resultBuilder.ToString();
-}
-
-public bool IsWorkingDirectoryClean()
-{
-  var hasOutput = false;
-  var command = "git";
-  var arguments = "status --porcelain";
-  WriteLine($"> {command} {arguments}{Environment.NewLine}");
-
-  var cmd = new Process();
-  cmd.StartInfo = new ProcessStartInfo
+  public static string ReplaceMarkdownRegions(string content, Dictionary<string, Region> regions)
   {
-    FileName = command,
-    Arguments = arguments,
-    CreateNoWindow = true,
-    RedirectStandardOutput = true,
-    RedirectStandardError = true,
-    UseShellExecute = false,
-    WindowStyle = ProcessWindowStyle.Hidden
-  };
-  cmd.OutputDataReceived += (_, e) =>
-  {
-    if (e.Data != null)
+    var builder = new StringBuilder(content);
+
+    foreach (Match match in markdownRegionRegex.Matches(content).Reverse())
     {
-      hasOutput = true;
-      WriteLine(e.Data, isError: false, GetLineColor(e.Data) ?? ConsoleColor.DarkGray);
-    }
-  };
-  cmd.ErrorDataReceived += (_, e) =>
-  {
-    if (e.Data != null)
-    {
-      hasOutput = true;
-      WriteLine(e.Data, isError: true, ConsoleColor.Red);
-    }
-  };
+      var regionName = match.Groups["name"].Value;
+      if (!regions.TryGetValue(regionName, out var region))
+        throw new Exception($"Could not find region with name {regionName}");
 
-  cmd.Start();
-  cmd.BeginOutputReadLine();
-  cmd.BeginErrorReadLine();
-  cmd.WaitForExit();
-
-  return !hasOutput && cmd.ExitCode == 0;
-}
-
-public void RewriteNugetIntegrationsTestProject(string generatorProject, string integrationTestsProject, string nugetIntegrationTestsProject, string nugetPackageName, string version)
-{
-  var escapedGeneratorProject = generatorProject.Replace(".", "\\.");
-  var commonProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\SafeRouting\.Common\\SafeRouting\.Common\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
-  var generatorProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\{escapedGeneratorProject}\\{escapedGeneratorProject}\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
-
-  var lines = File.ReadAllLines($"./Test/{integrationTestsProject}/{integrationTestsProject}.csproj");
-
-  for (var i = 0; i < lines.Length; i++)
-  {
-    if (commonProjectReferenceRegex.IsMatch(lines[i]))
-    {
-      lines[i] = "";
-      continue;
+      builder.Remove(match.Index, match.Length);
+      builder.Insert(match.Index, Environment.NewLine + "```" + region.Language + Environment.NewLine + region.GetContent() + Environment.NewLine + "```" + Environment.NewLine);
     }
 
-    var match = generatorProjectReferenceRegex.Match(lines[i]);
-    if (!match.Success)
-    {
-      continue;
-    }
-
-    var indent = match.Groups["indent"].Value;
-    var replacedLine = $"{indent}<PackageReference Include=\"{nugetPackageName}\" Version=\"{version}\" />" + Environment.NewLine
-      + @$"{indent}<Compile Include=""..\{integrationTestsProject}\**\*.cs"" Link=""%(Filename)%(Extension)""/>" + Environment.NewLine
-      + @$"{indent}<Compile Remove=""..\{integrationTestsProject}\bin\**\*""/>" + Environment.NewLine
-      + @$"{indent}<Compile Remove=""..\{integrationTestsProject}\obj\**\*""/>";
-
-    lines[i] = replacedLine;
-
-    break;
+    return builder.ToString();
   }
 
-  Directory.CreateDirectory($"./Test/{nugetIntegrationTestsProject}");
-  File.WriteAllLines($"./Test/{nugetIntegrationTestsProject}/{nugetIntegrationTestsProject}.csproj", lines);
+  private static readonly Regex markdownRegionRegex = new Regex(@"^\s*<region:\s*(?<name>.+)\s*>\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Multiline, TimeSpan.FromSeconds(5));
 }
 
-public void UpdateCopyright()
+public static class ProjectHelper
 {
-  const string filename = "./Directory.Build.props";
-
-  var currentYear = DateTime.Now.ToString("yyyy");
-  var copyrightRegex = new Regex(@$"<Copyright>.* (?<year>[0-9]+)</Copyright>", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
-  var matchEvaluator = new MatchEvaluator(m =>
+  public static void RewriteNugetIntegrationsTestProject(string generatorProject, string integrationTestsProject, string nugetIntegrationTestsProject, string nugetPackageName, string version)
   {
-    var group = m.Groups["year"];
-    return m.Value[..(group.Index - group.Length)] + currentYear + m.Value[group.Index..];
-  });
+    var escapedGeneratorProject = generatorProject.Replace(".", "\\.");
+    var commonProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\SafeRouting\.Common\\SafeRouting\.Common\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
+    var generatorProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\{escapedGeneratorProject}\\{escapedGeneratorProject}\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
 
-  var lines = File.ReadAllLines(filename);
+    var lines = File.ReadAllLines($"./Test/{integrationTestsProject}/{integrationTestsProject}.csproj");
 
-  for (var i = 0; i < lines.Length; i++)
-  {
-    lines[i] = copyrightRegex.Replace(lines[i], matchEvaluator);
-  }
-
-  File.WriteAllLines(filename, lines);
-}
-
-public void WriteLine(string? text, bool isError = false, ConsoleColor? color = null)
-{
-  if (text == null) return;
-
-  lock (consoleLock)
-  {
-    if (color != null)
+    for (var i = 0; i < lines.Length; i++)
     {
-      Console.ForegroundColor = color.Value;
+      if (commonProjectReferenceRegex.IsMatch(lines[i]))
+      {
+        lines[i] = "";
+        continue;
+      }
+
+      var match = generatorProjectReferenceRegex.Match(lines[i]);
+      if (!match.Success)
+      {
+        continue;
+      }
+
+      var indent = match.Groups["indent"].Value;
+      var replacedLine = $"{indent}<PackageReference Include=\"{nugetPackageName}\" Version=\"{version}\" />" + Environment.NewLine
+        + @$"{indent}<Compile Include=""..\{integrationTestsProject}\**\*.cs"" Link=""%(Filename)%(Extension)""/>" + Environment.NewLine
+        + @$"{indent}<Compile Remove=""..\{integrationTestsProject}\bin\**\*""/>" + Environment.NewLine
+        + @$"{indent}<Compile Remove=""..\{integrationTestsProject}\obj\**\*""/>";
+
+      lines[i] = replacedLine;
+
+      break;
     }
 
-    if (isError)
+    Directory.CreateDirectory($"./Test/{nugetIntegrationTestsProject}");
+    File.WriteAllLines($"./Test/{nugetIntegrationTestsProject}/{nugetIntegrationTestsProject}.csproj", lines);
+  }
+
+  public static void UpdateCopyright()
+  {
+    const string filename = "./Directory.Build.props";
+
+    var currentYear = DateTime.Now.ToString("yyyy");
+    var copyrightRegex = new Regex(@$"<Copyright>.* (?<year>[0-9]+)</Copyright>", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
+    var matchEvaluator = new MatchEvaluator(m =>
     {
-      Console.Error.WriteLine(text);
+      var group = m.Groups["year"];
+      return m.Value[..(group.Index - group.Length)] + currentYear + m.Value[group.Index..];
+    });
+
+    var lines = File.ReadAllLines(filename);
+
+    for (var i = 0; i < lines.Length; i++)
+    {
+      lines[i] = copyrightRegex.Replace(lines[i], matchEvaluator);
+    }
+
+    File.WriteAllLines(filename, lines);
+  }
+}
+
+public static class GitHelper
+{
+  public static bool IsWorkingDirectoryClean()
+  {
+    var hasOutput = false;
+    var command = "git";
+    var arguments = "status --porcelain";
+    ConsoleHelper.WriteLine($"> {command} {arguments}{Environment.NewLine}");
+
+    using var cmd = new Process();
+    cmd.StartInfo = new ProcessStartInfo
+    {
+      FileName = command,
+      Arguments = arguments,
+      CreateNoWindow = true,
+      RedirectStandardOutput = true,
+      RedirectStandardError = true,
+      UseShellExecute = false,
+      WindowStyle = ProcessWindowStyle.Hidden
+    };
+    cmd.OutputDataReceived += (_, e) =>
+    {
+      if (e.Data != null)
+      {
+        hasOutput = true;
+        ConsoleHelper.WriteLine(e.Data, isError: false, ConsoleHelper.GetColorForLine(e.Data) ?? ConsoleColor.DarkGray);
+      }
+    };
+    cmd.ErrorDataReceived += (_, e) =>
+    {
+      if (e.Data != null)
+      {
+        hasOutput = true;
+        ConsoleHelper.WriteLine(e.Data, isError: true, ConsoleColor.Red);
+      }
+    };
+
+    cmd.Start();
+    cmd.BeginOutputReadLine();
+    cmd.BeginErrorReadLine();
+    cmd.WaitForExit();
+
+    return !hasOutput && cmd.ExitCode == 0;
+  }
+}
+
+public static class FileHelper
+{
+  public static IEnumerable<string> EnumerateFiles(string path, params string[] extensions)
+  {
+    foreach (var directory in Directory.EnumerateDirectories(path))
+    {
+      var directoryName = new DirectoryInfo(directory).Name;
+      if (string.Equals(directoryName, "bin", StringComparison.Ordinal) || string.Equals(directoryName, "obj", StringComparison.Ordinal) || directoryName.StartsWith(".", StringComparison.Ordinal))
+        continue;
+
+      foreach (var file in EnumerateFiles(directory, extensions))
+        yield return file;
+    }
+
+    if (extensions.Length == 0)
+    {
+      foreach (var file in Directory.EnumerateFiles(path))
+        yield return file;
     }
     else
     {
-      Console.WriteLine(text);
-    }
-
-    if (color != null)
-    {
-      Console.ResetColor();
+      foreach (var extension in extensions)
+        foreach (var file in Directory.EnumerateFiles(path, $"*{extension}"))
+          yield return file;
     }
   }
+
+  public static string GetCallerFilePath([CallerFilePath] string path = "") => path;
 }
 
-public ConsoleColor? GetLineColor(string? text)
+public static class CSharpHelper
 {
-  if (text is null) return null;
-
-  if (text.StartsWith("Passed!"))
-    return ConsoleColor.Green;
-
-  if (text.StartsWith("Failed!") || text.Contains(": error "))
-    return ConsoleColor.Red;
-
-  if (text.Contains(": warning "))
-    return ConsoleColor.Yellow;
-
-  return null;
-}
-
-public int RunCommand(string command, string arguments)
-{
-  WriteLine($"> {command} {arguments}{Environment.NewLine}");
-
-  var cmd = new Process();
-  cmd.StartInfo = new ProcessStartInfo
+  public static IEnumerable<Region> EnumerateRegions(string path)
   {
-    FileName = command,
-    Arguments = arguments,
-    CreateNoWindow = true,
-    RedirectStandardOutput = true,
-    RedirectStandardError = true,
-    UseShellExecute = false,
-    WindowStyle = ProcessWindowStyle.Hidden
-  };
-  cmd.OutputDataReceived += (_, e) => WriteLine(e.Data, isError: false, GetLineColor(e.Data) ?? ConsoleColor.DarkGray);
-  cmd.ErrorDataReceived += (_, e) => WriteLine(e.Data, isError: true, ConsoleColor.Red);
+    var regionLines = new List<string>();
+    var isInRegion = false;
+    var regionName = "";
 
-  cmd.Start();
-  cmd.BeginOutputReadLine();
-  cmd.BeginErrorReadLine();
-  cmd.WaitForExit();
-
-  return cmd.ExitCode;
-}
-
-public static IEnumerable<string> EnumerateFiles(string path, params string[] extensions)
-{
-  foreach (var directory in Directory.EnumerateDirectories(path))
-  {
-    var directoryName = new DirectoryInfo(directory).Name;
-    if (string.Equals(directoryName, "bin", StringComparison.Ordinal) || string.Equals(directoryName, "obj", StringComparison.Ordinal) || directoryName.StartsWith(".", StringComparison.Ordinal))
-      continue;
-
-    foreach (var file in EnumerateFiles(directory, extensions))
-      yield return file;
-  }
-
-  if (extensions.Length == 0)
-  {
-    foreach (var file in Directory.EnumerateFiles(path))
-      yield return file;
-  }
-  else
-  {
-    foreach (var extension in extensions)
-      foreach (var file in Directory.EnumerateFiles(path, $"*{extension}"))
-        yield return file;
-  }
-}
-
-var startRegionCsRegex = new Regex(@"^\s*#region\s+(?<name>.+)\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
-var endRegionCsRegex = new Regex(@"^\s*#endregion\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
-
-var startRegionCshtmlRegex = new Regex(@"^\s*@{\s*#region\s+(?<name>.+)\s*}\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
-var endRegionCshtmlRegex = new Regex(@"^\s*@{\s*#endregion\s*}\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
-
-var markdownRegionRegex = new Regex(@"^\s*<region:\s*(?<name>.+)\s*>\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Multiline, TimeSpan.FromSeconds(5));
-
-public string ReplaceMarkdownRegions(string content, Dictionary<string, Region> regions)
-{
-  var builder = new StringBuilder(content);
-
-  foreach (Match match in markdownRegionRegex.Matches(content).Reverse())
-  {
-    var regionName = match.Groups["name"].Value;
-    if (!regions.TryGetValue(regionName, out var region))
-      throw new Exception($"Could not find region with name {regionName}");
-
-    builder.Remove(match.Index, match.Length);
-    builder.Insert(match.Index, Environment.NewLine + "```" + region.Language + Environment.NewLine + region.GetContent() + Environment.NewLine + "```" + Environment.NewLine);
-  }
-
-  return builder.ToString();
-}
-
-public IEnumerable<Region> EnumerateRegions(string path)
-{
-  var regionLines = new List<string>();
-  var isInRegion = false;
-  var regionName = "";
-
-  var (startRegionRegex, endRegionRegex, language) = new FileInfo(path).Extension switch
-  {
-    ".cs" => (startRegionCsRegex, endRegionCsRegex, "csharp"),
-    ".cshtml" => (startRegionCshtmlRegex, endRegionCshtmlRegex, "cshtml"),
-    _ => (null, null, "")
-  };
-
-  if (startRegionRegex is null || endRegionRegex is null)
-    yield break;
-
-  foreach (var line in File.ReadAllLines(path))
-  {
-    if (isInRegion)
+    var (startRegionRegex, endRegionRegex, language) = new FileInfo(path).Extension switch
     {
-      if (endRegionRegex.IsMatch(line))
+      ".cs" => (startRegionCsRegex, endRegionCsRegex, "csharp"),
+      ".cshtml" => (startRegionCshtmlRegex, endRegionCshtmlRegex, "cshtml"),
+      _ => (null, null, "")
+    };
+
+    if (startRegionRegex is null || endRegionRegex is null)
+      yield break;
+
+    foreach (var line in File.ReadAllLines(path))
+    {
+      if (isInRegion)
       {
-        if (regionLines.Count > 0)
+        if (endRegionRegex.IsMatch(line))
         {
-          yield return new Region(regionName, language, regionLines.ToArray());
-          regionLines.Clear();
-        }
+          if (regionLines.Count > 0)
+          {
+            yield return new Region(regionName, language, regionLines.ToArray());
+            regionLines.Clear();
+          }
 
-        isInRegion = false;
+          isInRegion = false;
+        }
+        else
+        {
+          regionLines.Add(line);
+        }
       }
       else
       {
-        regionLines.Add(line);
-      }
-    }
-    else
-    {
-      if (startRegionRegex.Match(line) is { Success: true } match)
-      {
-        regionName = match.Groups["name"].Value.Trim();
-        isInRegion = true;
+        if (startRegionRegex.Match(line) is { Success: true } match)
+        {
+          regionName = match.Groups["name"].Value.Trim();
+          isInRegion = true;
+        }
       }
     }
   }
+
+  private static readonly Regex startRegionCsRegex = new Regex(@"^\s*#region\s+(?<name>.+)\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+  private static readonly Regex endRegionCsRegex = new Regex(@"^\s*#endregion\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+
+  private static readonly Regex startRegionCshtmlRegex = new Regex(@"^\s*@{\s*#region\s+(?<name>.+)\s*}\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
+  private static readonly Regex endRegionCshtmlRegex = new Regex(@"^\s*@{\s*#endregion\s*}\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.Singleline, TimeSpan.FromSeconds(5));
 }
 
 public sealed class Region
