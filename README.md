@@ -61,6 +61,9 @@ Similarly, consider the following razor page model class:
 ```csharp
 public sealed class EditModel : PageModel
 {
+  [FromRoute]
+  public int Id { get; set; }
+
   public void OnGet()
   {
     // ...
@@ -76,7 +79,7 @@ public sealed class EditModel : PageModel
 The generated code enables you to access the URL for the `OnGet` handler with the following code:
 
 ```csharp
-string? editUrl = Routes.Pages.Edit.Get().Url(Url);
+string? editUrl = Routes.Pages.Edit.Get(123).Url(Url);
 ```
 
 ## Installation
@@ -98,7 +101,7 @@ This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` 
 ```cshtml
 @{
   var controllerRoute = Routes.Controllers.Product.Search("chair", 10);
-  var pageRoute = Routes.Pages.Edit.Post();
+  var pageRoute = Routes.Pages.Edit.Post(Model.Id);
 }
 
 <!-- Adds the URL in the href attribute -->
@@ -148,6 +151,15 @@ route.Remove(route.Properties.Limit);
 // Access the URL for the route using an IUrlHelper
 // Value: "/Product/Search/book"
 string? routeUrl = route.Url(Url);
+
+// Get route information for the OnGet method on the /Edit page
+var pageRoute = Routes.Pages.Edit.Get(123);
+
+// "/Edit?Id=123"
+var path = pageRoute.Path(linkGenerator);
+
+// "https://example.org/Edit?Id=123"
+var uri = pageRoute.Url(linkGenerator, "https", new HostString("example.org"));
 
 // Redirect from within a controller action method or a page handler method
 return route.Redirect(this);
