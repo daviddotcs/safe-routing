@@ -21,12 +21,12 @@ public sealed class UsageExampleController : Controller
   public string? PageUrl()
   {
     #region EditUrl
-    string? editUrl = Routes.Pages.Edit.Get().Url(Url);
+    string? editUrl = Routes.Pages.Edit.Get(123).Url(Url);
     #endregion
     return editUrl;
   }
 
-  public IActionResult GettingStarted()
+  public IActionResult GettingStarted([FromServices] LinkGenerator linkGenerator)
   {
 #pragma warning disable IDE0059 // Unnecessary assignment of a value
     #region GettingStarted
@@ -56,6 +56,15 @@ public sealed class UsageExampleController : Controller
     // Access the URL for the route using an IUrlHelper
     // Value: "/Product/Search/book"
     string? routeUrl = route.Url(Url);
+
+    // Get route information for the OnGet method on the /Edit page
+    var pageRoute = Routes.Pages.Edit.Get(123);
+
+    // "/Edit?Id=123"
+    var path = pageRoute.Path(linkGenerator);
+
+    // "https://example.org/Edit?Id=123"
+    var uri = pageRoute.Url(linkGenerator, "https", new HostString("example.org"));
 
     // Redirect from within a controller action method or a page handler method
     return route.Redirect(this);

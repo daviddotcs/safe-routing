@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SafeRouting.Demo.Pages;
@@ -6,6 +7,9 @@ namespace SafeRouting.Demo.Pages;
 
 public sealed class EditModel : PageModel
 {
+  [FromRoute]
+  public int Id { get; set; }
+
   public void OnGet()
   {
     // ...
