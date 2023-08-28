@@ -12,6 +12,130 @@ using Markdig;
 
 #nullable enable
 
+public static class Constants
+{
+  public const string SolutionName = "SafeRouting";
+
+  public const string NugetPackageName = "SafeRouting";
+
+  public const string CommonProjectName = $"{SolutionName}.Common";
+  public const string GeneratorProjectName = $"{SolutionName}.Generator";
+  public const string IntegrationTestsProjectName = $"{SolutionName}.Tests.Integration";
+  public const string NugetIntegrationTestsProjectName = $"{SolutionName}.Tests.NugetIntegration";
+
+  public const string ArtifactsPath = "./artifacts";
+  public const string GeneratorProjectPath = $"./{GeneratorProjectName}";
+  public const string NugetIntegrationTestsProjectPath = $"./Test/{NugetIntegrationTestsProjectName}";
+  public const string NugetConfigFile = "nuget.integration-tests.config";
+}
+
+public static class Steps
+{
+  /// <summary>
+  /// Set current directory to ./src so the build scripts can be invoked from any directory
+  /// </summary>
+  public static void SetCurrentDirectory()
+  {
+    var sourceDirectory = new FileInfo(FileHelper.GetCallerFilePath()).Directory!;
+    Environment.CurrentDirectory = sourceDirectory.FullName;
+  }
+
+  public static void UpdateReadme()
+  {
+    Console.WriteLine();
+    Console.WriteLine("Updating README.md...");
+    Console.WriteLine();
+    MarkdownHelper.GenerateMarkdownFiles("README.source.md", "../README.md", "./Demo/SafeRouting.Demo");
+    ConsoleHelper.WriteLine("Done", color: ConsoleColor.DarkGray);
+  }
+
+  public static void UpdateCopyright()
+  {
+    Console.WriteLine();
+    Console.WriteLine("Updating copyright...");
+    Console.WriteLine();
+    ProjectHelper.UpdateCopyright();
+    ConsoleHelper.WriteLine("Done", color: ConsoleColor.DarkGray);
+  }
+
+  public static void EnforceCleanWorkingDirectory()
+  {
+    Console.WriteLine();
+    Console.WriteLine("Checking working directory...");
+    Console.WriteLine();
+    if (!GitHelper.IsWorkingDirectoryClean())
+    {
+      ConsoleHelper.WriteLine($"ERROR: The working directory must be clean first. Commit or stash any changes.", isError: true, ConsoleColor.Red);
+      Environment.Exit(1);
+    }
+    ConsoleHelper.WriteLine("Done", color: ConsoleColor.DarkGray);
+  }
+
+  public static void CreateNugetPackage(string version)
+  {
+    Console.WriteLine();
+    Console.WriteLine("Creating NuGet package...");
+    Console.WriteLine();
+    if (ConsoleHelper.RunCommand("dotnet", $"pack {Constants.GeneratorProjectPath} -c Release -o {Constants.ArtifactsPath} /p:ContinuousIntegrationBuild=true -p:Version={version}") != 0)
+    {
+      Environment.Exit(1);
+    }
+  }
+
+  public static void CreateNugetTestProject(string version)
+  {
+    Console.WriteLine();
+    Console.WriteLine("Creating NuGet integration test project for new package...");
+    Console.WriteLine();
+    ProjectHelper.CreateNugetTestProject(Constants.GeneratorProjectName, Constants.IntegrationTestsProjectName, Constants.NugetIntegrationTestsProjectName, Constants.NugetPackageName, version);
+    ConsoleHelper.WriteLine("Done", color: ConsoleColor.DarkGray);
+  }
+
+  public static void RestoreNugetTestProject()
+  {
+    Console.WriteLine();
+    Console.WriteLine("Restoring packages for NuGet integration tests...");
+    Console.WriteLine();
+    var result = ConsoleHelper.RunCommand("dotnet", $"""
+  restore {Constants.NugetIntegrationTestsProjectPath} --packages ./packages --configfile "{Constants.NugetConfigFile}"
+  """);
+    if (result != 0)
+    {
+      Environment.Exit(1);
+    }
+  }
+
+  public static void BuildNugetTestProject()
+  {
+    Console.WriteLine();
+    Console.WriteLine("Building NuGet integration tests...");
+    Console.WriteLine();
+    if (ConsoleHelper.RunCommand("dotnet", $"build {Constants.NugetIntegrationTestsProjectPath} -c Release --packages ./packages --no-restore") != 0)
+    {
+      Environment.Exit(1);
+    }
+  }
+
+  public static void RunNugetTestProject()
+  {
+    Console.WriteLine();
+    Console.WriteLine("Running NuGet integration tests...");
+    Console.WriteLine();
+    if (ConsoleHelper.RunCommand("dotnet", $"test {Constants.NugetIntegrationTestsProjectPath} -c Release --no-build --no-restore") != 0)
+    {
+      Environment.Exit(1);
+    }
+  }
+
+  public static void AddGitTag(string version)
+  {
+    Console.WriteLine();
+    Console.WriteLine("Adding git tag...");
+    Console.WriteLine();
+    ConsoleHelper.RunCommand("git", $"tag v{version}");
+  }
+}
+
 public static class ConsoleHelper
 {
   public static void WriteLine(string? text, bool isError = false, ConsoleColor? color = null)
@@ -202,10 +326,14 @@ public static class MarkdownHelper
 
 public static class ProjectHelper
 {
-  public static void RewriteNugetIntegrationsTestProject(string generatorProject, string integrationTestsProject, string nugetIntegrationTestsProject, string nugetPackageName, string version)
+  /// <summary>
+  /// Clones the integration test project, targeting the NuGet package instead of the generator project.
+  /// </summary>
+  public static void CreateNugetTestProject(string generatorProject, string integrationTestsProject, string nugetIntegrationTestsProject, string nugetPackageName, string version)
   {
     var escapedGeneratorProject = generatorProject.Replace(".", "\\.");
-    var commonProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\SafeRouting\.Common\\SafeRouting\.Common\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
+    var escapedCommonProject = Constants.CommonProjectName.Replace(".", "\\.");
+    var commonProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\{escapedCommonProject}\\{escapedCommonProject}\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
     var generatorProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\{escapedGeneratorProject}\\{escapedGeneratorProject}\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
 
     var lines = File.ReadAllLines($"./Test/{integrationTestsProject}/{integrationTestsProject}.csproj");

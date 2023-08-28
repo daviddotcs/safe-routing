@@ -10,7 +10,7 @@ env:
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     defaults:
@@ -30,8 +30,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
+    - name: Install dotnet-script
+      run: dotnet tool install dotnet-script -g
+
     - name: Pack
       run: dotnet pack ./SafeRouting.Generator -c Release -o ./artifacts /p:ContinuousIntegrationBuild=true -p:Version=${{ env.VERSION }}
+
+    - name: Test NuGet package
+      run: dotnet script nuget-test.csx -- ${{ env.VERSION }}
 
     - name: Push to NuGet
       run: dotnet nuget push ./artifacts/*.nupkg -k ${{ secrets.NUGET_APIKEY }} -s ${{ env.NUGET_SOURCE_URL }}
