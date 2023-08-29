@@ -21,11 +21,10 @@ public static class Constants
   public const string CommonProjectName = $"{SolutionName}.Common";
   public const string GeneratorProjectName = $"{SolutionName}.Generator";
   public const string IntegrationTestsProjectName = $"{SolutionName}.Tests.Integration";
-  public const string NugetIntegrationTestsProjectName = $"{SolutionName}.Tests.NugetIntegration";
 
   public const string ArtifactsPath = "./artifacts";
   public const string GeneratorProjectPath = $"./{GeneratorProjectName}";
-  public const string NugetIntegrationTestsProjectPath = $"./Test/{NugetIntegrationTestsProjectName}";
+  public const string IntegrationTestsProjectPath = $"./Test/{IntegrationTestsProjectName}";
   public const string NugetConfigFile = "nuget.integration-tests.config";
 }
 
@@ -82,22 +81,13 @@ public static class Steps
     }
   }
 
-  public static void CreateNugetTestProject(string version)
-  {
-    Console.WriteLine();
-    Console.WriteLine("Creating NuGet integration test project for new package...");
-    Console.WriteLine();
-    ProjectHelper.CreateNugetTestProject(Constants.GeneratorProjectName, Constants.IntegrationTestsProjectName, Constants.NugetIntegrationTestsProjectName, Constants.NugetPackageName, version);
-    ConsoleHelper.WriteLine("Done", color: ConsoleColor.DarkGray);
-  }
-
-  public static void RestoreNugetTestProject()
+  public static void RestoreNugetTestProject(string version)
   {
     Console.WriteLine();
     Console.WriteLine("Restoring packages for NuGet integration tests...");
     Console.WriteLine();
     var result = ConsoleHelper.RunCommand("dotnet", $"""
-  restore {Constants.NugetIntegrationTestsProjectPath} --packages ./packages --configfile "{Constants.NugetConfigFile}"
+  restore {Constants.IntegrationTestsProjectPath} --packages ./packages --configfile "{Constants.NugetConfigFile}" -p:SafeRoutingPackageVersion={version}
   """);
     if (result != 0)
     {
@@ -105,12 +95,12 @@ public static class Steps
     }
   }
 
-  public static void BuildNugetTestProject()
+  public static void BuildNugetTestProject(string version)
   {
     Console.WriteLine();
     Console.WriteLine("Building NuGet integration tests...");
     Console.WriteLine();
-    if (ConsoleHelper.RunCommand("dotnet", $"build {Constants.NugetIntegrationTestsProjectPath} -c Release --packages ./packages --no-restore") != 0)
+    if (ConsoleHelper.RunCommand("dotnet", $"build {Constants.IntegrationTestsProjectPath} -c Release --packages ./packages --no-restore -p:SafeRoutingPackageVersion={version}") != 0)
     {
       Environment.Exit(1);
     }
@@ -121,7 +111,7 @@ public static class Steps
     Console.WriteLine();
     Console.WriteLine("Running NuGet integration tests...");
     Console.WriteLine();
-    if (ConsoleHelper.RunCommand("dotnet", $"test {Constants.NugetIntegrationTestsProjectPath} -c Release --no-build --no-restore") != 0)
+    if (ConsoleHelper.RunCommand("dotnet", $"test {Constants.IntegrationTestsProjectPath} -c Release --no-build --no-restore") != 0)
     {
       Environment.Exit(1);
     }
@@ -326,47 +316,6 @@ public static class MarkdownHelper
 
 public static class ProjectHelper
 {
-  /// <summary>
-  /// Clones the integration test project, targeting the NuGet package instead of the generator project.
-  /// </summary>
-  public static void CreateNugetTestProject(string generatorProject, string integrationTestsProject, string nugetIntegrationTestsProject, string nugetPackageName, string version)
-  {
-    var escapedGeneratorProject = generatorProject.Replace(".", "\\.");
-    var escapedCommonProject = Constants.CommonProjectName.Replace(".", "\\.");
-    var commonProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\{escapedCommonProject}\\{escapedCommonProject}\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
-    var generatorProjectReferenceRegex = new Regex(@$"(?<indent>^\s*)<ProjectReference\s+Include=""\.\.\\\.\.\\{escapedGeneratorProject}\\{escapedGeneratorProject}\.csproj""", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture, TimeSpan.FromSeconds(5));
-
-    var lines = File.ReadAllLines($"./Test/{integrationTestsProject}/{integrationTestsProject}.csproj");
-
-    for (var i = 0; i < lines.Length; i++)
-    {
-      if (commonProjectReferenceRegex.IsMatch(lines[i]))
-      {
-        lines[i] = "";
-        continue;
-      }
-
-      var match = generatorProjectReferenceRegex.Match(lines[i]);
-      if (!match.Success)
-      {
-        continue;
-      }
-
-      var indent = match.Groups["indent"].Value;
-      var replacedLine = $"{indent}<PackageReference Include=\"{nugetPackageName}\" Version=\"{version}\" />" + Environment.NewLine
-        + @$"{indent}<Compile Include=""..\{integrationTestsProject}\**\*.cs"" Link=""%(Filename)%(Extension)""/>" + Environment.NewLine
-        + @$"{indent}<Compile Remove=""..\{integrationTestsProject}\bin\**\*""/>" + Environment.NewLine
-        + @$"{indent}<Compile Remove=""..\{integrationTestsProject}\obj\**\*""/>";
-
-      lines[i] = replacedLine;
-
-      break;
-    }
-
-    Directory.CreateDirectory($"./Test/{nugetIntegrationTestsProject}");
-    File.WriteAllLines($"./Test/{nugetIntegrationTestsProject}/{nugetIntegrationTestsProject}.csproj", lines);
-  }
-
   public static void UpdateCopyright()
   {
     const string filename = "./Directory.Build.props";

@@ -30,14 +30,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Install dotnet-script
-      run: dotnet tool install dotnet-script -g
-
     - name: Pack
       run: dotnet pack ./SafeRouting.Generator -c Release -o ./artifacts /p:ContinuousIntegrationBuild=true -p:Version=${{ env.VERSION }}
 
-    - name: Test NuGet package
-      run: dotnet script nuget-test.csx -- ${{ env.VERSION }}
+    - name: Build integration tests
+      run: dotnet build Test/SafeRouting.Tests.Integration -c Release -p:SafeRoutingPackageVersion=${{ env.VERSION }}
+
+    - name: Run integration tests
+      run: dotnet test Test/SafeRouting.Tests.Integration -c Release --no-build --no-restore
 
     - name: Push to NuGet
       run: dotnet nuget push ./artifacts/*.nupkg -k ${{ secrets.NUGET_APIKEY }} -s ${{ env.NUGET_SOURCE_URL }}

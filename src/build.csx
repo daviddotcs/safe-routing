@@ -22,9 +22,8 @@ Steps.UpdateReadme();
 Steps.UpdateCopyright();
 Steps.EnforceCleanWorkingDirectory();
 Steps.CreateNugetPackage(version);
-Steps.CreateNugetTestProject(version);
-Steps.RestoreNugetTestProject();
-Steps.BuildNugetTestProject();
+Steps.RestoreNugetTestProject(version);
+Steps.BuildNugetTestProject(version);
 Steps.RunNugetTestProject();
 Steps.AddGitTag(version);
 
