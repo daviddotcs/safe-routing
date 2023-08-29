@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		generate.csx = generate.csx
 		lib.csx = lib.csx
 		README.source.md = README.source.md
-		nuget-test.csx = nuget-test.csx
 		testEnvironments.json = testEnvironments.json
 	EndProjectSection
 EndProject
