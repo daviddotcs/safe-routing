@@ -9,7 +9,7 @@ updates:
       - dependency-name: "Microsoft.CodeAnalysis.CSharp"
       
   - package-ecosystem: "nuget"
-    directory: "/src/Test"
+    directory: "/src/Test/SafeRouting.Tests.Unit"
     schedule:
       interval: "daily"
     allow:
