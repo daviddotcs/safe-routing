@@ -2,6 +2,7 @@
 
 namespace SafeRouting.Demo.Controllers;
 
+#pragma warning disable ASP0018 // Unused route parameter
 #pragma warning disable IDE0060 // Remove unused parameter
 
 #region ProductController
@@ -18,3 +19,4 @@ public sealed class ProductController : Controller
 #endregion
 
 #pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore ASP0018 // Unused route parameter
