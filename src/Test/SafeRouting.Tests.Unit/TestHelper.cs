@@ -11,38 +11,9 @@ internal static class TestHelper
   {
     var parseOptions = CSharpParseOptions.Default.WithLanguageVersion(languageVersion);
 
-    var syntaxTree = CSharpSyntaxTree.ParseText(
-      source,
-      path: path,
-      options: parseOptions);
-
-    var syntaxTrees = new List<SyntaxTree> { syntaxTree };
-
-    if (additionalSources is not null)
-    {
-      foreach (var additionalSource in additionalSources)
-      {
-        syntaxTrees.Add(CSharpSyntaxTree.ParseText(
-          additionalSource.Source,
-          path: additionalSource.Path,
-          options: additionalSource.ParseOptions ?? parseOptions));
-      }
-    }
-
-    var compilation = CSharpCompilation.Create(
-      assemblyName: "Tests",
-      syntaxTrees: syntaxTrees,
-      references: References,
-      options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: nullableContextOptions));
-
-    var optionsProvider = options is null ? null : new FixedConfigOptionsProvider(options);
-
-    var driver = CSharpGeneratorDriver.Create(
-      generators: Generators,
-      parseOptions: parseOptions,
-      optionsProvider: optionsProvider);
-
-    GeneratorDriver generatorDriver;
+    var syntaxTrees = CreateSyntaxTrees(source, path, parseOptions, additionalSources);
+    var compilation = CreateCompilation(syntaxTrees, nullableContextOptions);
+    var driver = CreateDriver(options, parseOptions);
 
     var verifySettings = new VerifySettings();
     verifySettings.UseDirectory("Snapshots");
@@ -52,25 +23,9 @@ internal static class TestHelper
       verifySettings.UseParameters(parameters);
     }
 
-    if (testCompilation)
-    {
-      generatorDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var compilationWithGeneratedCode, out var generatorDiagnostics);
-
-      using var stream = new MemoryStream();
-      var emitResult = compilationWithGeneratedCode.Emit(stream);
-
-      Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x, formatter: null)))}");
-      Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity == DiagnosticSeverity.Warning || x.Severity == DiagnosticSeverity.Error));
-
-      if ((path.Length > 0 || (additionalSources?.Any(x => x.Path.Length > 0) ?? false)) && generatorDiagnostics.Any())
-      {
-        verifySettings.UniqueForOSPlatform();
-      }
-    }
-    else
-    {
-      generatorDriver = driver.RunGenerators(compilation);
-    }
+    var generatorDriver = testCompilation
+      ? RunGeneratorsAndTestCompilation(driver, compilation, path, additionalSources, verifySettings)
+      : driver.RunGenerators(compilation);
 
     return Verifier.Verify(generatorDriver, verifySettings);
   }
@@ -113,6 +68,70 @@ internal static class TestHelper
   {
     new SafeRouting.Generator.RouteGenerator().AsSourceGenerator()
   };
+
+  private static List<SyntaxTree> CreateSyntaxTrees(string source, string path, CSharpParseOptions parseOptions, AdditionalSource[]? additionalSources)
+  {
+    var syntaxTree = CSharpSyntaxTree.ParseText(
+      source,
+      path: path,
+      options: parseOptions);
+
+    var syntaxTrees = new List<SyntaxTree>(1 + (additionalSources?.Length ?? 0)) { syntaxTree };
+
+    if (additionalSources is not null)
+    {
+      foreach (var additionalSource in additionalSources)
+      {
+        syntaxTrees.Add(CSharpSyntaxTree.ParseText(
+          additionalSource.Source,
+          path: additionalSource.Path,
+          options: additionalSource.ParseOptions ?? parseOptions));
+      }
+    }
+
+    return syntaxTrees;
+  }
+
+  private static CSharpCompilation CreateCompilation(IEnumerable<SyntaxTree> syntaxTrees, NullableContextOptions nullableContextOptions)
+  {
+    var compilation = CSharpCompilation.Create(
+      assemblyName: "Tests",
+      syntaxTrees: syntaxTrees,
+      references: References,
+      options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: nullableContextOptions));
+
+    return compilation;
+  }
+
+  private static CSharpGeneratorDriver CreateDriver(TestConfigOptions? options, CSharpParseOptions parseOptions)
+  {
+    var optionsProvider = options is null ? null : new FixedConfigOptionsProvider(options);
+
+    var driver = CSharpGeneratorDriver.Create(
+      generators: Generators,
+      parseOptions: parseOptions,
+      optionsProvider: optionsProvider);
+
+    return driver;
+  }
+
+  private static GeneratorDriver RunGeneratorsAndTestCompilation(CSharpGeneratorDriver driver, CSharpCompilation compilation, string path, AdditionalSource[]? additionalSources, VerifySettings verifySettings)
+  {
+    var generatorDriver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var compilationWithGeneratedCode, out var generatorDiagnostics);
+
+    using var stream = new MemoryStream();
+    var emitResult = compilationWithGeneratedCode.Emit(stream);
+
+    Assert.True(emitResult.Success, $"C# compilation failed with diagnostics:{Environment.NewLine}{string.Join(Environment.NewLine, emitResult.Diagnostics.Select(x => CSharpDiagnosticFormatter.Instance.Format(x, formatter: null)))}");
+    Assert.Empty(emitResult.Diagnostics.Where(x => x.Severity is DiagnosticSeverity.Warning or DiagnosticSeverity.Error));
+
+    if ((path.Length > 0 || (additionalSources?.Any(x => x.Path.Length > 0) ?? false)) && generatorDiagnostics.Length > 0)
+    {
+      verifySettings.UniqueForOSPlatform();
+    }
+
+    return generatorDriver;
+  }
 }
 
 internal sealed record AdditionalSource(string Source, string Path = "", CSharpParseOptions? ParseOptions = null);
