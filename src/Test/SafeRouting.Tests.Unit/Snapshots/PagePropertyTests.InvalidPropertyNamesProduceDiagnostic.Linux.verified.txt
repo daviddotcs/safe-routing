@@ -6,8 +6,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: /Project/Pages/Products/Edit.cshtml.cs: (6,3)-(6,32),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier,
       Message: The text '%&*$#(.' is not a valid C# identifier,
       Category: SafeRouting.Generator.RouteGenerator
