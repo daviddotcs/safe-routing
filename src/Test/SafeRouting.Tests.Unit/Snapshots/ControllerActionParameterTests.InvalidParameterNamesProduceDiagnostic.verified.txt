@@ -6,8 +6,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: : (6,5)-(6,34),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier,
       Message: The text '%&*$#(.' is not a valid C# identifier,
       Category: SafeRouting.Generator.RouteGenerator
@@ -18,8 +16,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: : (7,5)-(7,27),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier,
       Message: The text '' is not a valid C# identifier,
       Category: SafeRouting.Generator.RouteGenerator
@@ -30,8 +26,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: : (8,5)-(8,28),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier,
       Message: The text '3' is not a valid C# identifier,
       Category: SafeRouting.Generator.RouteGenerator
@@ -42,8 +36,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: : (9,5)-(9,28),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The text '{0}' is not a valid C# identifier,
       Message: The text '@' is not a valid C# identifier,
       Category: SafeRouting.Generator.RouteGenerator
