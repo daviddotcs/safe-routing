@@ -6,8 +6,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: C:\Project\Pages\Products\Edit.cshtml.cs: (14,2)-(19,3),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The page class '{0}' conflicts with another page class with the same resulting name,
       Message: The page class 'global::B.EditModel' conflicts with another page class with the same resulting name,
       Category: SafeRouting.Generator.RouteGenerator

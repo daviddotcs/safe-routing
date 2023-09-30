@@ -6,8 +6,6 @@
       Severity: Error,
       WarningLevel: 0,
       Location: : (7,2)-(8,68),
-      Description: ,
-      HelpLink: ,
       MessageFormat: The class '{0}' contains multiple methods which map to the route method '{1}',
       Message: The class 'ProductsController' contains multiple methods which map to the route method 'Index()',
       Category: SafeRouting.Generator.RouteGenerator
