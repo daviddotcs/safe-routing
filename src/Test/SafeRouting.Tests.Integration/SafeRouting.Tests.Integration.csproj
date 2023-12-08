@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(SafeRoutingPackageVersion)' != ''">
-    <PackageReference Include="SafeRouting" Version="$(SafeRoutingPackageVersion)" />
+    <PackageReference Include="SafeRouting" VersionOverride="$(SafeRoutingPackageVersion)" />
   </ItemGroup>
 
 </Project>
