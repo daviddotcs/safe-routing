@@ -43,7 +43,7 @@ To enable the included tag helpers, add the following line to `_ViewImports.csht
 
 <region:ViewImports>
 
-This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` elements, for example:
+This enables `for-route` attributes to be added to `<a>`, `<button>`, `<img>`, and `<form>` elements, for example:
 
 <region:CshtmlExample>
 

@@ -5,6 +5,7 @@
 @{
   var controllerRoute = Routes.Controllers.Product.Search("chair", 10);
   var pageRoute = Routes.Pages.Edit.Post(Model.Id);
+  var pageHandlerRoute = Routes.Pages.Product.PostDelete();
 }
 
 <!-- Adds the URL in the href attribute -->
@@ -15,5 +16,10 @@
 
 <!-- Adds the URL in the action attribute -->
 <form for-route="pageRoute" method="post"></form>
+
+<!-- Adds the URL in the button's formaction attribute -->
+<form method="post">
+  <button type="submit" for-route="pageHandlerRoute">Delete</button>
+</form>
 
 @{ #endregion }

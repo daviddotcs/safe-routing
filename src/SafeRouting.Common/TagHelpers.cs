@@ -11,6 +11,7 @@ namespace SafeRouting.TagHelpers;
 /// <see cref="ITagHelper"/> implementation targeting <c>&lt;a&gt;</c>, <c>&lt;form&gt;</c>, or <c>&lt;img&gt;</c> elements.
 /// </summary>
 [HtmlTargetElement(AnchorTagName, Attributes = ForRouteAttributeName)]
+[HtmlTargetElement(ButtonTagName, Attributes = ForRouteAttributeName)]
 [HtmlTargetElement(FormTagName, Attributes = ForRouteAttributeName)]
 [HtmlTargetElement(ImageTagName, Attributes = ForRouteAttributeName)]
 public sealed class RouteValuesTagHelper : TagHelper
@@ -43,6 +44,7 @@ public sealed class RouteValuesTagHelper : TagHelper
     var urlAttributeName = context.TagName switch
     {
       AnchorTagName => AnchorAttributeName,
+      ButtonTagName => ButtonAttributeName,
       FormTagName => FormAttributeName,
       ImageTagName => ImageAttributeName,
       _ => null
@@ -65,6 +67,8 @@ public sealed class RouteValuesTagHelper : TagHelper
   private const string ForRouteAttributeName = "for-route";
   private const string AnchorTagName = "a";
   private const string AnchorAttributeName = "href";
+  private const string ButtonTagName = "button";
+  private const string ButtonAttributeName = "formaction";
   private const string FormTagName = "form";
   private const string FormAttributeName = "action";
   private const string ImageTagName = "img";

@@ -10,4 +10,6 @@ public sealed class ProductModel : PageModel
   public IActionResult OnGetRedirectToController() => Routes.Controllers.Account.Index().Redirect(this);
 
   public IActionResult OnGetRedirectToPage() => Routes.Pages.Index.Get().Redirect(this);
+
+  public void OnPostDelete() { }
 }
