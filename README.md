@@ -96,12 +96,13 @@ To enable the included tag helpers, add the following line to `_ViewImports.csht
 @addTagHelper SafeRouting.TagHelpers.*, SafeRouting.Common
 ```
 
-This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` elements, for example:
+This enables `for-route` attributes to be added to `<a>`, `<button>`, `<img>`, and `<form>` elements, for example:
 
 ```cshtml
 @{
   var controllerRoute = Routes.Controllers.Product.Search("chair", 10);
   var pageRoute = Routes.Pages.Edit.Post(Model.Id);
+  var pageHandlerRoute = Routes.Pages.Product.PostDelete();
 }
 
 <!-- Adds the URL in the href attribute -->
@@ -112,6 +113,11 @@ This enables `for-route` attributes to be added to `<a>`, `<img>`, and `<form>` 
 
 <!-- Adds the URL in the action attribute -->
 <form for-route="pageRoute" method="post"></form>
+
+<!-- Adds the URL in the button's formaction attribute -->
+<form method="post">
+  <button type="submit" for-route="pageHandlerRoute">Delete</button>
+</form>
 ```
 
 ### Extension Methods
