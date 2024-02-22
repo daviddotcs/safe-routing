@@ -1,6 +1,5 @@
 ﻿namespace SafeRouting.Tests.Unit;
 
-[UsesVerify]
 public sealed class PageTests
 {
   [Fact]

@@ -2,7 +2,6 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace SafeRouting.Tests.Unit;
 
-[UsesVerify]
 public sealed class CommonTests
 {
   [Fact]
