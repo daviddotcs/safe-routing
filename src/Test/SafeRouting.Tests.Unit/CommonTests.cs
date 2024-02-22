@@ -16,7 +16,7 @@ public sealed class CommonTests
   [InlineData(LanguageVersion.CSharp12)]
   public Task GlobalUsingsGeneratedForSupportedLanguageVersions(LanguageVersion version)
   {
-    return TestHelper.Verify("", languageVersion: version, parameters: new object[] { version });
+    return TestHelper.Verify("", languageVersion: version, parameters: [version]);
   }
 
   [Theory]
@@ -24,7 +24,7 @@ public sealed class CommonTests
   [InlineData(LanguageVersion.CSharp9)]
   public Task GlobalUsingsNotGeneratedForUnsupportedLanguageVersions(LanguageVersion version)
   {
-    return TestHelper.Verify("", languageVersion: version, parameters: new object[] { version });
+    return TestHelper.Verify("", languageVersion: version, parameters: [version]);
   }
 
   [Fact]
@@ -324,7 +324,7 @@ public sealed class CommonTests
   [InlineData(LanguageVersion.CSharp12)]
   public Task SupportedLanguageVersionsBuild(LanguageVersion version)
   {
-    return TestHelper.Verify("", languageVersion: version, parameters: new object[] { version });
+    return TestHelper.Verify("", languageVersion: version, parameters: [version]);
   }
 
   [Theory]
@@ -373,7 +373,7 @@ public sealed class CommonTests
       path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"),
       languageVersion: version,
       nullableContextOptions: Microsoft.CodeAnalysis.NullableContextOptions.Disable,
-      parameters: new object[] { version },
+      parameters: [version],
       testCompilation: false);
   }
 }

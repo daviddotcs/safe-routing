@@ -111,6 +111,6 @@ public sealed class PageHandlerParameterTests
         {
         }
       }
-      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"), additionalSources: new[] { TestHelper.GetFromKeyedServicesAttributeAdditionalSource() });
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"), additionalSources: [TestHelper.GetFromKeyedServicesAttributeAdditionalSource()]);
   }
 }

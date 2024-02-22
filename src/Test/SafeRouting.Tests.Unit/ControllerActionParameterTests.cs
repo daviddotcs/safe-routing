@@ -287,7 +287,7 @@ public sealed class ControllerActionParameterTests
       {
         public IActionResult Index([FromServices] string fromServices, [FromKeyedServices("foo")] object fromKeyedServices) => View();
       }
-      """, additionalSources: new[] { TestHelper.GetFromKeyedServicesAttributeAdditionalSource() });
+      """, additionalSources: [TestHelper.GetFromKeyedServicesAttributeAdditionalSource()]);
   }
 
   [Fact]
