@@ -75,7 +75,7 @@ public static class RouteValueExtensions
     };
 
   /// <summary>
-  /// Generates a URL with a relative path for the specified <paramref name="route"/>.
+  /// Generates a URL with a relative path for the specified <paramref name="route"/>. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IPageRouteValues"/> to generate the URL for.</param>
   /// <param name="url">The <see cref="IUrlHelper"/>.</param>
@@ -83,12 +83,19 @@ public static class RouteValueExtensions
   /// <param name="host">The host name for the URL.</param>
   /// <param name="fragment">The fragment for the URL.</param>
   /// <returns>The generated URL.</returns>
-  /// <remarks>The value of host should be a trusted value. Relying on the value of the current request can allow untrusted input to influence the resulting URI unless the Host header has been validated. See the deployment documentation for instructions on how to properly validate the Host header in your deployment environment.</remarks>
+  /// <remarks>
+  /// <para>
+  /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
+  /// can allow untrusted input to influence the resulting URI unless the <c>Host</c> header has been validated.
+  /// See the deployment documentation for instructions on how to properly validate the <c>Host</c> header in
+  /// your deployment environment.
+  /// </para>
+  /// </remarks>
   public static string? Url(this IPageRouteValues route, IUrlHelper url, string? protocol = null, string? host = null, string? fragment = null)
     => url.Page(route.PageName, route.HandlerName, route.RouteValues, protocol, host, fragment);
 
   /// <summary>
-  /// Generates a URL with a relative path for the specified <paramref name="route"/>.
+  /// Generates a URL with a relative path for the specified <paramref name="route"/>. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IControllerRouteValues"/> to generate the URL for.</param>
   /// <param name="url">The <see cref="IUrlHelper"/>.</param>
@@ -96,12 +103,19 @@ public static class RouteValueExtensions
   /// <param name="host">The host name for the URL.</param>
   /// <param name="fragment">The fragment for the URL.</param>
   /// <returns>The generated URL.</returns>
-  /// <remarks>The value of host should be a trusted value. Relying on the value of the current request can allow untrusted input to influence the resulting URI unless the Host header has been validated. See the deployment documentation for instructions on how to properly validate the Host header in your deployment environment.</remarks>
+  /// <remarks>
+  /// <para>
+  /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
+  /// can allow untrusted input to influence the resulting URI unless the <c>Host</c> header has been validated.
+  /// See the deployment documentation for instructions on how to properly validate the <c>Host</c> header in
+  /// your deployment environment.
+  /// </para>
+  /// </remarks>
   public static string? Url(this IControllerRouteValues route, IUrlHelper url, string? protocol = null, string? host = null, string? fragment = null)
     => url.Action(route.ActionName, route.ControllerName, route.RouteValues, protocol, host, fragment);
 
   /// <summary>
-  /// Generates a URL with a relative path for the specified <paramref name="route"/>.
+  /// Generates a URL with a relative path for the specified <paramref name="route"/>. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IRouteValues"/> to generate the URL for.</param>
   /// <param name="url">The <see cref="IUrlHelper"/>.</param>
@@ -109,7 +123,14 @@ public static class RouteValueExtensions
   /// <param name="host">The host name for the URL.</param>
   /// <param name="fragment">The fragment for the URL.</param>
   /// <returns>The generated URL.</returns>
-  /// <remarks>The value of host should be a trusted value. Relying on the value of the current request can allow untrusted input to influence the resulting URI unless the Host header has been validated. See the deployment documentation for instructions on how to properly validate the Host header in your deployment environment.</remarks>
+  /// <remarks>
+  /// <para>
+  /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
+  /// can allow untrusted input to influence the resulting URI unless the <c>Host</c> header has been validated.
+  /// See the deployment documentation for instructions on how to properly validate the <c>Host</c> header in
+  /// your deployment environment.
+  /// </para>
+  /// </remarks>
   public static string? Url(this IRouteValues route, IUrlHelper url, string? protocol = null, string? host = null, string? fragment = null)
     => route switch
     {
@@ -144,7 +165,7 @@ public static class RouteValueExtensions
     => generator.GetPathByPage(httpContext, route.PageName, route.HandlerName, route.RouteValues, pathBase, fragment, options);
 
   /// <summary>
-  /// Generates an absolute URI based on the provided values.
+  /// Generates an absolute URI based on the provided values. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IPageRouteValues"/> to generate the URI for.</param>
   /// <param name="generator">The <see cref="LinkGenerator"/>.</param>
@@ -166,7 +187,7 @@ public static class RouteValueExtensions
     => generator.GetUriByPage(route.PageName, route.HandlerName, route.RouteValues, scheme, host, pathBase, fragment, options);
 
   /// <summary>
-  /// Generates an absolute URI based on the provided values.
+  /// Generates an absolute URI based on the provided values. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IPageRouteValues"/> to generate the URI for.</param>
   /// <param name="generator">The <see cref="LinkGenerator"/>.</param>
@@ -214,7 +235,7 @@ public static class RouteValueExtensions
     => generator.GetPathByAction(httpContext, route.ActionName, route.ControllerName, route.RouteValues, pathBase, fragment, options);
 
   /// <summary>
-  /// Generates an absolute URI based on the provided values.
+  /// Generates an absolute URI based on the provided values. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IControllerRouteValues"/> to generate the URI for.</param>
   /// <param name="generator">The <see cref="LinkGenerator"/>.</param>
@@ -236,7 +257,7 @@ public static class RouteValueExtensions
     => generator.GetUriByAction(route.ActionName, route.ControllerName, route.RouteValues, scheme, host, pathBase, fragment, options);
 
   /// <summary>
-  /// Generates an absolute URI based on the provided values.
+  /// Generates an absolute URI based on the provided values. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IControllerRouteValues"/> to generate the URI for.</param>
   /// <param name="generator">The <see cref="LinkGenerator"/>.</param>
@@ -294,7 +315,7 @@ public static class RouteValueExtensions
     };
 
   /// <summary>
-  /// Generates an absolute URI based on the provided values.
+  /// Generates an absolute URI based on the provided values. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IRouteValues"/> to generate the URI for.</param>
   /// <param name="generator">The <see cref="LinkGenerator"/>.</param>
@@ -321,7 +342,7 @@ public static class RouteValueExtensions
     };
 
   /// <summary>
-  /// Generates an absolute URI based on the provided values.
+  /// Generates an absolute URI based on the provided values. See the remarks section for important security information.
   /// </summary>
   /// <param name="route">The <see cref="IRouteValues"/> to generate the URI for.</param>
   /// <param name="generator">The <see cref="LinkGenerator"/>.</param>
