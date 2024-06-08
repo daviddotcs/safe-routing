@@ -749,7 +749,7 @@ internal static class Parser
   private static PageMethodInfo? GetPageMethodInfo(IMethodSymbol methodSymbol, SemanticModel semanticModel, ImmutableArray<Diagnostic>.Builder diagnostics, CancellationToken cancellationToken)
   {
     if (methodSymbol.MethodKind != MethodKind.Ordinary || methodSymbol.IsGenericMethod
-      || !TryParseRazorPageMethodName(methodSymbol.Name, out var name, out var handlerName))
+      || !TryParseRazorPageMethodName(methodSymbol.Name, out var name, out var httpMethod, out var handlerName))
     {
       return null;
     }
@@ -795,7 +795,7 @@ internal static class Parser
 
     var escapedName = CSharpSupport.EscapeIdentifier(name);
 
-    return new PageMethodInfo(name, escapedName, name, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters.ToImmutable());
+    return new PageMethodInfo(name, escapedName, name, httpMethod, handlerName, methodSymbol.ToDisplayString(UniqueClassMemberWithNullableAnnotationsSymbolDisplayFormat), parameters.ToImmutable());
   }
   private static ExpressionSyntax? GetSanitisedDefaultValue(IParameterSymbol parameterSymbol, SemanticModel semanticModel, CancellationToken cancellationToken)
   {
@@ -881,23 +881,25 @@ internal static class Parser
 
     return ToResult();
   }
-  private static bool TryParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, out string? handler)
+  private static bool TryParseRazorPageMethodName(string methodName, [MaybeNullWhen(false)] out string name, [MaybeNullWhen(false)] out string httpMethod, out string? handler)
   {
     var methodNameMatch = RazorPageMethodNameRegex.Match(methodName);
     if (!methodNameMatch.Success)
     {
       name = null;
+      httpMethod = null;
       handler = null;
       return false;
     }
+
+    name = methodNameMatch.Groups["name"].Value;
+    httpMethod = methodNameMatch.Groups["verb"].Value;
 
     handler = methodNameMatch.Groups["handler"].Value;
     if (string.IsNullOrEmpty(handler))
     {
       handler = null;
     }
-
-    name = methodNameMatch.Groups["name"].Value;
 
     return true;
   }

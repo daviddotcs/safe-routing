@@ -349,6 +349,8 @@ internal static class Emitter
     writer.WriteLine("/// </summary>");
     writer.WriteLine($"""public string {item.Noun}Name => "{item.RouteValue}";""");
 
+    WriteHttpMethod(writer, method);
+
     writer.WriteLine("/// <summary>");
     writer.WriteLine($"/// The name of the {item.DivisionName.ToLowerInvariant()} for the route.");
     writer.WriteLine("/// </summary>");
@@ -394,6 +396,37 @@ internal static class Emitter
 
       writer.Indent--;
       writer.WriteLine("}");
+    }
+  }
+  private static void WriteHttpMethod(IndentedTextWriter writer, IMvcMethodInfo method)
+  {
+    if (method.HttpMethod is null)
+    {
+      return;
+    }
+
+    writer.WriteLine("/// <summary>");
+    writer.WriteLine("/// The HTTP method used for the route.");
+    writer.WriteLine("/// </summary>");
+
+    switch (method.HttpMethod)
+    {
+      case "Delete":
+      case "Get":
+      case "Head":
+      case "Options":
+      case "Post":
+      case "Put":
+        writer.WriteLine($"""public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.{method.HttpMethod};""");
+        break;
+
+      case "Patch":
+        writer.WriteLine($"""public global::System.Net.Http.HttpMethod HttpMethod => new global::System.Net.Http.HttpMethod("{method.HttpMethod}");""");
+        break;
+
+      default:
+        writer.WriteLine($"""public global::System.Net.Http.HttpMethod HttpMethod => new global::System.Net.Http.HttpMethod("{method.HttpMethod}");""");
+        break;
     }
   }
   private static void WriteRouteValuesClassMembers(IndentedTextWriter writer, string memberDataClassName, IEnumerable<TypeInfo> memberTypes, string fullyQualifiedSourceIdentifier, MemberType memberType)

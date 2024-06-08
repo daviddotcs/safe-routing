@@ -65,6 +65,10 @@ namespace Routes
       /// </summary>
       public string PageName => "/Products/Edit";
       /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Get;
+      /// <summary>
       /// The name of the handler for the route.
       /// </summary>
       public string? HandlerName => null;

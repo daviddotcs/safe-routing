@@ -42,6 +42,11 @@ public interface IPageRouteValues : IRouteValues
   string PageName { get; }
 
   /// <summary>
+  /// The HTTP method used for the route.
+  /// </summary>
+  HttpMethod HttpMethod { get; }
+
+  /// <summary>
   /// The name of the handler.
   /// </summary>
   string? HandlerName { get; }

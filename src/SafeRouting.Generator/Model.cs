@@ -83,6 +83,7 @@ internal interface IMvcMethodInfo
 {
   string EscapedName { get; }
   string UniqueName { get; }
+  string? HttpMethod { get; }
   string? DivisionRouteValue { get; }
   string? Area { get; }
   string FullyQualifiedMethodDeclaration { get; }
@@ -100,6 +101,7 @@ internal sealed record ControllerMethodInfo(
   string FullyQualifiedMethodDeclaration,
   ImmutableArray<MvcMethodParameterInfo> Parameters) : IMvcMethodInfo
 {
+  string? IMvcMethodInfo.HttpMethod => null;
   string IMvcMethodInfo.DivisionRouteValue => ActionName;
 
   public IEnumerable<MvcMethodParameterInfo> GetUrlParameters()
@@ -110,6 +112,7 @@ internal sealed record PageMethodInfo(
   string Name,
   string EscapedName,
   string UniqueName,
+  string HttpMethod,
   string? HandlerName,
   string FullyQualifiedMethodDeclaration,
   ImmutableArray<MvcMethodParameterInfo> Parameters) : IMvcMethodInfo

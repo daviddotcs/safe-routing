@@ -117,6 +117,10 @@ namespace Routes
       /// </summary>
       public string PageName => "/Products/Edit";
       /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Delete;
+      /// <summary>
       /// The name of the handler for the route.
       /// </summary>
       public string? HandlerName => null;
@@ -146,6 +150,10 @@ namespace Routes
       /// The name of the page for the route.
       /// </summary>
       public string PageName => "/Products/Edit";
+      /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Get;
       /// <summary>
       /// The name of the handler for the route.
       /// </summary>
@@ -177,6 +185,10 @@ namespace Routes
       /// </summary>
       public string PageName => "/Products/Edit";
       /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Head;
+      /// <summary>
       /// The name of the handler for the route.
       /// </summary>
       public string? HandlerName => null;
@@ -206,6 +218,10 @@ namespace Routes
       /// The name of the page for the route.
       /// </summary>
       public string PageName => "/Products/Edit";
+      /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Options;
       /// <summary>
       /// The name of the handler for the route.
       /// </summary>
@@ -237,6 +253,10 @@ namespace Routes
       /// </summary>
       public string PageName => "/Products/Edit";
       /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => new global::System.Net.Http.HttpMethod("Patch");
+      /// <summary>
       /// The name of the handler for the route.
       /// </summary>
       public string? HandlerName => null;
@@ -267,6 +287,10 @@ namespace Routes
       /// </summary>
       public string PageName => "/Products/Edit";
       /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Post;
+      /// <summary>
       /// The name of the handler for the route.
       /// </summary>
       public string? HandlerName => null;
@@ -296,6 +320,10 @@ namespace Routes
       /// The name of the page for the route.
       /// </summary>
       public string PageName => "/Products/Edit";
+      /// <summary>
+      /// The HTTP method used for the route.
+      /// </summary>
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Put;
       /// <summary>
       /// The name of the handler for the route.
       /// </summary>
