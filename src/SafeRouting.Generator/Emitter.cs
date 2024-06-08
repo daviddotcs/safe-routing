@@ -421,7 +421,18 @@ internal static class Emitter
         break;
 
       case "Patch":
+        var originalIndent = writer.Indent;
+        writer.Indent = 0;
+        writer.WriteLine("""#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER""");
+        writer.Indent = originalIndent;
+        writer.WriteLine($"""public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.{method.HttpMethod};""");
+        writer.Indent = 0;
+        writer.WriteLine("""#else""");
+        writer.Indent = originalIndent;
         writer.WriteLine($"""public global::System.Net.Http.HttpMethod HttpMethod => new global::System.Net.Http.HttpMethod("{method.HttpMethod}");""");
+        writer.Indent = 0;
+        writer.WriteLine("""#endif""");
+        writer.Indent = originalIndent;
         break;
 
       default:

@@ -255,7 +255,11 @@ namespace Routes
       /// <summary>
       /// The HTTP method used for the route.
       /// </summary>
+#if NETCOREAPP2_1_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+      public global::System.Net.Http.HttpMethod HttpMethod => global::System.Net.Http.HttpMethod.Patch;
+#else
       public global::System.Net.Http.HttpMethod HttpMethod => new global::System.Net.Http.HttpMethod("Patch");
+#endif
       /// <summary>
       /// The name of the handler for the route.
       /// </summary>
