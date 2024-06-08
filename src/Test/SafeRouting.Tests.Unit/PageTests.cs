@@ -123,6 +123,81 @@ public sealed class PageTests
   }
 
   [Fact]
+  public Task HttpMethodsThatAreIncorrectlyCapitalisedAreExcluded()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class EditModel : PageModel
+      {
+        public void Ondelete()
+        {
+        }
+        public void OnGET()
+        {
+        }
+        public void OnhEAD()
+        {
+        }
+        public void OnOpTiOnS()
+        {
+        }
+      }
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
+  }
+
+  [Fact]
+  public Task HttpMethodsThatAreSupportedAreIncluded()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class EditModel : PageModel
+      {
+        public void OnDelete()
+        {
+        }
+        public void OnGet()
+        {
+        }
+        public void OnHead()
+        {
+        }
+        public void OnOptions()
+        {
+        }
+        public void OnPatch()
+        {
+        }
+        public void OnPost()
+        {
+        }
+        public void OnPut()
+        {
+        }
+      }
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
+  }
+
+  [Fact]
+  public Task HttpMethodsThatAreNotSupportedAreExcluded()
+  {
+    return TestHelper.Verify("""
+      using Microsoft.AspNetCore.Mvc.RazorPages;
+
+      public sealed class EditModel : PageModel
+      {
+        public void OnConnect()
+        {
+        }
+        public void OnTrace()
+        {
+        }
+      }
+      """, path: TestHelper.MakePath("Project", "Pages", "Products", "Edit.cshtml.cs"));
+  }
+
+  [Fact]
   public Task InheritedMembersAreIncluded()
   {
     return TestHelper.Verify("""
