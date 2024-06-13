@@ -147,7 +147,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A URI with an absolute path, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A URI with an absolute path, or <see langword="null" /> if a URI cannot be created.</returns>
   public static string Path(this IPageRouteValues route, LinkGenerator generator, PathString pathBase = default, FragmentString fragment = default, LinkOptions? options = null)
     => generator.GetPathByPage(route.PageName, route.HandlerName, route.RouteValues, pathBase, fragment, options);
 
@@ -160,7 +160,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI. If not provided, the value of <see cref="HttpRequest.PathBase"/> will be used.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A URI with an absolute path, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A URI with an absolute path, or <see langword="null" /> if a URI cannot be created.</returns>
   public static string Path(this IPageRouteValues route, LinkGenerator generator, HttpContext httpContext, PathString? pathBase = null, FragmentString fragment = default, LinkOptions? options = null)
     => generator.GetPathByPage(httpContext, route.PageName, route.HandlerName, route.RouteValues, pathBase, fragment, options);
 
@@ -174,7 +174,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A absolute URI, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A absolute URI, or <see langword="null" /> if a URI cannot be created.</returns>
   /// <remarks>
   /// <para>
   /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
@@ -197,7 +197,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI. If not provided, the value of <see cref="HttpRequest.PathBase"/> will be used.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A absolute URI, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A absolute URI, or <see langword="null" /> if a URI cannot be created.</returns>
   /// <remarks>
   /// <para>
   /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
@@ -217,7 +217,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A URI with an absolute path, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A URI with an absolute path, or <see langword="null" /> if a URI cannot be created.</returns>
   public static string Path(this IControllerRouteValues route, LinkGenerator generator, PathString pathBase = default, FragmentString fragment = default, LinkOptions? options = null)
     => generator.GetPathByAction(route.ActionName, route.ControllerName, route.RouteValues, pathBase, fragment, options);
 
@@ -230,7 +230,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI. If not provided, the value of <see cref="HttpRequest.PathBase"/> will be used.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A URI with an absolute path, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A URI with an absolute path, or <see langword="null" /> if a URI cannot be created.</returns>
   public static string Path(this IControllerRouteValues route, LinkGenerator generator, HttpContext httpContext, PathString? pathBase = null, FragmentString fragment = default, LinkOptions? options = null)
     => generator.GetPathByAction(httpContext, route.ActionName, route.ControllerName, route.RouteValues, pathBase, fragment, options);
 
@@ -244,7 +244,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A absolute URI, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A absolute URI, or <see langword="null" /> if a URI cannot be created.</returns>
   /// <remarks>
   /// <para>
   /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
@@ -267,7 +267,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI. If not provided, the value of <see cref="HttpRequest.PathBase"/> will be used.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A absolute URI, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A absolute URI, or <see langword="null" /> if a URI cannot be created.</returns>
   /// <remarks>
   /// <para>
   /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
@@ -287,7 +287,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A URI with an absolute path, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A URI with an absolute path, or <see langword="null" /> if a URI cannot be created.</returns>
   public static string Path(this IRouteValues route, LinkGenerator generator, PathString pathBase = default, FragmentString fragment = default, LinkOptions? options = null)
     => route switch
     {
@@ -305,7 +305,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI. If not provided, the value of <see cref="HttpRequest.PathBase"/> will be used.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A URI with an absolute path, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A URI with an absolute path, or <see langword="null" /> if a URI cannot be created.</returns>
   public static string Path(this IRouteValues route, LinkGenerator generator, HttpContext httpContext, PathString? pathBase = null, FragmentString fragment = default, LinkOptions? options = null)
     => route switch
     {
@@ -324,7 +324,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A absolute URI, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A absolute URI, or <see langword="null" /> if a URI cannot be created.</returns>
   /// <remarks>
   /// <para>
   /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
@@ -352,7 +352,7 @@ public static class RouteValueExtensions
   /// <param name="pathBase">An optional URI path base. Prepended to the path in the resulting URI. If not provided, the value of <see cref="HttpRequest.PathBase"/> will be used.</param>
   /// <param name="fragment">A URI fragment. Optional. Appended to the resulting URI.</param>
   /// <param name="options">An optional <see cref="LinkOptions"/>. Settings on provided object override the settings with matching names from <c>RouteOptions</c>.</param>
-  /// <returns>A absolute URI, or <c>null</c> if a URI cannot be created.</returns>
+  /// <returns>A absolute URI, or <see langword="null" /> if a URI cannot be created.</returns>
   /// <remarks>
   /// <para>
   /// The value of <paramref name="host" /> should be a trusted value. Relying on the value of the current request
