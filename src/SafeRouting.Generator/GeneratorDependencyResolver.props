@@ -1,0 +1,108 @@
+<Project>
+
+  <PropertyGroup>
+    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);AddGenerationTimeReferences</GetTargetPathDependsOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_SystemLibs Include="Microsoft.Bcl.AsyncInterfaces" />
+    <_SystemLibs Include="Microsoft.CodeAnalysis" />
+    <_SystemLibs Include="Microsoft.CodeAnalysis.CSharp" />
+    <_SystemLibs Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+    <_SystemLibs Include="Microsoft.CodeAnalysis.Workspaces" />
+    <_SystemLibs Include="System.Buffers" />
+    <_SystemLibs Include="System.Collections.Immutable" />
+    <_SystemLibs Include="System.Composition.AttributedModel" />
+    <_SystemLibs Include="System.Composition.Convention" />
+    <_SystemLibs Include="System.Composition.Hosting" />
+    <_SystemLibs Include="System.Composition.Runtime" />
+    <_SystemLibs Include="System.Composition.TypedParts" />
+    <_SystemLibs Include="System.IO.Pipelines" />
+    <_SystemLibs Include="System.Memory" />
+    <_SystemLibs Include="System.Numerics.Vectors" />
+    <_SystemLibs Include="System.Reflection.Metadata" />
+    <_SystemLibs Include="System.Runtime.CompilerServices.Unsafe" />
+    <_SystemLibs Include="System.Text.Encoding.CodePages" />
+    <_SystemLibs Include="System.Threading.Tasks.Extensions" />
+
+    <_SystemLibs Include="Microsoft.NETCore.Platforms" />
+    <_SystemLibs Include="Microsoft.Win32.Primitives" />
+    <_SystemLibs Include="System.AppContext" />
+    <_SystemLibs Include="System.Collections" />
+    <_SystemLibs Include="System.Collections.Concurrent" />
+    <_SystemLibs Include="System.Console" />
+    <_SystemLibs Include="System.Diagnostics.Debug" />
+    <_SystemLibs Include="System.Diagnostics.Tools" />
+    <_SystemLibs Include="System.Diagnostics.Tracing" />
+    <_SystemLibs Include="System.Globalization" />
+    <_SystemLibs Include="System.Globalization.Calendars" />
+    <_SystemLibs Include="System.IO" />
+    <_SystemLibs Include="System.IO.Compression" />
+    <_SystemLibs Include="System.IO.Compression.ZipFile" />
+    <_SystemLibs Include="System.IO.FileSystem" />
+    <_SystemLibs Include="System.IO.FileSystem.Primitives" />
+    <_SystemLibs Include="System.Linq" />
+    <_SystemLibs Include="System.Linq.Expressions" />
+    <_SystemLibs Include="System.Net.Http" />
+    <_SystemLibs Include="System.Net.Primitives" />
+    <_SystemLibs Include="System.Net.Sockets" />
+    <_SystemLibs Include="System.ObjectModel" />
+    <_SystemLibs Include="System.Reflection" />
+    <_SystemLibs Include="System.Reflection.Extensions" />
+    <_SystemLibs Include="System.Reflection.Primitives" />
+    <_SystemLibs Include="System.Resources.ResourceManager" />
+    <_SystemLibs Include="System.Runtime" />
+    <_SystemLibs Include="System.Runtime.Extensions" />
+    <_SystemLibs Include="System.Runtime.Handles" />
+    <_SystemLibs Include="System.Runtime.InteropServices" />
+    <_SystemLibs Include="System.Runtime.InteropServices.RuntimeInformation" />
+    <_SystemLibs Include="System.Runtime.Numerics" />
+    <_SystemLibs Include="System.Security.Cryptography.Algorithms" />
+    <_SystemLibs Include="System.Security.Cryptography.Encoding" />
+    <_SystemLibs Include="System.Security.Cryptography.Primitives" />
+    <_SystemLibs Include="System.Security.Cryptography.X509Certificates" />
+    <_SystemLibs Include="System.Text.Encoding" />
+    <_SystemLibs Include="System.Text.Encoding.Extensions" />
+    <_SystemLibs Include="System.Text.RegularExpressions" />
+    <_SystemLibs Include="System.Threading" />
+    <_SystemLibs Include="System.Threading.Tasks" />
+    <_SystemLibs Include="System.Threading.Timer" />
+    <_SystemLibs Include="System.Xml.ReaderWriter" />
+    <_SystemLibs Include="System.Xml.XDocument" />
+
+    <!-- Fix for Reference assemblies should not be loaded for execution.  They can only be loaded in the Reflection-only loader context. (0x80131058)) -->
+    <_SystemLibs Include="System.Dynamic.Runtime" />
+
+    <!-- https://github.com/HavenDV/H.Generators.Extensions/issues/3 -->
+    <_SystemLibs Include="Microsoft.CSharp" />
+    <_SystemLibs Include="System.Runtime.Serialization.Primitives" />
+
+    <!-- https://discord.com/channels/988253265550532680/988253266393579583/1075854799821623346 -->
+    <_SystemLibs Include="System.ComponentModel" />
+    <_SystemLibs Include="System.Runtime.Serialization.Formatters" />
+  </ItemGroup>
+
+  <!--
+    https://github.com/dotnet/roslyn/issues/52017#issuecomment-1046216200
+    This automatically adds explicit and transient dependencies so that they are available at the time the generator is executed.
+  -->
+  <Target Name="AddGenerationTimeReferences" DependsOnTargets="ResolveReferences">
+    <PropertyGroup>
+      <_SystemLibsProperty>@(_SystemLibs)</_SystemLibsProperty>
+      <_ResolvedCompileFileDefinitions>@(ResolvedCompileFileDefinitions)</_ResolvedCompileFileDefinitions>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ResolvedCompileFileDefinitionsWithoutSystem Include="%(ResolvedCompileFileDefinitions.Identity)" Condition="$(_SystemLibsProperty) != '' AND $(_ResolvedCompileFileDefinitions) != '' AND !$(_SystemLibsProperty.Contains(%(ResolvedCompileFileDefinitions.Filename)))" />
+      <ResolvedCompileFileDefinitionsWithoutSystemNonRef Include="@(ResolvedCompileFileDefinitionsWithoutSystem->Replace('\ref\', '\lib\')->Replace('/ref/', '/lib/'))" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="@(ResolvedCompileFileDefinitionsWithoutSystemNonRef)" Pack="true" PackagePath="analyzers/dotnet/cs" />
+      <TargetPathWithTargetPlatformMoniker Include="@(ResolvedCompileFileDefinitionsWithoutSystemNonRef)" IncludeRuntimeDependency="false" />
+    </ItemGroup>
+
+    <Message Text="Added generation time reference: %(ResolvedCompileFileDefinitionsWithoutSystemNonRef.Identity)" Importance="high" Condition="$(_ResolvedCompileFileDefinitions) != ''"/>
+  </Target>
+
+</Project>
